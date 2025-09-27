@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sulama Kumandası - Cihaz Kurulumu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 32px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: #999;
+        }
+        
+        .connect-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+        }
+        
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-btn {
+            background: transparent;
+            color: #666;
+            border: 2px solid #e0e6ed;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            border-color: #4facfe;
+            color: #4facfe;
+        }
+        
+        .device-info {
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .info-title {
+            color: #4facfe;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-text {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .status-disconnected {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+        
+        .status-connected {
+            background: rgba(51, 217, 178, 0.1);
+            color: #33d9b2;
+            border: 1px solid rgba(51, 217, 178, 0.2);
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">💧</div>
+        <h1>Cihaz Bağlantısı</h1>
+        <p class="subtitle">Sulama cihazınızın kodunu girerek bağlantı kurun</p>
+        
+        <div class="device-info">
+            <div class="info-title">
+                <span>ℹ️</span>
+                Cihaz Kodu Hakkında
+            </div>
+            <div class="info-text">
+                Cihaz kodu, sulama sisteminizin benzersiz tanımlayıcısıdır. 
+                Bu kodu cihazınızın üzerindeki etiketten veya kurulum dökümanından bulabilirsiniz.
+            </div>
+        </div>
+        
+        <form id="deviceForm">
+            <div class="form-group">
+                <label for="deviceCode" class="form-label">Cihaz Kodu</label>
+                <input 
+                    type="text" 
+                    id="deviceCode" 
+                    class="form-input" 
+                    placeholder="Örn: DEVICE001, PUMP_A1, vb..."
+                    required
+                    autocomplete="off"
+                >
+            </div>
+            
+            <button type="submit" class="connect-btn" id="connectBtn">
+                Cihaza Bağlan
+            </button>
+            
+            <button type="button" class="back-btn" onclick="history.back()">
+                ← Geri Dön
+            </button>
+        </form>
+        
+        <div class="status-indicator status-disconnected" id="connectionStatus">
+            <div class="status-dot"></div>
+            <span>Bağlantı Bekleniyor</span>
+        </div>
+    </div>
+
+    <script>
+        const MESSAGE_PROTOCOL = {
+            STATUS: 0,
+            RUN: 1,
+            STOP: 2,
+            TIMER_RUN: 3,
+        };
+
+        const StatusEnum = {
+            UNKNOWN: 0,
+            READY: 1,
+            RUNNING: 2,
+            TIME_RUNNING: 3,
+            FAULT: 4,
+        };
+
+        let deviceCode = '';
+        let isConnected = false;
+
+        document.getElementById('deviceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const deviceCodeInput = document.getElementById('deviceCode');
+            deviceCode = deviceCodeInput.value.trim();
+            
+            if (!deviceCode) {
+                alert('Lütfen cihaz kodunu girin!');
+                return;
+            }
+            
+            // Cihaz kodunu kaydet ve kontrol paneline geç
+            localStorage.setItem('deviceCode', deviceCode);
+            
+            // Bağlantı durumu simülasyonu
+            updateConnectionStatus('connecting');
+            
+            setTimeout(() => {
+                updateConnectionStatus('connected');
+                
+                setTimeout(() => {
+                    // Kontrol paneline yönlendir
+                    window.location.href = `control-panel.html?device=${encodeURIComponent(deviceCode)}`;
+                }, 1000);
+            }, 2000);
+        });
+
+        function updateConnectionStatus(status) {
+            const statusIndicator = document.getElementById('connectionStatus');
+            const connectBtn = document.getElementById('connectBtn');
+            
+            switch(status) {
+                case 'connecting':
+                    statusIndicator.className = 'status-indicator status-disconnected';
+                    statusIndicator.innerHTML = '<div class="status-dot"></div><span>Bağlanıyor...</span>';
+                    connectBtn.disabled = true;
+                    connectBtn.textContent = 'Bağlanıyor...';
+                    break;
+                    
+                case 'connected':
+                    statusIndicator.className = 'status-indicator status-connected';
+                    statusIndicator.innerHTML = '<div class="status-dot"></div><span>Bağlantı Başarılı</span>';
+                    connectBtn.textContent = 'Kontrol Paneline Geç';
+                    break;
+                    
+                case 'error':
+                    statusIndicator.className = 'status-indicator status-disconnected';
+                    statusIndicator.innerHTML = '<div class="status-dot"></div><span>Bağlantı Hatası</span>';
+                    connectBtn.disabled = false;
+                    connectBtn.textContent = 'Tekrar Dene';
+                    break;
+            }
+        }
+
+        // Klavye desteği
+        document.getElementById('deviceCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('deviceForm').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Sayfa yüklendiğinde odağı input'a ver
+        window.addEventListener('load', function() {
+            document.getElementById('deviceCode').focus();
+        });
+    </script>
+</body>
+</html>
