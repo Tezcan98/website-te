@@ -273,25 +273,21 @@
             }
         });
         
-        function handleAndroidDownload() {
-            // APK dosyası indirme simülasyonu
-            const downloadLink = document.createElement('a');
-            downloadLink.href = '#'; // Burada gerçek APK dosyasının URL'i olacak
-            downloadLink.download = 'bi-analytics.apk';
-            
-            // Kullanıcıya bilgi ver
-            alert('APK dosyası indiriliyor...\n\nDikkat: Bilinmeyen kaynaklardan uygulama yüklemesine izin vermeniz gerekebilir.');
-            
-            // Gerçek projede burada APK indirme işlemi yapılacak
-            console.log('APK indirme işlemi başlatılıyor...');
-        }
-        
-        function handleIOSRedirect() {
-            // iOS/Windows web uygulaması açılıyor
-            alert('Web uygulaması açılıyor...');
-            
+       function handleAndroidDownload() {
+	  const downloadLink = document.createElement('a');
+	  downloadLink.href = 'sulama.apk'; // public klasöründe durmalı
+	  downloadLink.download = 'sulama.apk';
+
+	  document.body.appendChild(downloadLink);
+	  downloadLink.click();
+	  document.body.removeChild(downloadLink);
+
+	  alert('APK dosyası indiriliyor...\n\nDikkat: Bilinmeyen kaynaklardan uygulama yüklemesine izin vermeniz gerekebilir.');
+	  console.log('APK indirme işlemi başlatıldı...');
+	}
+        function handleIOSRedirect() { 
             // Cihaz kodu giriş sayfasına yönlendirme
-            window.location.href = 'device-setup.html';
+            window.location.href = 'ios.html';
         }
         
         // Klavye desteği

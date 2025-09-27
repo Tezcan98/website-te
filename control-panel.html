@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sulama Kumandası - Kontrol Paneli</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <style>
+        /* Aynı stiller */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #6BBF59 0%, #4CAF50 50%, #66BB6A 100%); min-height: 100vh; color: white; }
+        .header { text-align: center; padding: 20px; position: relative; }
+        .device-name { font-size: 2rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; }
+        .menu-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .main-circle { width: 250px; height: 250px; margin: 30px auto; border: 3px solid rgba(255, 255, 255, 0.5); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .status-text { font-size: 1.2rem; font-weight: 300; opacity: 0.9; margin-bottom: 10px; }
+        .play-btn { position: absolute; bottom: -30px; width: 60px; height: 60px; background: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
+        .play-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+        .play-icon { width: 0; height: 0; border-left: 15px solid #4CAF50; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 3px; }
+        .stop-icon { width: 16px; height: 16px; background: #e74c3c; border-radius: 2px; }
+        .controls-section { background: rgba(255, 255, 255, 0.95); color: #333; border-radius: 20px 20px 0 0; margin-top: 50px; padding: 30px 20px; min-height: 400px; }
+        .control-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; color: #333; display: flex; align-items: center; gap: 10px; }
+        .control-grid { display: grid; gap: 15px; margin-bottom: 30px; }
+        .control-card { background: #f8f9fa; border-radius: 12px; padding: 20px; border: 1px solid #e9ecef; transition: all 0.3s ease; }
+        .control-card:hover { background: #e8f5e8; border-color: #4CAF50; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; color: #333; display: flex; align-items: center; gap: 8px; }
+        .control-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .btn-primary { background: #4CAF50; color: white; }
+        .btn-primary:hover { background: #45a049; }
+        .btn-warning { background: #ff9800; color: white; }
+        .btn-warning:hover { background: #e68900; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn-danger:hover { background: #da190b; }
+        .btn-info { background: #2196F3; color: white; }
+        .btn-info:hover { background: #0b7dda; }
+        .timer-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 10px; font-size: 1rem; text-align: center; }
+        .mqtt-status { position: fixed; bottom: 20px; left: 20px; right: 20px; background: rgba(0, 0, 0, 0.8); color: white; padding: 10px 15px; border-radius: 25px; text-align: center; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; animation: pulse 2s infinite; }
+        .connected { background: #4CAF50; }
+        .disconnected { background: #f44336; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="device-name" id="deviceName">...</h1>
+        <button class="menu-btn">☰</button>
+    </div>
+    
+    <div class="main-circle">
+        <div class="status-text" id="statusText">Anlık Olarak</div>
+        <button class="play-btn" id="playBtn" onclick="toggleOperation()">
+            <div class="play-icon" id="playIcon"></div>
+        </button>
+    </div>
+
+    <div class="controls-section">
+        <div class="control-title">⚙️ Sulama Kontrolleri</div>
+        <div class="control-grid">
+            <div class="control-card">
+                <div class="card-title">🔄 Durum Sorgula</div>
+                <button class="control-btn btn-info" onclick="queryDeviceStatus()">Durumu Yenile</button>
+            </div>
+            <div class="control-card">
+                <div class="card-title">▶️ Süresiz Çalışma</div>
+                <button class="control-btn btn-primary" onclick="startInfiniteRun()">Başlat</button>
+            </div>
+            <div class="control-card">
+                <div class="card-title">⏱️ Süreli Çalışma</div>
+                <input type="number" class="timer-input" id="timerMinutes" placeholder="Dakika (1-1440)" min="1" max="1440">
+                <button class="control-btn btn-warning" onclick="startTimedRun()">Zamanlı Başlat</button>
+            </div>
+            <div class="control-card">
+                <div class="card-title">⏹️ Durdur</div>
+                <button class="control-btn btn-danger" onclick="stopDevice()">Sulama Durdur</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mqtt-status" id="mqttStatus">
+        <div class="status-dot disconnected"></div>
+        <span>Sulama durumu sorgulanıyor...</span>
+    </div>
+
+    <script>
+        const MESSAGE_PROTOCOL = { STATUS: 0, RUN: 1, STOP: 2, TIMER_RUN: 3 };
+        const StatusEnum = { UNKNOWN: 0, READY: 1, RUNNING: 2, TIME_RUNNING: 3, FAULT: 4 };
+
+        const MQTT_CONFIG = { host: '31.58.245.116', port: 8083, username: 'myuser', password: 'qwert159' };
+
+        let mqttClient = null;
+        let currentDeviceCode = '';
+        let isRunning = false;
+        let isConnected = false;
+
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentDeviceCode = urlParams.get('device') || 'UNKNOWN';
+            document.getElementById('deviceName').textContent = currentDeviceCode;
+            initializeMQTT();
+        });
+
+        function initializeMQTT() {
+            const clientId = 'web_client_' + Math.random().toString(16).substr(2, 8);
+
+            try {
+                mqttClient = mqtt.connect({
+                    host: MQTT_CONFIG.host,
+                    port: MQTT_CONFIG.port,
+                    protocol: 'ws', // Tarayıcıdan bağlantı için ws gerekli
+                    clientId,
+                    username: MQTT_CONFIG.username,
+                    password: MQTT_CONFIG.password,
+                    keepalive: 60,
+                    reconnectPeriod: 1000,
+                    clean: true
+                });
+            } catch (err) {
+                updateMqttStatus('MQTT bağlantı hatası: ' + err.message, 'disconnected');
+                return;
+            }
+
+            mqttClient.on('connect', () => {
+                isConnected = true;
+                updateMqttStatus('MQTT Bağlandı - Hazır', 'connected');
+                mqttClient.subscribe(`cevap/${currentDeviceCode}`, { qos: 1 });
+                setTimeout(queryDeviceStatus, 500);
+            });
+
+            mqttClient.on('message', onMqttMessage);
+            mqttClient.on('error', err => {
+                isConnected = false;
+                updateMqttStatus('MQTT Hatası: ' + err.message, 'disconnected');
+            });
+            mqttClient.on('close', () => {
+                isConnected = false;
+                updateMqttStatus('Bağlantı Kapandı', 'disconnected');
+            });
+        }
+
+        function onMqttMessage(topic, message) {
+            const payload = message.toString();
+            const parts = payload.split('/');
+            const type = parseInt(parts[0]);
+
+            if (!topic.includes(currentDeviceCode)) return;
+
+            if (type === MESSAGE_PROTOCOL.STATUS) {
+                const status = parseInt(parts[1]);
+                updateDeviceStatus(status);
+            } else if (type === MESSAGE_PROTOCOL.RUN) {
+                isRunning = true;
+                updateDeviceStatus(StatusEnum.RUNNING);
+            } else if (type === MESSAGE_PROTOCOL.STOP) {
+                isRunning = false;
+                updateDeviceStatus(StatusEnum.READY);
+            } else if (type === MESSAGE_PROTOCOL.TIMER_RUN) {
+                isRunning = true;
+                updateDeviceStatus(StatusEnum.TIME_RUNNING);
+            }
+        }
+
+        function sendMqttCommand(cmd) {
+            if (!isConnected || !mqttClient) {
+                alert('MQTT bağlantısı yok. Komut gönderilemedi.');
+                return;
+            }
+            mqttClient.publish(`emir/${currentDeviceCode}`, cmd.toString(), { qos: 1 });
+        }
+
+        function queryDeviceStatus() { sendMqttCommand(MESSAGE_PROTOCOL.STATUS); }
+        function startInfiniteRun() { sendMqttCommand(MESSAGE_PROTOCOL.RUN); }
+        function startTimedRun() {
+            const minutes = document.getElementById('timerMinutes').value;
+            if (!minutes) return alert('Dakika gir!');
+            sendMqttCommand(`${MESSAGE_PROTOCOL.TIMER_RUN}/${minutes}`);
+        }
+        function stopDevice() { sendMqttCommand(MESSAGE_PROTOCOL.STOP); }
+        function toggleOperation() { isRunning ? stopDevice() : startInfiniteRun(); }
+
+        function updateDeviceStatus(status) {
+            const textMap = { 0: 'Bilinmeyen', 1: 'Hazır', 2: 'Çalışıyor', 3: 'Zamanlı Çalışıyor', 4: 'Arızalı' };
+            document.getElementById('statusText').textContent = textMap[status] || 'Bilinmeyen';
+            updatePlayButton(status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
+        }
+
+        function updatePlayButton(running) {
+            const playBtn = document.getElementById('playBtn');
+            const playIcon = document.getElementById('playIcon');
+            if (running) { playIcon.className = 'stop-icon'; playBtn.style.background = '#f44336'; }
+            else { playIcon.className = 'play-icon'; playBtn.style.background = 'white'; }
+        }
+
+        function updateMqttStatus(msg, type) {
+            const el = document.getElementById('mqttStatus');
+            el.querySelector('span').textContent = msg;
+            el.querySelector('.status-dot').className = `status-dot ${type}`;
+        }
+    </script>
+</body>
+</html>
+
