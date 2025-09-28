@@ -264,32 +264,33 @@
         });
         
         continueBtn.addEventListener('click', () => {
-            if (selectedPlatform === 'android') {
-                // Android APK indirme
-                handleAndroidDownload();
-            } else if (selectedPlatform === 'ios') {
-                // iOS web sitesine yönlendirme
-                handleIOSRedirect();
-            }
-        });
-        
-       function handleAndroidDownload() {
-	  const downloadLink = document.createElement('a');
-	  downloadLink.href = 'sulama.apk'; // public klasöründe durmalı
-	  downloadLink.download = 'sulama.apk';
+    if (selectedPlatform === 'android') {
+        // Android APK indirme (BU KISIM DEĞİŞMEDİ)
+        handleAndroidDownload(); 
+    } else if (selectedPlatform === 'ios') {
+        // iOS/Windows web sitesine yönlendirme: Yeni rotamızı kullanıyoruz.
+        handleIOSRedirect();
+    }
+});
+		
+	function handleAndroidDownload() {
+	    // ... (Mevcut APK indirme kodu)
+	    const downloadLink = document.createElement('a');
+		downloadLink.href = 'sulama.apk'; // public klasöründe durmalı
+		downloadLink.download = 'sulama.apk';
 
-	  document.body.appendChild(downloadLink);
-	  downloadLink.click();
-	  document.body.removeChild(downloadLink);
+		document.body.appendChild(downloadLink);
+		downloadLink.click();
+		document.body.removeChild(downloadLink);
 
-	  alert('APK dosyası indiriliyor...\n\nDikkat: Bilinmeyen kaynaklardan uygulama yüklemesine izin vermeniz gerekebilir.');
-	  console.log('APK indirme işlemi başlatıldı...');
+		alert('APK dosyası indiriliyor...\n\nDikkat: Bilinmeyen kaynaklardan uygulama yüklemesine izin vermeniz gerekebilir.');
+		console.log('APK indirme işlemi başlatıldı...');
 	}
-        function handleIOSRedirect() { 
-            // Cihaz kodu giriş sayfasına yönlendirme
-            window.location.href = 'ios.html';
-        }
-        
+
+	function handleIOSRedirect() {
+	    // Cihaz kodu giriş sayfasına (init.html) yönlendirme için sunucudaki rotayı kullan
+	    window.location.href = '/iosekrani'; // <-- BURASI DEĞİŞTİ!
+	}
         // Klavye desteği
         document.addEventListener('keydown', (e) => {
             if (e.key === '1') {
