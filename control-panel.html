@@ -11,7 +11,7 @@
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #6BBF59 0%, #4CAF50 50%, #66BB6A 100%); min-height: 100vh; color: white; }
         .header { text-align: center; padding: 20px; position: relative; }
         .device-name { font-size: 2rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; }
-        .menu-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
         .main-circle { width: 250px; height: 250px; margin: 30px auto; border: 3px solid rgba(255, 255, 255, 0.5); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
         .status-text { font-size: 1.2rem; font-weight: 300; opacity: 0.9; margin-bottom: 10px; }
         .play-btn { position: absolute; bottom: -30px; width: 60px; height: 60px; background: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
@@ -43,12 +43,11 @@
 </head>
 <body>
     <div class="header">
-        <h1 class="device-name" id="deviceName">...</h1>
-        <button class="menu-btn">☰</button>
+        <div class="device-name" id="deviceName">CİHAZ KODU</div>
     </div>
     
     <div class="main-circle">
-        <div class="status-text" id="statusText">Anlık Olarak</div>
+        <div class="status-text" id="statusText">Durum Sorgulanıyor...</div>
         <button class="play-btn" id="playBtn" onclick="toggleOperation()">
             <div class="play-icon" id="playIcon"></div>
         </button>
@@ -67,7 +66,7 @@
             </div>
             <div class="control-card">
                 <div class="card-title">⏱️ Süreli Çalışma</div>
-                <input type="number" class="timer-input" id="timerMinutes" placeholder="Dakika (1-1440)" min="1" max="1440">
+                <input type="number" class="timer-input" id="timerHours" placeholder="Saat (1-72)" min="1" max="72" step="1">
                 <button class="control-btn btn-warning" onclick="startTimedRun()">Zamanlı Başlat</button>
             </div>
             <div class="control-card">
@@ -79,7 +78,7 @@
     
     <div class="mqtt-status" id="mqttStatus">
         <div class="status-dot disconnected"></div>
-        <span>Sulama durumu sorgulanıyor...</span>
+        <span>Cihaz durumu kontrol ediliyor...</span>
     </div>
 
     <script>
@@ -116,13 +115,13 @@
                     clean: true
                 });
             } catch (err) {
-                updateMqttStatus('MQTT bağlantı hatası: ' + err.message, 'disconnected');
+                updateMqttStatus('Cihaz bağlantı hatası: ' + err.message, 'disconnected');
                 return;
             }
 
             mqttClient.on('connect', () => {
                 isConnected = true;
-                updateMqttStatus('MQTT Bağlandı - Hazır', 'connected');
+                updateMqttStatus('Cihaz Bağlandı - Hazır', 'connected');
                 mqttClient.subscribe(`cevap/${currentDeviceCode}`, { qos: 1 });
                 setTimeout(queryDeviceStatus, 500);
             });
@@ -130,11 +129,11 @@
             mqttClient.on('message', onMqttMessage);
             mqttClient.on('error', err => {
                 isConnected = false;
-                updateMqttStatus('MQTT Hatası: ' + err.message, 'disconnected');
+                updateMqttStatus('Cihaz Bağlantı Hatası: ' + err.message, 'disconnected');
             });
             mqttClient.on('close', () => {
                 isConnected = false;
-                updateMqttStatus('Bağlantı Kapandı', 'disconnected');
+                updateMqttStatus('Cihaz Bağlantısı Kesildi', 'disconnected');
             });
         }
 
@@ -162,33 +161,66 @@
 
         function sendMqttCommand(cmd) {
             if (!isConnected || !mqttClient) {
-                alert('MQTT bağlantısı yok. Komut gönderilemedi.');
+                alert('Cihaza bağlantı yok. Komut gönderilemedi.');
                 return;
             }
             mqttClient.publish(`emir/${currentDeviceCode}`, cmd.toString(), { qos: 1 });
         }
 
-        function queryDeviceStatus() { sendMqttCommand(MESSAGE_PROTOCOL.STATUS); }
-        function startInfiniteRun() { sendMqttCommand(MESSAGE_PROTOCOL.RUN); }
+        function queryDeviceStatus() { 
+            sendMqttCommand(MESSAGE_PROTOCOL.STATUS); 
+        }
+        
+        function startInfiniteRun() { 
+            sendMqttCommand(MESSAGE_PROTOCOL.RUN); 
+        }
+        
         function startTimedRun() {
-            const minutes = document.getElementById('timerMinutes').value;
-            if (!minutes) return alert('Dakika gir!');
+            const hours = document.getElementById('timerHours').value;
+            if (!hours || hours < 1 || hours > 72) {
+                alert('Lütfen 1-72 arası saat değeri girin!');
+                return;
+            }
+            
+            const minutes = hours * 60; // Saati dakikaya çevir
             sendMqttCommand(`${MESSAGE_PROTOCOL.TIMER_RUN}/${minutes}`);
         }
-        function stopDevice() { sendMqttCommand(MESSAGE_PROTOCOL.STOP); }
-        function toggleOperation() { isRunning ? stopDevice() : startInfiniteRun(); }
+        
+        function stopDevice() { 
+            sendMqttCommand(MESSAGE_PROTOCOL.STOP); 
+        }
+        
+        function toggleOperation() { 
+            isRunning ? stopDevice() : startInfiniteRun(); 
+        }
 
         function updateDeviceStatus(status) {
-            const textMap = { 0: 'Bilinmeyen', 1: 'Hazır', 2: 'Çalışıyor', 3: 'Zamanlı Çalışıyor', 4: 'Arızalı' };
-            document.getElementById('statusText').textContent = textMap[status] || 'Bilinmeyen';
-            updatePlayButton(status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
+            const statusTextMap = {
+                0: 'Bilinmeyen',
+                1: 'Hazır',
+                2: 'Çalışıyor',
+                3: 'Zamanlı Çalışıyor',
+                4: 'Arızalı'
+            };
+            
+            const statusText = statusTextMap[status] || 'Bilinmeyen';
+            document.getElementById('statusText').textContent = statusText;
+            
+            // Running durumunu güncelle
+            isRunning = (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
+            updatePlayButton(isRunning);
         }
 
         function updatePlayButton(running) {
             const playBtn = document.getElementById('playBtn');
             const playIcon = document.getElementById('playIcon');
-            if (running) { playIcon.className = 'stop-icon'; playBtn.style.background = '#f44336'; }
-            else { playIcon.className = 'play-icon'; playBtn.style.background = 'white'; }
+            if (running) { 
+                playIcon.className = 'stop-icon'; 
+                playBtn.style.background = '#f44336'; 
+            } else { 
+                playIcon.className = 'play-icon'; 
+                playBtn.style.background = 'white'; 
+            }
         }
 
         function updateMqttStatus(msg, type) {
@@ -199,4 +231,3 @@
     </script>
 </body>
 </html>
-
