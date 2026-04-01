@@ -408,19 +408,18 @@
             }
             const hoursInput = document.getElementById('timerHours').value;
             const hours = parseFloat(hoursInput);
-            
+
             if (!hours || hours <= 0) {
                 showToast('Lütfen geçerli bir saat değeri girin!', 'error');
                 return;
             }
-            
-            // Saati saniyeye çevir (protokol: 3/SURE_SANİYE)
+
             const totalSeconds = Math.round(parseFloat(hours) * 3600);
-            if (totalSeconds < 60 || totalSeconds > 259200) { // 1 dk - 72 saat
+            if (totalSeconds < 60 || totalSeconds > 259200) {
                 showToast('Lütfen 1 - 72 saat arası bir değer girin!', 'error');
                 return;
             }
-            
+
             const cmd = MESSAGE_PROTOCOL.TIMER_RUN + "/" + totalSeconds;
             sendMqttCommand(cmd)
                 .then(() => {
@@ -436,7 +435,7 @@
                 return;
             }
             if (!confirm('Sulama işlemini durdurmak istediğinize emin misiniz?')) return;
-            
+
             sendMqttCommand(MESSAGE_PROTOCOL.STOP)
                 .then(() => {
                     showToast('Sulama durduruldu');
@@ -456,7 +455,7 @@
         }
 
         // ===== STATUS VERİSİ İŞLEME =====
-           function handleStatusData(data) {
+        function handleStatusData(data) {
             const status = parseInt(data.status);
             const serverTimerValue = parseInt(data.timerValue) || 0;
 
@@ -485,7 +484,17 @@
                 4: 'Arızalı'
             };
             
-            const statusText = statusTextMap[status] || 'Bilinmeyen';
+            let statusText = statusTextMap[status] || 'Bilinmeyen';
+            
+            // Protokole göre zaman bilgilerini göster
+            if (status === StatusEnum.TIME_RUNNING && remainingTime > 0) {
+                statusText += ' - Kalan: ' + formatTime(remainingTime);
+            } else if (status === StatusEnum.RUNNING && runTime > 0) {
+                statusText += ' - Süre: ' + formatTime(runTime);
+            } else if ((status === StatusEnum.READY || status === StatusEnum.FAULT) && runTime > 0) {
+                statusText += ' - Toplam: ' + formatTime(runTime);
+            }
+            
             document.getElementById('statusText').textContent = statusText;
              
             updateTimerDisplay();
