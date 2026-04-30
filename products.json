@@ -1,0 +1,177 @@
+{
+  "page": {
+    "title": "Ürünler",
+    "subtitle": "Tarımsal verimliliği artıran akıllı robotik ve IoT ürünlerimizi keşfedin.",
+    "hero_bg": "#1a1a2e"
+  },
+  "categories": [
+    { "id": "tumu", "label": "Tümü" },
+    { "id": "robotik", "label": "Robotik Sistemler" },
+    { "id": "iot", "label": "IoT & Sensör" },
+    { "id": "yazilim", "label": "Yazılım & Analitik" }
+  ],
+  "products": [
+    {
+      "id": "agro-bot-x1",
+      "category": "robotik",
+      "name": "AgroBot X1",
+      "tagline": "Otonom Tarla Robotu",
+      "image_emoji": "🤖",
+      "badge": "Çok Satan",
+      "badge_color": "#7cb342",
+      "short_desc": "GPS destekli otonom navigasyon ile 7/24 kesintisiz tarla operasyonu. Ekim, ilaçlama ve hasat görevlerini tek platformda yönetin.",
+      "price": "İletişime Geçin",
+      "specs": [
+        { "label": "Çalışma Süresi", "value": "12 saat (şarjla)" },
+        { "label": "Kapsama Alanı", "value": "50 dönüm/gün" },
+        { "label": "Hassasiyet", "value": "±2 cm GPS" },
+        { "label": "Yük Kapasitesi", "value": "80 kg" },
+        { "label": "Bağlantı", "value": "4G LTE + WiFi" },
+        { "label": "Garanti", "value": "2 yıl" }
+      ],
+      "features": [
+        "Otonom navigasyon ve engel algılama",
+        "Gerçek zamanlı bulut izleme",
+        "Çoklu görev modları (ekim, ilaçlama, hasat)",
+        "Mobil uygulama kontrolü",
+        "OTA yazılım güncellemeleri"
+      ],
+      "detail_desc": "AgroBot X1, modern çiftçilerin ihtiyaçlarını karşılamak üzere tasarlanmış tam otonom bir tarla robotu platformudur. Gelişmiş SLAM algoritmaları ve çok modlu sensör füzyonu sayesinde karmaşık tarla koşullarında bile güvenli ve verimli çalışır. Bulut tabanlı görev planlama sistemi ile birden fazla robotu tek merkezden yönetebilirsiniz."
+    },
+    {
+      "id": "soil-sense-pro",
+      "category": "iot",
+      "name": "SoilSense Pro",
+      "tagline": "Toprak Analiz Sensörü",
+      "image_emoji": "📡",
+      "badge": "Yeni",
+      "badge_color": "#1976d2",
+      "short_desc": "Toprak nemi, pH, sıcaklık ve besin değerlerini anlık olarak ölçen akıllı sensör sistemi. Sulama kararlarını veriye dayalı alın.",
+      "price": "İletişime Geçin",
+      "specs": [
+        { "label": "Ölçüm Parametreleri", "value": "Nem, pH, N-P-K, Sıcaklık" },
+        { "label": "Batarya Ömrü", "value": "18 ay" },
+        { "label": "İletişim", "value": "LoRaWAN / NB-IoT" },
+        { "label": "Derinlik", "value": "0-60 cm" },
+        { "label": "Veri Aralığı", "value": "15 dakika" },
+        { "label": "Su Geçirmezlik", "value": "IP68" }
+      ],
+      "features": [
+        "6 farklı toprak parametresi",
+        "18 aylık pil ömrü",
+        "LoRaWAN uzun menzil iletişim",
+        "Otomatik sulama tetikleme",
+        "Tarihsel veri analizi ve raporlama"
+      ],
+      "detail_desc": "SoilSense Pro, tarla genelinde dağıtılabilen kablosuz toprak sensörü ağı kurmanızı sağlar. Her sensör; toprak nemi, pH değeri, azot-fosfor-potasyum seviyeleri ve toprak sıcaklığını gerçek zamanlı olarak merkezi platforma iletir. Yapay zeka destekli sulama önerisi motoru, su tasarrufunu %40'a kadar artırabilir."
+    },
+    {
+      "id": "cropvision-ai",
+      "category": "yazilim",
+      "name": "CropVision AI",
+      "tagline": "Bitki Hastalık Tespit Sistemi",
+      "image_emoji": "🧠",
+      "badge": "AI Destekli",
+      "badge_color": "#7b1fa2",
+      "short_desc": "Drone ve sabit kameralardan gelen görüntüleri yapay zeka ile analiz ederek bitki hastalıklarını erken aşamada tespit eder.",
+      "price": "İletişime Geçin",
+      "specs": [
+        { "label": "Doğruluk Oranı", "value": "%94.7" },
+        { "label": "Tespit Süresi", "value": "< 2 saniye" },
+        { "label": "Hastalık Veritabanı", "value": "200+ bitki hastalığı" },
+        { "label": "Kamera Desteği", "value": "RGB + Multispektral" },
+        { "label": "Çıktı", "value": "GIS harita + rapor" },
+        { "label": "Lisans", "value": "Yıllık abonelik" }
+      ],
+      "features": [
+        "200+ hastalık ve zararlı tespiti",
+        "Drone entegrasyonu",
+        "GIS tabanlı harita çıktısı",
+        "Erken uyarı bildirimleri",
+        "Agronomist destek hattı"
+      ],
+      "detail_desc": "CropVision AI, derin öğrenme tabanlı görüntü işleme modelleri kullanarak bitkisel hastalıkları, besin eksikliklerini ve zararlı böcek tahribatını yüksek doğrulukla tespit eder. Drone uçuş verileri veya sabit kamera görüntüleri üzerinden otomatik analiz yaparak parseller bazında renk kodlu hastalık haritaları üretir."
+    },
+    {
+      "id": "irrigo-smart",
+      "category": "iot",
+      "name": "IrriGo Smart",
+      "tagline": "Akıllı Sulama Kontrol Sistemi",
+      "image_emoji": "🌱",
+      "badge": "",
+      "badge_color": "",
+      "short_desc": "Hava durumu verileri, toprak nem sensörleri ve bitki su ihtiyacı modellerini birleştirerek sulamayı tam otomatik hale getirir.",
+      "price": "İletişime Geçin",
+      "specs": [
+        { "label": "Vana Kontrolü", "value": "64 zona kadar" },
+        { "label": "Entegrasyon", "value": "SoilSense Pro, Hava API" },
+        { "label": "Protokol", "value": "MQTT / Modbus" },
+        { "label": "Panel", "value": "Web + Mobil" },
+        { "label": "Su Tasarrufu", "value": "%30-45" },
+        { "label": "Kurulum", "value": "Plug & Play" }
+      ],
+      "features": [
+        "64 sulama zonası kontrolü",
+        "Hava durumu entegrasyonu",
+        "Akıllı zamanlama algoritması",
+        "Su kullanım raporları",
+        "Arıza ve sızıntı alarmı"
+      ],
+      "detail_desc": "IrriGo Smart, mevcut sulama altyapınıza kolayca entegre olabilen akıllı bir kontrol ünitesidir. Toprak nem sensörlerinden, hava durumu istasyonlarından ve bitki büyüme modellerinden gelen verileri harmanlayarak her parsel için optimum sulama programı oluşturur. Kullanıcılar web paneli veya mobil uygulama üzerinden sistemi anlık izleyip müdahale edebilir."
+    },
+    {
+      "id": "fieldmap-360",
+      "category": "yazilim",
+      "name": "FieldMap 360",
+      "tagline": "Tarla Yönetim Platformu",
+      "image_emoji": "📊",
+      "badge": "Popüler",
+      "badge_color": "#f57c00",
+      "short_desc": "Tüm tarla operasyonlarını tek ekrandan yönetin. Ekipman takibi, görev planlama, raporlama ve maliyet analizi bir arada.",
+      "price": "İletişime Geçin",
+      "specs": [
+        { "label": "Kullanıcı", "value": "Sınırsız" },
+        { "label": "Tarla Alanı", "value": "Sınırsız" },
+        { "label": "Entegrasyon", "value": "Tüm TE-Robotik ürünleri" },
+        { "label": "Veri Saklama", "value": "5 yıl" },
+        { "label": "Erişim", "value": "Web + iOS + Android" },
+        { "label": "Destek", "value": "7/24 teknik destek" }
+      ],
+      "features": [
+        "Sürükle-bırak görev planlama",
+        "Gerçek zamanlı ekipman takibi",
+        "Maliyet ve verimlilik analizleri",
+        "Çoklu çiftlik yönetimi",
+        "API entegrasyon desteği"
+      ],
+      "detail_desc": "FieldMap 360, TE-Robotik ekosisteminin merkezi yönetim platformudur. Robotlardan, sensörlerden ve sulama sistemlerinden gelen tüm verileri tek bir arayüzde birleştirir. Çiftlik sahipleri ve agronomi uzmanları için ayrı rol tabanlı erişim yetkilendirmesi, detaylı operasyon geçmişi ve özelleştirilebilir raporlama modülleri sunar."
+    },
+    {
+      "id": "drone-spray-v2",
+      "category": "robotik",
+      "name": "DroneSpray V2",
+      "tagline": "Tarımsal İlaçlama Dronu",
+      "image_emoji": "🛰️",
+      "badge": "Ar-Ge",
+      "badge_color": "#c62828",
+      "short_desc": "10 litre tank kapasiteli, rüzgar kompanzasyonlu hassas ilaçlama dronu. Geleneksel ilaçlamaya kıyasla %60 ilaç tasarrufu.",
+      "price": "İletişime Geçin",
+      "specs": [
+        { "label": "Tank Kapasitesi", "value": "10 litre" },
+        { "label": "Uçuş Süresi", "value": "22 dakika (tam yük)" },
+        { "label": "Kapsama", "value": "10 dönüm/saat" },
+        { "label": "Püskürtme Genişliği", "value": "4-6 metre" },
+        { "label": "Rüzgar Toleransı", "value": "6 m/s" },
+        { "label": "Otomasyon", "value": "Tam otonom rota" }
+      ],
+      "features": [
+        "Tam otonom ilaçlama rotası",
+        "Rüzgar kompanzasyon sistemi",
+        "Engel algılama radarı",
+        "Değişken oranlı ilaçlama",
+        "Anlık uçuş izleme"
+      ],
+      "detail_desc": "DroneSpray V2, hassas tarım uygulamaları için özel olarak tasarlanmış profesyonel bir ilaçlama platformudur. Çift anten GPS/RTK sistemi ile santimetre hassasiyetinde konumlandırma yaparak tarlanın her köşesine eşit miktarda ilaç uygulanmasını sağlar. CropVision AI ile entegre çalışarak yalnızca hastalıklı bölgelere hedefli ilaçlama yapabilir."
+    }
+  ]
+}

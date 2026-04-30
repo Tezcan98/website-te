@@ -1,0 +1,172 @@
+{
+  "settings": {
+    "site_name": "TE-Robotik",
+    "site_tagline": "Akıllı Tarım Çözümleri",
+    "logo_text": "TE-Robotik",
+    "primary_color": "#2c5530",
+    "secondary_color": "#4a7c59",
+    "accent_color": "#7cb342",
+    "footer_copyright": "© 2024 TE-Robotik. Tüm hakları saklıdır.",
+    "footer_bottom": "Bu website TE-Robotik Akıllı Çözümler tarafından geliştirilmiştir."
+  },
+  "hero": {
+    "id": 1,
+    "title": "Tarımda Geleceği Bugün Yaşayın",
+    "subtitle": "Akıllı robotik çözümler ile tarımsal verimliliği artırıyor, sürdürülebilir gıda üretiminin öncülüğünü yapıyoruz.",
+    "btn_primary_text": "Çözümlerimizi Keşfedin",
+    "btn_primary_href": "#services",
+    "btn_secondary_text": "İletişime Geçin",
+    "btn_secondary_href": "#contact"
+  },
+  "about": {
+    "id": 1,
+    "heading": "Hakkımızda",
+    "subheading": "Tarım sektöründe dijital dönüşümün öncü firması olarak, gelecek nesil teknolojiler geliştiriyoruz.",
+    "mission_title": "Misyonumuz",
+    "mission_p1": "TE-Robotik olarak, tarımsal üretimde verimliliği artırırken çevresel sürdürülebilirliği sağlayan akıllı robotik çözümler geliştiriyoruz. Yapay zeka, IoT ve otomasyon teknolojilerini birleştirerek çiftçilerin işini kolaylaştırıyoruz.",
+    "mission_p2": "Gıda güvenliği ve çevre dostu tarımsal uygulamaları destekleyen yenilikçi çözümlerimizle, tarım sektöründe dijital dönüşümün lideri olmayı hedefliyoruz."
+  },
+  "aboutStats": [
+    {
+      "id": 1,
+      "value": "50+",
+      "label": "Başarılı Proje",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "value": "15+",
+      "label": "Ar-Ge Çalışması",
+      "sort_order": 2
+    }
+  ],
+  "techItems": [
+    {
+      "id": 1,
+      "icon": "🤖",
+      "label": "Robotik",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "icon": "🧠",
+      "label": "AI/ML",
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "icon": "📡",
+      "label": "IoT",
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "icon": "🛰️",
+      "label": "Sensör",
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "icon": "📊",
+      "label": "Analitik",
+      "sort_order": 5
+    },
+    {
+      "id": 6,
+      "icon": "🌱",
+      "label": "Sürdürülebilirlik",
+      "sort_order": 6
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "icon": "🤖",
+      "title": "Akıllı Tarım Robotları",
+      "description": "Otomatik ekim, sulama, hasat ve bakım işlemlerini gerçekleştiren akıllı robotik sistemler. Hassas tarım teknikleri ile maksimum verim sağlayın.",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "icon": "📊",
+      "title": "Veri Analizi ve İzleme",
+      "description": "Tarla verilerini gerçek zamanlı olarak toplayıp analiz eden sistemler. Toprak kalitesi, nem, sıcaklık ve bitki sağlığını izleyin.",
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "icon": "🌱",
+      "title": "Hassas Tarım Çözümleri",
+      "description": "GPS ve sensör teknolojileri ile hassas konumlandırma yapan sistemler. Gübre, ilaç ve su kullanımını optimize edin.",
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "icon": "🛰️",
+      "title": "IoT Tarım Sistemleri",
+      "description": "Nesnelerin interneti teknolojisi ile akıllı tarla yönetimi. Uzaktan kontrol ve otomatik müdahale sistemleri.",
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "icon": "🔬",
+      "title": "Ar-Ge ve Danışmanlık",
+      "description": "Özel ihtiyaçlarınız için teknoloji geliştirme ve tarımsal danışmanlık hizmetleri. İnovatif çözümler üretiyoruz.",
+      "sort_order": 5
+    },
+    {
+      "id": 6,
+      "icon": "⚙️",
+      "title": "Sistem Entegrasyonu",
+      "description": "Mevcut tarım ekipmanlarınıza akıllı teknolojiler entegre ediyoruz. Uyumlu ve verimli çözümler sunuyoruz.",
+      "sort_order": 6
+    }
+  ],
+  "innovation": {
+    "id": 1,
+    "title": "İnovasyon ve Teknoloji",
+    "p1": "En son teknolojileri kullanarak tarım sektörüne yenilikçi çözümler sunuyoruz. Ar-Ge departmanımız sürekli olarak gelecek nesil teknolojiler üzerinde çalışmaktadır.",
+    "p2": "Yapay zeka, makine öğrenmesi ve derin öğrenme algoritmalarımız ile tarımsal verimliliği maksimum seviyeye çıkarıyoruz."
+  },
+  "innFeatures": [
+    "Yapay Zeka Destekli Karar Verme Sistemleri",
+    "Bilgisayar Görü ile Bitki Hastalık Tespiti",
+    "Otomatik İklim Kontrol Sistemleri",
+    "Predictive Analytics ile Hasat Tahmini",
+    "Blockchain Tabanlı Tarım Takip Sistemleri"
+  ],
+  "contactInfo": [
+    {
+      "id": 1,
+      "icon": "📍",
+      "title": "Adres",
+      "line1": "Teknokent, Ankara",
+      "line2": "Türkiye",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "icon": "📞",
+      "title": "Telefon",
+      "line1": "+90 (312) 123 45 67",
+      "line2": null,
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "icon": "✉️",
+      "title": "E-posta",
+      "line1": "info@te-robotik.com",
+      "line2": null,
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "icon": "🕒",
+      "title": "Çalışma Saatleri",
+      "line1": "Pazartesi - Cuma",
+      "line2": "09:00 - 18:00",
+      "sort_order": 4
+    }
+  ]
+}

@@ -3,7 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring'); 
 const url = require('url');
-
+const renderer = require('./db-renderer');
+const productsRenderer = require('./products-renderer');
 const hostname = '0.0.0.0';
 const port = 3000;
 
@@ -20,8 +21,29 @@ const server = http.createServer((req, res) => {
     let fileName;
     
     if (pathname === '/') {
-      fileName = 'index.html';
-    } 
+    
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(renderer.renderIndex());
+  return;
+}
+else if (pathname === '/urunler') {
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(productsRenderer.renderProductList());
+  return;
+}
+// Ürün detay
+else if (pathname.startsWith('/urun/')) {
+  var productId = pathname.replace('/urun/', '');
+  var html = productsRenderer.renderProductDetail(productId);
+  if (html) {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(html);
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404: Ürün bulunamadı');
+  }
+  return;
+}
     else if (pathname === '/iosekrani') {
       fileName = 'ios.html';
     }   
