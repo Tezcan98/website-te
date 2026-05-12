@@ -1,0 +1,28 @@
+{
+  "name": "website-te",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db-renderer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tezcan98/website-te.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Tezcan98/website-te/issues"
+  },
+  "homepage": "https://github.com/Tezcan98/website-te#readme",
+  "dependencies": {
+    "ws": "^8.20.1"
+  },
+  "devDependencies": {
+    "mqtt": "^5.15.1"
+  }
+}
