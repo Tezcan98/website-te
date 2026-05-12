@@ -189,7 +189,7 @@
         <div class="control-grid">
             <div class="control-card">
                 <div class="card-title">🔄 Durum Sorgula</div>
-                <button class="control-btn btn-info" onclick="queryDeviceStatus()">Durumu Yenile</button>
+                <button class="control-btn btn-info" onclick="queryDeviceStatus(true)">Durumu Yenile</button>
             </div>
             <div class="control-card">
                 <div class="card-title">▶️ Süresiz Çalışma</div>
@@ -245,7 +245,6 @@
         let currentStatus = StatusEnum.UNKNOWN;
         let pollInterval = null;
         let eventSource = null;
-        let lastNotifiedStatus = -1;
 
         // ===== SAYFA YÜKLENDİĞİNDE =====
         window.addEventListener('load', function() {
@@ -264,8 +263,10 @@
             // SSE ile anlık bildirim dinle
             connectSSE();
             
-            // 5 saniyede bir durum sorgula (yedek)
-            pollInterval = setInterval(queryDeviceStatus, 5000);
+            // 30 saniyede bir cache'den oku (arka planda yapma, STATUS gönderme)
+            pollInterval = setInterval(function() {
+                if (!document.hidden) queryDeviceStatus(false);
+            }, 30000);
         });
 
         // ===== BİLDİRİM GÖNDER =====
@@ -312,13 +313,6 @@
             };
         }
 
-        // ===== ARKAPLANDA 5 DAKİKADA BİR KONTROL =====
-        setInterval(function() {
-            if (document.hidden) {
-                queryDeviceStatus();
-            }
-        }, 300000); // 5 dakika
-
         // ===== SUNUCU BAĞLANTISI =====
         function checkServerConnection() {
             updateMqttStatus('Sunucuya bağlanılıyor...', 'connecting');
@@ -329,7 +323,7 @@
                     console.log('Sunucu bağlantısı var:', text);
                     isConnected = true;
                     updateMqttStatus('Bağlandı - Hazır', 'connected');
-                    queryDeviceStatus();
+                    queryDeviceStatus(true); // sayfa yüklenince STATUS gönder
                     hideLoading();
                 })
                 .catch(err => {
@@ -365,19 +359,23 @@
             });
         }
 
-        // ===== MQTT DURUM SORGULAMA (STATUS komutu gönder + son durumu oku) =====
-        function queryDeviceStatus() {
-            // Önce STATUS (0) komutunu MQTT'ye gönder, cihaz anlık durumunu yayınlasın
-            fetch('/api/mqtt-send', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    topic: commandTopic + currentDeviceCode,
-                    message: MESSAGE_PROTOCOL.STATUS.toString()
-                })
-            }).catch(() => {});
+        // ===== MQTT DURUM SORGULAMA =====
+        // sendMqtt=true: STATUS komutu gönder (buton/sayfa yüklenirken)
+        // sendMqtt=false: sadece cache'den oku (otomatik poll)
+        function queryDeviceStatus(sendMqtt) {
+            if (sendMqtt) {
+                // STATUS (0) komutunu MQTT broker'a gönder, cihaz anlık durumunu yayınlasın
+                fetch('/api/mqtt-send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        topic: commandTopic + currentDeviceCode,
+                        message: MESSAGE_PROTOCOL.STATUS.toString()
+                    })
+                }).catch(() => {});
+            }
             
-            // 200ms sonra son durumu oku (cihazın cevap vermesi için kısa bir süre)
+            // Cevap gelmesi için 300ms bekle, sonra cache'den oku
             setTimeout(() => {
                 fetch('/api/mqtt-query?device=' + encodeURIComponent(currentDeviceCode))
                     .then(r => r.json())
@@ -386,10 +384,8 @@
                             handleStatusData(data);
                         }
                     })
-                    .catch(err => {
-                        console.log('Status sorgulama hatası:', err.message);
-                    });
-            }, 200);
+                    .catch(err => {});
+            }, sendMqtt ? 300 : 0);
         }
 
         function startInfiniteRun() {
@@ -415,10 +411,9 @@
                 return;
             }
             
-            // Saati dakikaya çevir (72 saat max = 4320 dakika)
             const totalMinutes = Math.round(parseFloat(hours) * 60);
             if (totalMinutes < 1 || totalMinutes > 4320) {
-                showToast('Lütfen 0.1 - 72 saat arası bir değer girin!', 'error');
+                showToast('Lütfen 1 - 72 saat arası bir değer girin!', 'error');
                 return;
             }
             
@@ -579,7 +574,6 @@
             }
         }
 
-        // CSS animasyonları ekle
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fadeIn {
