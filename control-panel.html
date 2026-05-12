@@ -263,9 +263,9 @@
             // SSE ile anlık bildirim dinle
             connectSSE();
             
-            // 10 saniyede bir cache'den oku (arka planda yapma, STATUS gönderme)
+            // 10 saniyede bir durum sorgula (arka planda yapma)
             pollInterval = setInterval(function() {
-                if (!document.hidden) queryDeviceStatus(false);
+                if (!document.hidden) queryDeviceStatus(true);
             }, 10000);
         });
 
