@@ -456,17 +456,21 @@
         }
 
         // ===== STATUS VERİSİ İŞLEME =====
-        function handleStatusData(data) {
+           function handleStatusData(data) {
             const status = parseInt(data.status);
-            let timerValue = parseInt(data.timerValue) || 0;
-            
+            const serverTimerValue = parseInt(data.timerValue) || 0;
+
             currentStatus = status;
-            timerSeconds = timerValue;
-            
-            updateDeviceStatus(status, timerValue);
-            
+
+            const isLocalTimerActive = timerInterval !== null;
+            if (!isLocalTimerActive || Math.abs(serverTimerValue - timerSeconds) > 5) {
+                timerSeconds = serverTimerValue;
+            }
+
+            updateDeviceStatus(status);
+
             if (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING) {
-                startLocalTimer();
+                if (!isLocalTimerActive) startLocalTimer();
             } else {
                 stopLocalTimer();
             }
@@ -483,8 +487,7 @@
             
             const statusText = statusTextMap[status] || 'Bilinmeyen';
             document.getElementById('statusText').textContent = statusText;
-            
-            timerSeconds = timerValue;
+             
             updateTimerDisplay();
             
             isRunning = (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
