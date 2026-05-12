@@ -263,10 +263,10 @@
             // SSE ile anlık bildirim dinle
             connectSSE();
             
-            // 30 saniyede bir cache'den oku (arka planda yapma, STATUS gönderme)
+            // 10 saniyede bir cache'den oku (arka planda yapma, STATUS gönderme)
             pollInterval = setInterval(function() {
                 if (!document.hidden) queryDeviceStatus(false);
-            }, 30000);
+            }, 10000);
         });
 
         // ===== BİLDİRİM GÖNDER =====
@@ -394,7 +394,10 @@
                 return;
             }
             sendMqttCommand(MESSAGE_PROTOCOL.RUN)
-                .then(() => showToast('Sulama başlatıldı'))
+                .then(() => {
+                    showToast('Sulama başlatıldı');
+                    setTimeout(() => queryDeviceStatus(true), 1500);
+                })
                 .catch(err => showToast('Hata: ' + err.message, 'error'));
         }
 
@@ -420,7 +423,10 @@
             
             const cmd = MESSAGE_PROTOCOL.TIMER_RUN + "/" + totalSeconds;
             sendMqttCommand(cmd)
-                .then(() => showToast('Süreli sulama başlatıldı'))
+                .then(() => {
+                    showToast('Süreli sulama başlatıldı');
+                    setTimeout(() => queryDeviceStatus(true), 1500);
+                })
                 .catch(err => showToast('Hata: ' + err.message, 'error'));
         }
 
@@ -432,7 +438,10 @@
             if (!confirm('Sulama işlemini durdurmak istediğinize emin misiniz?')) return;
             
             sendMqttCommand(MESSAGE_PROTOCOL.STOP)
-                .then(() => showToast('Sulama durduruldu'))
+                .then(() => {
+                    showToast('Sulama durduruldu');
+                    setTimeout(() => queryDeviceStatus(true), 1500);
+                })
                 .catch(err => showToast('Hata: ' + err.message, 'error'));
         }
 
