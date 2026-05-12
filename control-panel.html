@@ -411,13 +411,14 @@
                 return;
             }
             
-            const totalMinutes = Math.round(parseFloat(hours) * 60);
-            if (totalMinutes < 1 || totalMinutes > 4320) {
+            // Saati saniyeye çevir (protokol: 3/SURE_SANİYE)
+            const totalSeconds = Math.round(parseFloat(hours) * 3600);
+            if (totalSeconds < 60 || totalSeconds > 259200) { // 1 dk - 72 saat
                 showToast('Lütfen 1 - 72 saat arası bir değer girin!', 'error');
                 return;
             }
             
-            const cmd = MESSAGE_PROTOCOL.TIMER_RUN + "/" + totalMinutes;
+            const cmd = MESSAGE_PROTOCOL.TIMER_RUN + "/" + totalSeconds;
             sendMqttCommand(cmd)
                 .then(() => showToast('Süreli sulama başlatıldı'))
                 .catch(err => showToast('Hata: ' + err.message, 'error'));
