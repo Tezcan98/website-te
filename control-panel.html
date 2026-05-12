@@ -365,18 +365,31 @@
             });
         }
 
-        // ===== MQTT DURUM SORGULAMA (HTTP üzerinden) =====
+        // ===== MQTT DURUM SORGULAMA (STATUS komutu gönder + son durumu oku) =====
         function queryDeviceStatus() {
-            fetch('/api/mqtt-query?device=' + encodeURIComponent(currentDeviceCode))
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success && data.status !== undefined) {
-                        handleStatusData(data);
-                    }
+            // Önce STATUS (0) komutunu MQTT'ye gönder, cihaz anlık durumunu yayınlasın
+            fetch('/api/mqtt-send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    topic: commandTopic + currentDeviceCode,
+                    message: MESSAGE_PROTOCOL.STATUS.toString()
                 })
-                .catch(err => {
-                    console.log('Status sorgulama hatası (beklenebilir):', err.message);
-                });
+            }).catch(() => {});
+            
+            // 200ms sonra son durumu oku (cihazın cevap vermesi için kısa bir süre)
+            setTimeout(() => {
+                fetch('/api/mqtt-query?device=' + encodeURIComponent(currentDeviceCode))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success && data.status !== undefined) {
+                            handleStatusData(data);
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Status sorgulama hatası:', err.message);
+                    });
+            }, 200);
         }
 
         function startInfiniteRun() {
