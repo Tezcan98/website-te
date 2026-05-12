@@ -283,15 +283,15 @@
             // Web için WebSocket proxy gerekli - şimdilik test için public broker
             // Gerçek kullanım için broker'ınızın WebSocket desteklemesi lazım
             
-            // WebSocket URL'sini oluştur: sayfayla aynı host:port üzerinden proxy'ye bağlan
-            // NOT: Artık doğrudan MQTT broker'a değil, server.js'deki WebSocket proxy'sine bağlanıyoruz.
-            // Bu sayede HTTPS üzerinde de sorunsuz çalışır (same-origin).
-            const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-            const wsHost = window.location.host; // hostname + port (örn: example.com:3000 veya domain.com)
+            // Sunucudaki WebSocket proxy'sine bağlan (port 3000)
+            // NOT: Sayfa HTTPS ile açılsa bile ws:// (farklı port) kullanılır.
+            // Sunucu 3000 portunda HTTP olduğu için wss:// çalışmaz.
+            // Cloudflare'de WebSocket proxy ayarlanırsa ileride wss://'ye geçilebilir.
+            const wsPort = '3000';
             
             try {
                 // WebSocket üzerinden MQTT - Sunucudaki proxy'ye bağlan
-                mqttClient = mqtt.connect(wsProtocol + '://' + wsHost, {
+                mqttClient = mqtt.connect('ws://' + window.location.hostname + ':' + wsPort, {
                     clientId: clientId,
                     username: MQTT_CONFIG.username,
                     password: MQTT_CONFIG.password,
