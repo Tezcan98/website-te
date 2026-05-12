@@ -19,6 +19,7 @@ const MQTT_CONFIG = {
 
 let mqttClient = null;
 let lastStatusData = {}; // deviceCode -> { status, timerValue }
+const sseClients = []; // SSE bağlantıları
 
 // MQTT bağlantısını başlat
 function connectMQTT() {
@@ -47,11 +48,15 @@ function connectMQTT() {
             const payloadParts = msgStr.split('/');
             
             if (payloadParts[0] === '0' || payloadParts[0] === 'STATUS') {
-                lastStatusData[deviceCode] = {
+                const statusData = {
                     status: parseInt(payloadParts[1]) || 0,
                     timerValue: parseInt(payloadParts[2]) || 0
                 };
-                console.log(`STATUS güncellendi - ${deviceCode}:`, JSON.stringify(lastStatusData[deviceCode]));
+                lastStatusData[deviceCode] = statusData;
+                console.log(`STATUS güncellendi - ${deviceCode}:`, JSON.stringify(statusData));
+                
+                // SSE ile tüm bağlı istemcilere gönder
+                sendSSE({ type: 'status', device: deviceCode, data: statusData });
             }
         }
     });
@@ -72,11 +77,47 @@ function connectMQTT() {
 // MQTT'yi başlat
 connectMQTT();
 
+// ===== SSE ENDPOINT: Anlık bildirimler =====
+function sendSSE(data) {
+    sseClients.forEach(res => {
+        try {
+            res.write('data: ' + JSON.stringify(data) + '\n\n');
+        } catch(e) {
+            // client kapandıysa sil
+        }
+    });
+}
+
+function removeSSEClient(res) {
+    const idx = sseClients.indexOf(res);
+    if (idx !== -1) sseClients.splice(idx, 1);
+}
+
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
   const query = parsedUrl.query;
   const method = req.method;
+
+  // ===== SSE ENDPOINT =====
+  if (pathname === '/api/events') {
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Access-Control-Allow-Origin': '*'
+    });
+    res.write('\n');
+    
+    sseClients.push(res);
+    console.log('SSE istemcisi bağlandı. Toplam:', sseClients.length);
+    
+    req.on('close', () => {
+        removeSSEClient(res);
+        console.log('SSE istemcisi ayrıldı. Kalan:', sseClients.length);
+    });
+    return;
+  }
 
   // ===== API ENDPOINT'LERİ =====
   
