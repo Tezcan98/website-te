@@ -3,1158 +3,762 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TE-Robotik | Akıllı Tarım Çözümleri</title>
+    <title>TE Robotik | Akıllı Çözümler</title>
+    <meta name="description" content="TE Robotik Akıllı Çözümler — tarımsal ve endüstriyel uygulamalar için akıllı elektronik modüller, IoT sistemleri ve yazılım platformları.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary-color: #2c5530;
-            --secondary-color: #4a7c59;
-            --accent-color: #7cb342;
-            --tech-blue: #1976d2;
-            --bg-light: #f8fffe;
-            --text-dark: #2e2e2e;
-            --text-light: #666;
-            --white: #ffffff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
-            --gradient: linear-gradient(135deg, #2c5530, #4a7c59, #7cb342);
+            --green:  #145a32;
+            --green2: #1a7a44;
+            --light-green: #e8f5ee;
+            --navy:   #0b1a2e;
+            --white:  #fff;
+            --off:    #f7f8fa;
+            --border: #e3e7ed;
+            --text:   #1a2030;
+            --muted:  #6b7686;
         }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: #fff; overflow-x: hidden; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
+        /* ─── NAV ─── */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
+            position: fixed; top: 0; width: 100%; z-index: 9000;
+            background: rgba(255,255,255,.97); backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent;
+            transition: border-color .2s, box-shadow .2s;
         }
-
-        nav.scrolled {
-            background: rgba(255,255,255,0.98);
-            box-shadow: var(--shadow);
+        nav.scrolled { border-bottom-color: var(--border); box-shadow: 0 1px 12px rgba(0,0,0,.07); }
+        .nav-wrap {
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            height: 66px; display: flex; align-items: center; justify-content: space-between;
         }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+        .logo-box {
+            width: 36px; height: 36px; border-radius: 6px; background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: .9rem; color: #fff; letter-spacing: -.5px;
         }
+        .logo-txt { font-size: .95rem; font-weight: 700; color: #111; line-height: 1.25; }
+        .logo-txt small { display: block; font-size: .58rem; font-weight: 400; color: var(--muted); }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--gradient);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
+        /* main nav links */
+        .nav-links { display: flex; align-items: center; list-style: none; gap: 0; }
+        .nav-links > li { position: relative; }
+        .nav-links > li > a {
+            display: flex; align-items: center; gap: 4px;
+            text-decoration: none; color: #333; font-size: .855rem; font-weight: 500;
+            padding: .5rem .95rem; border-radius: 6px; white-space: nowrap;
+            transition: background .15s, color .15s;
         }
+        .nav-links > li > a:hover { background: var(--off); color: var(--green); }
+        .nav-links > li > a svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform .2s; }
+        .nav-links > li:hover > a svg { transform: rotate(180deg); }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+        .nav-cta {
+            margin-left: .6rem; background: var(--green) !important; color: #fff !important;
+            border-radius: 6px;
         }
+        .nav-cta:hover { background: var(--green2) !important; }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
+        /* dropdowns */
+        .drop {
+            position: absolute; top: calc(100% + 4px); left: 0;
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 8px; box-shadow: 0 12px 40px rgba(0,0,0,.12);
+            z-index: 9001; opacity: 0; visibility: hidden;
+            transform: translateY(6px); transition: all .18s ease;
+            min-width: 220px; padding: .5rem;
         }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
+        .nav-links > li:hover > .drop { opacity: 1; visibility: visible; transform: translateY(0); }
+        .drop a {
+            display: block; padding: .6rem .9rem; border-radius: 6px;
+            font-size: .84rem; color: #333; text-decoration: none; white-space: nowrap;
+            transition: background .12s, color .12s;
         }
-
-        .nav-links a:hover::after {
-            width: 100%;
+        .drop a:hover { background: var(--off); color: var(--green); }
+        .drop-cat {
+            font-size: .68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--muted); padding: .5rem .9rem .25rem;
         }
+        .drop-divider { height: 1px; background: var(--border); margin: .35rem 0; }
 
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
+        /* wide mega dropdown for products */
+        .drop-wide {
+            min-width: 380px; display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0; padding: 1rem;
         }
+        .drop-wide .drop-col { padding: 0 .5rem; }
+        .drop-wide .drop-col + .drop-col { border-left: 1px solid var(--border); padding-left: 1rem; }
 
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--text-dark);
-            transition: 0.3s;
+        /* burger */
+        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .burger span { display: block; width: 22px; height: 2px; background: #444; border-radius: 2px; transition: .2s; }
+
+        /* mobile nav overlay */
+        .mobile-nav {
+            display: none; position: fixed; top: 66px; left: 0; right: 0; bottom: 0;
+            background: #fff; z-index: 8999; overflow-y: auto;
+            padding: 1.5rem 2rem;
         }
+        .mobile-nav.open { display: block; }
+        .mobile-nav a { display: block; padding: .75rem 0; font-size: .95rem; color: #333; text-decoration: none; border-bottom: 1px solid var(--border); }
+        .mobile-nav a:hover { color: var(--green); }
+        .mobile-cat { font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); padding: 1.25rem 0 .4rem; }
 
-        /* Hero Section */
+        /* ─── HERO ─── */
         .hero {
-            height: 100vh;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            position: relative; height: 100vh; min-height: 600px;
+            display: flex; align-items: center;
+            background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="0.5" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to right, rgba(8,18,30,.88) 45%, rgba(8,18,30,.5) 100%);
         }
-
-        .hero-content {
-            text-align: center;
-            color: var(--white);
-            max-width: 800px;
-            padding: 0 2rem;
-            z-index: 2;
-            position: relative;
+        .hero-inner {
+            position: relative; z-index: 1;
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%;
+            padding-top: 66px;
         }
-
+        .hero-label {
+            font-size: .72rem; letter-spacing: 2.5px; text-transform: uppercase;
+            color: rgba(255,255,255,.5); margin-bottom: 1.5rem; font-weight: 500;
+        }
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
+            font-size: clamp(2.1rem, 4.2vw, 3.8rem); font-weight: 900;
+            color: #fff; line-height: 1.1; letter-spacing: -1.5px;
+            max-width: 640px; margin-bottom: 1.5rem;
         }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
+        .hero h1 span { color: #5dc48a; }
+        .hero-sub {
+            font-size: 1.1rem; color: rgba(255,255,255,.6); line-height: 1.75;
+            max-width: 500px; margin-bottom: 2.75rem;
         }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
-        }
-
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
         .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: var(--white);
-            color: var(--primary-color);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid var(--white);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            top: 30%;
-            right: 30%;
-            animation-delay: 4s;
-        }
-
-        /* Sections */
-        .section {
-            padding: 5rem 0;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* About Section */
-        .about {
-            background: var(--bg-light);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-        }
-
-        .stat h4 {
-            font-size: 2rem;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .about-visual {
-            background: var(--gradient);
-            border-radius: 20px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            padding: 2rem;
-        }
-
-        .tech-item {
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-            color: var(--white);
-            backdrop-filter: blur(5px);
-        }
-
-        /* Services Section */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 3px;
-            background: var(--gradient);
-            transition: 0.3s ease;
-        }
-
-        .service-card:hover::before {
-            left: 0;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient);
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .service-card p {
-            color: var(--text-light);
-            line-height: 1.8;
-        }
-
-        /* Innovation Section */
-        .innovation {
-            background: var(--text-dark);
-            color: var(--white);
-        }
-
-        .innovation-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .innovation-text h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent-color);
-        }
-
-        .innovation-text p {
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-        }
-
-        .innovation-features {
-            list-style: none;
-            margin-top: 2rem;
-        }
-
-        .innovation-features li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .innovation-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        .innovation-visual {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .circuit-pattern {
-            width: 300px;
-            height: 300px;
-            opacity: 0.3;
-            animation: rotate 20s linear infinite;
-        }
-
-        /* Contact Section */
-        .contact {
-            background: var(--bg-light);
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-form {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: .8rem 1.8rem; border-radius: 6px; font-size: .9rem;
+            font-weight: 600; text-decoration: none; border: none; cursor: pointer;
+            transition: background .18s, border-color .18s, opacity .18s;
             font-family: inherit;
         }
+        .btn-primary { background: var(--green2); color: #fff; }
+        .btn-primary:hover { background: #1d8f50; }
+        .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.35); }
+        .btn-outline:hover { border-color: rgba(255,255,255,.7); }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
+        /* ─── STATS ─── */
+        .stats { background: var(--off); border-bottom: 1px solid var(--border); }
+        .stats-wrap { max-width: 1280px; margin: 0 auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+        .stat { padding: 2rem 1.5rem; text-align: center; border-right: 1px solid var(--border); }
+        .stat:last-child { border-right: none; }
+        .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--green); line-height: 1; letter-spacing: -1px; margin-bottom: .3rem; }
+        .stat-lbl { font-size: .8rem; color: var(--muted); font-weight: 500; }
+
+        /* ─── SECTION SHARED ─── */
+        .sec { padding: 6rem 0; }
+        .sec-white { background: #fff; }
+        .sec-off   { background: var(--off); }
+        .sec-dark  { background: var(--navy); }
+        .wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+        .eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); display: block; margin-bottom: .75rem; }
+        .eyebrow-light { color: #5dc48a; }
+        h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -.4px; line-height: 1.2; color: var(--text); }
+        h2.light { color: #fff; }
+        .sec-lead { font-size: .95rem; color: var(--muted); line-height: 1.75; max-width: 500px; margin-top: .75rem; }
+        .sec-lead.light { color: rgba(255,255,255,.5); }
+        .sec-head { margin-bottom: 3rem; }
+
+        /* ─── SOLUTION PHOTO CARDS ─── */
+        .sol-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .sol-card {
+            position: relative; height: 310px; border-radius: 8px; overflow: hidden;
+            display: flex; align-items: flex-end; text-decoration: none;
+        }
+        .sol-card-bg {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            transition: transform .5s ease;
+        }
+        .sol-card:hover .sol-card-bg { transform: scale(1.05); }
+        .sol-card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(5,15,25,.85) 0%, rgba(5,15,25,.3) 55%, rgba(5,15,25,.1) 100%);
+            transition: background .3s;
+        }
+        .sol-card:hover .sol-card-overlay {
+            background: linear-gradient(to top, rgba(5,15,25,.92) 0%, rgba(5,15,25,.45) 55%, rgba(5,15,25,.15) 100%);
+        }
+        .sol-card-body { position: relative; z-index: 1; padding: 1.75rem; color: #fff; }
+        .sol-card-cat { font-size: .65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #5dc48a; margin-bottom: .4rem; }
+        .sol-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; }
+        .sol-card p { font-size: .8rem; color: rgba(255,255,255,.7); line-height: 1.6; }
+        .sol-card-arrow {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: .78rem; font-weight: 600; color: #5dc48a; margin-top: .75rem;
+            transition: gap .2s;
+        }
+        .sol-card:hover .sol-card-arrow { gap: 8px; }
+
+        /* ─── PRODUCT STRIP ─── */
+        .prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+        .prod-card {
+            background: #fff; border: 1px solid var(--border); border-radius: 8px;
+            overflow: hidden; text-decoration: none; color: inherit;
+            transition: border-color .2s, box-shadow .2s, transform .2s;
+        }
+        .prod-card:hover { border-color: var(--green2); box-shadow: 0 6px 24px rgba(26,122,68,.1); transform: translateY(-3px); }
+        .prod-card-img {
+            width: 100%; height: 180px;
+            background-size: cover; background-position: center;
+            position: relative;
+        }
+        .prod-card-badge {
+            position: absolute; top: .75rem; left: .75rem;
+            font-size: .65rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+            background: rgba(20,90,50,.85); color: #fff; padding: 3px 8px; border-radius: 4px;
+        }
+        .prod-card-body { padding: 1.25rem; }
+        .prod-card-model { font-size: .7rem; font-weight: 600; color: var(--muted); letter-spacing: .5px; text-transform: uppercase; margin-bottom: .3rem; }
+        .prod-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: .5rem; color: var(--text); }
+        .prod-card p { font-size: .8rem; color: var(--muted); line-height: 1.6; margin-bottom: .75rem; }
+        .prod-link { font-size: .78rem; font-weight: 600; color: var(--green); display: flex; align-items: center; gap: 4px; }
+        .prod-card:hover .prod-link { gap: 8px; }
+
+        /* ─── ABOUT ─── */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .about-img {
+            border-radius: 8px; overflow: hidden; height: 440px;
+            background: url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+        }
+        .about-copy h2 { margin-bottom: .9rem; }
+        .about-copy p { font-size: .95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+        .check-list { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+        .check-list li { display: flex; gap: 10px; font-size: .88rem; color: var(--text); line-height: 1.55; }
+        .check-list li::before {
+            content: '';
+            flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+            background: var(--light-green);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23145a32' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-size: 12px; background-repeat: no-repeat; background-position: center;
+            margin-top: 1px;
+        }
+        .about-copy .btn-dark { background: var(--green); color: #fff; margin-top: 2rem; display: inline-flex; }
+        .about-copy .btn-dark:hover { background: var(--green2); }
+
+        /* ─── CTA ─── */
+        .cta-strip {
+            background: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            position: relative; padding: 6rem 0; text-align: center;
+        }
+        .cta-strip::before { content: ''; position: absolute; inset: 0; background: rgba(10,24,40,.8); }
+        .cta-inner { position: relative; z-index: 1; }
+        .cta-strip h2 { color: #fff; margin-bottom: .9rem; font-size: clamp(1.6rem, 3vw, 2.4rem); }
+        .cta-strip p { color: rgba(255,255,255,.65); max-width: 460px; margin: 0 auto 2.25rem; font-size: .95rem; line-height: 1.75; }
+        .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-white { background: #fff; color: var(--green); }
+        .btn-white:hover { background: #f0fff6; }
+        .btn-outline-w { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.4); }
+        .btn-outline-w:hover { border-color: rgba(255,255,255,.8); }
+
+        /* ─── CONTACT ─── */
+        .contact-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; align-items: start; }
+        .form-box { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 2.5rem; }
+        .form-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.75rem; }
+        .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .fg { margin-bottom: 1rem; }
+        .fg label { display: block; font-size: .78rem; font-weight: 600; color: #555; margin-bottom: 5px; }
+        .fg input, .fg textarea, .fg select {
+            width: 100%; padding: .7rem 1rem; border: 1px solid var(--border);
+            border-radius: 5px; font-size: .875rem; font-family: inherit; color: var(--text);
+            background: #fff; outline: none; transition: border-color .15s;
+        }
+        .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--green); }
+        .fg textarea { resize: vertical; min-height: 110px; }
+        .btn-submit {
+            width: 100%; padding: .82rem; background: var(--green); color: #fff;
+            border: none; border-radius: 5px; font-size: .88rem; font-weight: 600;
+            cursor: pointer; font-family: inherit; transition: background .18s;
+        }
+        .btn-submit:hover { background: var(--green2); }
+        .contact-aside h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .6rem; }
+        .aside-sub { font-size: .875rem; color: var(--muted); line-height: 1.75; margin-bottom: 2rem; }
+        .ci-list { display: flex; flex-direction: column; gap: .7rem; }
+        .ci { display: flex; gap: 1rem; padding: .9rem 1.1rem; background: var(--off); border: 1px solid var(--border); border-radius: 6px; align-items: center; }
+        .ci-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+        .ci-label { font-size: .7rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1px; }
+        .ci-val { font-size: .875rem; font-weight: 600; color: var(--text); }
+
+        /* ─── FOOTER ─── */
+        footer { background: #060e18; padding: 4rem 0 1.75rem; }
+        .footer-grid {
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-brand .logo-txt { color: #fff; }
+        .footer-brand .logo-txt small { color: rgba(255,255,255,.3); }
+        .footer-tagline { font-size: .82rem; color: rgba(255,255,255,.3); line-height: 1.7; margin-top: .9rem; max-width: 240px; }
+        .ft-col h5 { font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.8); margin-bottom: 1.1rem; }
+        .ft-col a, .ft-col p { display: block; font-size: .82rem; color: rgba(255,255,255,.32); text-decoration: none; margin-bottom: .55rem; transition: color .15s; }
+        .ft-col a:hover { color: #5dc48a; }
+        .footer-bar {
+            max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem 0;
+            border-top: 1px solid rgba(255,255,255,.07);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: .78rem; color: rgba(255,255,255,.22);
         }
 
-        .contact-info {
-            padding: 2rem 0;
-        }
+        /* ─── REVEAL ─── */
+        .rv { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+        .rv.in { opacity: 1; transform: none; }
 
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .sol-grid { grid-template-columns: repeat(2, 1fr); }
+            .prod-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
         }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--white);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--text-dark);
-            color: var(--white);
-            padding: 3rem 0 1rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h4 {
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-color);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1rem;
-            opacity: 0.7;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .about-content,
-            .innovation-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .tech-grid {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 1rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-form {
-                padding: 2rem;
-            }
+            .nav-links { display: none; }
+            .burger { display: flex; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat:nth-child(odd) { border-right: 1px solid var(--border); }
+            .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+            .sol-grid { grid-template-columns: 1fr; }
+            .prod-grid { grid-template-columns: 1fr 1fr; }
+            .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .row2 { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bar { flex-direction: column; gap: .4rem; text-align: center; }
+            .sec { padding: 4rem 0; }
         }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .nav-container {
-                padding: 0 1rem;
-            }
-
-            .hero {
-                padding: 0 1rem;
-            }
-
-            .service-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .contact-form {
-                padding: 1.5rem;
-            }
+        @media (max-width: 520px) {
+            .wrap, .nav-wrap { padding: 0 1.25rem; }
+            .hero-inner { padding: 0 1.25rem; padding-top: 66px; }
+            .prod-grid { grid-template-columns: 1fr; }
+            .hero-btns { flex-direction: column; }
+            .btn { justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">TE-Robotik</a>
-            <ul class="nav-links">
-                <li><a href="#home">Ana Sayfa</a></li>
-                <li><a href="#about">Hakkımızda</a></li>
-                <li><a href="#services">Hizmetler</a></li>
-                <li><a href="#innovation">İnovasyon</a></li>
-                <li><a href="#contact">İletişim</a></li>
-            </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-        </div>
-        <div class="hero-content">
-            <h1>Tarımda Geleceği Bugün Yaşayın</h1>
-            <p>Akıllı robotik çözümler ile tarımsal verimliliği artırıyor, sürdürülebilir gıda üretiminin öncülüğünü yapıyoruz.</p>
-            <div class="cta-buttons">
-                <a href="#services" class="btn btn-primary">Çözümlerimizi Keşfedin</a>
-                <a href="#contact" class="btn btn-secondary">İletişime Geçin</a>
-            </div>
-        </div>
-    </section>
+<!-- ─── NAV ─── -->
+<nav id="nav">
+    <div class="nav-wrap">
+        <a href="/" class="logo">
+            <div class="logo-box">TE</div>
+            <div class="logo-txt">TE Robotik <small>Akıllı Çözümler</small></div>
+        </a>
 
-    <!-- About Section -->
-    <section class="section about" id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>Hakkımızda</h2>
-                <p>Tarım sektöründe dijital dönüşümün öncü firması olarak, gelecek nesil teknolojiler geliştiriyoruz.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Misyonumuz</h3>
-                    <p>TE-Robotik olarak, tarımsal üretimde verimliliği artırırken çevresel sürdürülebilirliği sağlayan akıllı robotik çözümler geliştiriyoruz. Yapay zeka, IoT ve otomasyon teknolojilerini birleştirerek çiftçilerin işini kolaylaştırıyoruz.</p>
-                    <p>Gıda güvenliği ve çevre dostu tarımsal uygulamaları destekleyen yenilikçi çözümlerimizle, tarım sektöründe dijital dönüşümün lideri olmayı hedefliyoruz.</p>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <h4>50+</h4>
-                            <p>Başarılı Proje</p>
-                        </div>
-                        <div class="stat">
-                            <h4>15+</h4>
-                            <p>Ar-Ge Çalışması</p>
-                        </div>
+        <ul class="nav-links">
+            <li><a href="/">Anasayfa</a></li>
+            <li>
+                <a href="/urunler">Ürünlerimiz
+                    <svg viewBox="0 0 10 6"><polyline points="1,1 5,5 9,1"/></svg>
+                </a>
+                <div class="drop drop-wide">
+                    <div class="drop-col">
+                        <div class="drop-cat">Elektronik Ürünler</div>
+                        <a href="/urunler?id=efe001-ac">Röle Kontrol Modülü — AC Serisi</a>
+                        <a href="/urunler?id=efe001-dc">Röle Kontrol Modülü — DC Serisi</a>
+                        <a href="/urunler?id=lrg100">LoRa-SIM Gateway</a>
+                    </div>
+                    <div class="drop-col">
+                        <div class="drop-cat">Yazılım Ürünleri</div>
+                        <a href="/urunler?id=dernek-platform">Üyelik Yönetim Platformu</a>
+                        <div class="drop-divider"></div>
+                        <a href="/urunler" style="color:var(--green);font-weight:600;">Tüm Ürünler &rarr;</a>
                     </div>
                 </div>
-                <div class="about-visual">
-                    <div class="tech-grid">
-                        <div class="tech-item">🤖 Robotik</div>
-                        <div class="tech-item">🧠 AI/ML</div>
-                        <div class="tech-item">📡 IoT</div>
-                        <div class="tech-item">🛰️ Sensör</div>
-                        <div class="tech-item">📊 Analitik</div>
-                        <div class="tech-item">🌱 Sürdürülebilirlik</div>
+            </li>
+            <li>
+                <a href="/cozumler">Çözümlerimiz
+                    <svg viewBox="0 0 10 6"><polyline points="1,1 5,5 9,1"/></svg>
+                </a>
+                <div class="drop">
+                    <a href="/cozumler?id=gunes-enerjisi">Güneş Enerjisi Sistemleri</a>
+                    <a href="/cozumler?id=batarya-sistemleri">Batarya & Enerji Depolama</a>
+                    <a href="/cozumler?id=plc-otomasyon">PLC & Saha Otomasyonu</a>
+                    <a href="/cozumler?id=tarimsal-sulama">Tarımsal Sulama & Kontrol</a>
+                    <a href="/cozumler?id=iot-uzak-izleme">IoT & Uzaktan İzleme</a>
+                    <a href="/cozumler?id=kurumsal-yazilim">Kurumsal Yazılım & Dijitalleşme</a>
+                    <div class="drop-divider"></div>
+                    <a href="/cozumler" style="color:var(--green);font-weight:600;">Tüm Çözümler &rarr;</a>
+                </div>
+            </li>
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+            <li><a href="#iletisim" class="nav-cta">İletişime Geç</a></li>
+        </ul>
+
+        <button class="burger" id="burger" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+    <a href="/">Anasayfa</a>
+    <div class="mobile-cat">Ürünlerimiz</div>
+    <a href="/urunler?id=efe001-ac" style="padding-left:1rem;font-size:.88rem;">Röle Modülü — AC Serisi</a>
+    <a href="/urunler?id=efe001-dc" style="padding-left:1rem;font-size:.88rem;">Röle Modülü — DC Serisi</a>
+    <a href="/urunler?id=lrg100" style="padding-left:1rem;font-size:.88rem;">LoRa-SIM Gateway</a>
+    <a href="/urunler?id=dernek-platform" style="padding-left:1rem;font-size:.88rem;">Üyelik Yönetim Platformu</a>
+    <div class="mobile-cat">Çözümlerimiz</div>
+    <a href="/cozumler?id=gunes-enerjisi" style="padding-left:1rem;font-size:.88rem;">Güneş Enerjisi Sistemleri</a>
+    <a href="/cozumler?id=batarya-sistemleri" style="padding-left:1rem;font-size:.88rem;">Batarya & Enerji Depolama</a>
+    <a href="/cozumler?id=plc-otomasyon" style="padding-left:1rem;font-size:.88rem;">PLC & Saha Otomasyonu</a>
+    <a href="/cozumler?id=tarimsal-sulama" style="padding-left:1rem;font-size:.88rem;">Tarımsal Sulama & Kontrol</a>
+    <a href="/cozumler?id=iot-uzak-izleme" style="padding-left:1rem;font-size:.88rem;">IoT & Uzaktan İzleme</a>
+    <a href="/cozumler?id=kurumsal-yazilim" style="padding-left:1rem;font-size:.88rem;">Kurumsal Yazılım</a>
+    <a href="#hakkimizda">Hakkımızda</a>
+    <a href="#iletisim">İletişim</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+        <p class="hero-label">TE Robotik Akıllı Çözümler — Yerli Üretim, Türkiye</p>
+        <h1>Sahadaki Her Soruna<br><span>Akıllı bir Çözüm</span><br>Üretiyoruz</h1>
+        <p class="hero-sub">
+            Elektronik kontrol modüllerinden LoRa IoT ağlarına,
+            yazılım platformlarına kadar — tarımsal ve endüstriyel ihtiyaçlarınız için
+            yerli teknoloji ile çözüm üretiyoruz.
+        </p>
+        <div class="hero-btns">
+            <a href="/cozumler" class="btn btn-primary">Çözümlerimizi İnceleyin</a>
+            <a href="/urunler" class="btn btn-outline">Ürün Kataloğu</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SOLUTIONS ─── -->
+<section class="sec sec-white">
+    <div class="wrap">
+        <div class="sec-head rv">
+            <span class="eyebrow">Çözüm Alanlarımız</span>
+            <h2>Sahadan Sunucuya Çözüm Üretiyoruz</h2>
+            <p class="sec-lead">Her sektörden ihtiyaca karşılık veren elektronik, IoT ve yazılım çözümleri.</p>
+        </div>
+        <div class="sol-grid rv">
+            <a href="/cozumler?id=gunes-enerjisi" class="sol-card">
+                <div class="sol-card-bg" style="background-image:url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="sol-card-overlay"></div>
+                <div class="sol-card-body">
+                    <div class="sol-card-cat">Enerji</div>
+                    <h3>Güneş Enerjisi Sistemleri</h3>
+                    <p>Uzak noktalardaki güneş tesisatlarını SMS veya internet üzerinden yönetin.</p>
+                    <span class="sol-card-arrow">Detaylar &rarr;</span>
+                </div>
+            </a>
+            <a href="/cozumler?id=batarya-sistemleri" class="sol-card">
+                <div class="sol-card-bg" style="background-image:url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="sol-card-overlay"></div>
+                <div class="sol-card-body">
+                    <div class="sol-card-cat">Enerji</div>
+                    <h3>Batarya & Enerji Depolama</h3>
+                    <p>Akü ve batarya sistemlerinde uzaktan yük kesme ve şarj izleme.</p>
+                    <span class="sol-card-arrow">Detaylar &rarr;</span>
+                </div>
+            </a>
+            <a href="/cozumler?id=plc-otomasyon" class="sol-card">
+                <div class="sol-card-bg" style="background-image:url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="sol-card-overlay"></div>
+                <div class="sol-card-body">
+                    <div class="sol-card-cat">Otomasyon</div>
+                    <h3>PLC & Saha Otomasyonu</h3>
+                    <p>Mevcut PLC altyapınıza 2G/SIM ile uzaktan erişim kapasitesi ekleyin.</p>
+                    <span class="sol-card-arrow">Detaylar &rarr;</span>
+                </div>
+            </a>
+            <a href="/cozumler?id=tarimsal-sulama" class="sol-card">
+                <div class="sol-card-bg" style="background-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="sol-card-overlay"></div>
+                <div class="sol-card-body">
+                    <div class="sol-card-cat">Tarım</div>
+                    <h3>Tarımsal Sulama & Kontrol</h3>
+                    <p>Bağ, bahçe ve tarla sulama pompanızı telefondan çalıştırın, durdurun.</p>
+                    <span class="sol-card-arrow">Detaylar &rarr;</span>
+                </div>
+            </a>
+            <a href="/cozumler?id=iot-uzak-izleme" class="sol-card">
+                <div class="sol-card-bg" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="sol-card-overlay"></div>
+                <div class="sol-card-body">
+                    <div class="sol-card-cat">IoT</div>
+                    <h3>IoT & Uzaktan İzleme</h3>
+                    <p>LoRa-SIM gateway ile internet olmayan alanlarda sensör ağı kurun.</p>
+                    <span class="sol-card-arrow">Detaylar &rarr;</span>
+                </div>
+            </a>
+            <a href="/cozumler?id=kurumsal-yazilim" class="sol-card">
+                <div class="sol-card-bg" style="background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="sol-card-overlay"></div>
+                <div class="sol-card-body">
+                    <div class="sol-card-cat">Yazılım</div>
+                    <h3>Kurumsal Yazılım & Dijitalleşme</h3>
+                    <p>Dernekler ve kuruluşlar için üyelik, aidat ve etkinlik yönetim platformu.</p>
+                    <span class="sol-card-arrow">Detaylar &rarr;</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRODUCTS ─── -->
+<section class="sec sec-off">
+    <div class="wrap">
+        <div class="sec-head rv" style="display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;">
+            <div>
+                <span class="eyebrow">Ürünlerimiz</span>
+                <h2>Akıllı Donanım ve Yazılım</h2>
+            </div>
+            <a href="/urunler" class="btn btn-primary" style="white-space:nowrap;">Tüm Ürünler &rarr;</a>
+        </div>
+        <div class="prod-grid rv">
+            <a href="/urunler?id=efe001-ac" class="prod-card">
+                <div class="prod-card-img" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80')">
+                    <span class="prod-card-badge">AC — 100-240V</span>
+                </div>
+                <div class="prod-card-body">
+                    <div class="prod-card-model">EFE001-2G-SIM</div>
+                    <h4>Akıllı Röle Kontrol Modülü</h4>
+                    <p>100–240V AC beslemeli, 2G/SIM destekli uzaktan kontrol modülü.</p>
+                    <span class="prod-link">İncele &rarr;</span>
+                </div>
+            </a>
+            <a href="/urunler?id=efe001-dc" class="prod-card">
+                <div class="prod-card-img" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80')">
+                    <span class="prod-card-badge">DC — 5-130V</span>
+                </div>
+                <div class="prod-card-body">
+                    <div class="prod-card-model">EFE001-2G-SIM-DC</div>
+                    <h4>Akıllı Röle Kontrol Modülü</h4>
+                    <p>5–130V DC geniş aralık, güneş enerjisi ve akü sistemleri için ideal.</p>
+                    <span class="prod-link">İncele &rarr;</span>
+                </div>
+            </a>
+            <a href="/urunler?id=lrg100" class="prod-card">
+                <div class="prod-card-img" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80')">
+                    <span class="prod-card-badge">LoRa + 2G</span>
+                </div>
+                <div class="prod-card-body">
+                    <div class="prod-card-model">LRG-100-2G</div>
+                    <h4>LoRa-SIM Gateway</h4>
+                    <p>LoRaWAN sensör ağlarını 2G backhaul ile buluta bağlayan hibrit gateway.</p>
+                    <span class="prod-link">İncele &rarr;</span>
+                </div>
+            </a>
+            <a href="/urunler?id=dernek-platform" class="prod-card">
+                <div class="prod-card-img" style="background-image:url('https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=600&q=80')">
+                    <span class="prod-card-badge">SaaS Platform</span>
+                </div>
+                <div class="prod-card-body">
+                    <div class="prod-card-model">TE-MMP v2.0</div>
+                    <h4>Üyelik Yönetim Platformu</h4>
+                    <p>Dernek ve kuruluşlar için bulut tabanlı dijital üyelik, aidat ve etkinlik yönetimi.</p>
+                    <span class="prod-link">İncele &rarr;</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section class="sec sec-white" id="hakkimizda">
+    <div class="wrap">
+        <div class="about-grid">
+            <div class="about-img rv"></div>
+            <div class="about-copy rv">
+                <span class="eyebrow">Hakkımızda</span>
+                <h2>Teknolojiyi Sahaya Taşıyoruz</h2>
+                <p>
+                    TE Robotik Akıllı Çözümler olarak; tarımdan günlük hayata,
+                    küçük işletmelerden kurumsal yapılara kadar geniş bir yelpazede
+                    donanımsal ve yazılımsal teknoloji çözümleri üretiyoruz.
+                    Tüm elektronik ürünlerimiz Türkiye'de tasarlanıp üretilmektedir.
+                </p>
+                <ul class="check-list">
+                    <li>SMS, MQTT ve HTTP ile mevcut sistemlere kolayca entegre olur</li>
+                    <li>Özel proje ve entegrasyon danışmanlığı sağlıyoruz</li>
+                </ul>
+                <a href="#iletisim" class="btn btn-dark">Bizimle Çalışın &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<div class="cta-strip rv">
+    <div class="wrap cta-inner">
+        <h2>Projeniz İçin Doğru Çözümü Birlikte Bulalım</h2>
+        <p>İhtiyacınızı paylaşın; size özel bir teklif veya demo hazırlayalım.</p>
+        <div class="cta-btns">
+            <a href="/urunler" class="btn btn-white">Ürün Kataloğu</a>
+            <a href="#iletisim" class="btn btn-outline-w">Teklif İste</a>
+        </div>
+    </div>
+</div>
+
+<!-- ─── CONTACT ─── -->
+<section class="sec sec-white" id="iletisim">
+    <div class="wrap">
+        <div class="sec-head rv" style="text-align:center;">
+            <span class="eyebrow">İletişim</span>
+            <h2>Bizimle İletişime Geçin</h2>
+            <p class="sec-lead" style="margin:0 auto;">Sorularınız, talepleriniz veya demo için formu doldurun.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="form-box rv">
+                <h3>Mesaj Gönderin</h3>
+                <form id="contact-form">
+                    <div class="row2">
+                        <div class="fg"><label>Ad Soyad *</label><input type="text" name="name" required placeholder="Adınız Soyadınız"></div>
+                        <div class="fg"><label>E-posta *</label><input type="email" name="email" required placeholder="ornek@firma.com"></div>
                     </div>
+                    <div class="row2">
+                        <div class="fg"><label>Telefon</label><input type="tel" name="phone" placeholder="+90 5XX XXX XX XX"></div>
+                        <div class="fg"><label>Konu</label>
+                            <select name="subject">
+                                <option value="">Seçiniz</option>
+                                <option>Ürün Bilgisi</option>
+                                <option>Teknik Destek</option>
+                                <option>Demo Talebi</option>
+                                <option>Fiyat Teklifi</option>
+                                <option>Diğer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fg"><label>Mesajınız *</label><textarea name="message" required placeholder="Projeniz hakkında kısa bilgi verin..."></textarea></div>
+                    <button type="submit" class="btn-submit">Gönder</button>
+                </form>
+            </div>
+            <div class="contact-aside rv">
+                <h3>İletişim Bilgileri</h3>
+                <p class="aside-sub">Çalışma saatlerinde en geç 24 saat içinde dönüş yapıyoruz.</p>
+                <div class="ci-list">
+                    <div class="ci"><div class="ci-dot"></div><div><div class="ci-label">Telefon</div><div class="ci-val">+90 542 517 48 60</div></div></div>
+                    <div class="ci"><div class="ci-dot"></div><div><div class="ci-label">E-posta</div><div class="ci-val">tezcansoft@gmail.com</div></div></div>
+                    <div class="ci"><div class="ci-dot"></div><div><div class="ci-label">Çalışma Saatleri</div><div class="ci-val">Pazartesi – Cuma, 09:00 – 18:00</div></div></div>
+                    <div class="ci"><div class="ci-dot"></div><div><div class="ci-label">Konum</div><div class="ci-val">Türkiye</div></div></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Services Section -->
-    <section class="section services" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Hizmetlerimiz</h2>
-                <p>Tarımsal verimliliği artıran, çevre dostu ve akıllı teknoloji çözümleri sunuyoruz.</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🤖</div>
-                    <h3>Akıllı Tarım Robotları</h3>
-                    <p>Otomatik ekim, sulama, hasat ve bakım işlemlerini gerçekleştiren akıllı robotik sistemler. Hassas tarım teknikleri ile maksimum verim sağlayın.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">📊</div>
-                    <h3>Veri Analizi ve İzleme</h3>
-                    <p>Tarla verilerini gerçek zamanlı olarak toplayıp analiz eden sistemler. Toprak kalitesi, nem, sıcaklık ve bitki sağlığını izleyin.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🌱</div>
-                    <h3>Hassas Tarım Çözümleri</h3>
-                    <p>GPS ve sensör teknolojileri ile hassas konumlandırma yapan sistemler. Gübre, ilaç ve su kullanımını optimize edin.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🛰️</div>
-                    <h3>IoT Tarım Sistemleri</h3>
-                    <p>Nesnelerin interneti teknolojisi ile akıllı tarla yönetimi. Uzaktan kontrol ve otomatik müdahale sistemleri.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🔬</div>
-                    <h3>Ar-Ge ve Danışmanlık</h3>
-                    <p>Özel ihtiyaçlarınız için teknoloji geliştirme ve tarımsal danışmanlık hizmetleri. İnovatif çözümler üretiyoruz.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">⚙️</div>
-                    <h3>Sistem Entegrasyonu</h3>
-                    <p>Mevcut tarım ekipmanlarınıza akıllı teknolojiler entegre ediyoruz. Uyumlu ve verimli çözümler sunuyoruz.</p>
-                </div>
-            </div>
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="logo">
+                <div class="logo-box">TE</div>
+                <div class="logo-txt" style="color:#fff">TE Robotik <small>Akıllı Çözümler</small></div>
+            </a>
+            <p class="footer-tagline">Elektronik modüllerden yazılım platformlarına — teknoloji çözümleri üretiyoruz.</p>
         </div>
-    </section>
-
-    <!-- Innovation Section -->
-    <section class="section innovation" id="innovation">
-        <div class="container">
-            <div class="innovation-content">
-                <div class="innovation-text">
-                    <h3>İnovasyon ve Teknoloji</h3>
-                    <p>En son teknolojileri kullanarak tarım sektörüne yenilikçi çözümler sunuyoruz. Ar-Ge departmanımız sürekli olarak gelecek nesil teknolojiler üzerinde çalışmaktadır.</p>
-                    <p>Yapay zeka, makine öğrenmesi ve derin öğrenme algoritmalarımız ile tarımsal verimliliği maksimum seviyeye çıkarıyoruz.</p>
-                    <ul class="innovation-features">
-                        <li>Yapay Zeka Destekli Karar Verme Sistemleri</li>
-                        <li>Bilgisayar Görü ile Bitki Hastalık Tespiti</li>
-                        <li>Otomatik İklim Kontrol Sistemleri</li>
-                        <li>Predictive Analytics ile Hasat Tahmini</li>
-                        <li>Blockchain Tabanlı Tarım Takip Sistemleri</li>
-                    </ul>
-                </div>
-                <div class="innovation-visual">
-                    <svg class="circuit-pattern" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="2" opacity="0.3"/>
-                        <circle cx="100" cy="100" r="60" stroke="currentColor" stroke-width="2" opacity="0.5"/>
-                        <circle cx="100" cy="100" r="40" stroke="currentColor" stroke-width="2" opacity="0.7"/>
-                        <circle cx="100" cy="100" r="20" stroke="currentColor" stroke-width="2" opacity="0.9"/>
-                        <circle cx="100" cy="100" r="5" fill="currentColor"/>
-                        <line x1="20" y1="100" x2="40" y2="100" stroke="currentColor" stroke-width="2"/>
-                        <line x1="160" y1="100" x2="180" y2="100" stroke="currentColor" stroke-width="2"/>
-                        <line x1="100" y1="20" x2="100" y2="40" stroke="currentColor" stroke-width="2"/>
-                        <line x1="100" y1="160" x2="100" y2="180" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                </div>
-            </div>
+        <div class="ft-col">
+            <h5>Ürünler</h5>
+            <a href="/urunler?id=efe001-ac">Röle Modülü — AC</a>
+            <a href="/urunler?id=efe001-dc">Röle Modülü — DC</a>
+            <a href="/urunler?id=lrg100">LoRa-SIM Gateway</a>
+            <a href="/urunler?id=dernek-platform">Üyelik Platformu</a>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>İletişim</h2>
-                <p>Projeleriniz için bizimle iletişime geçin. Uzman ekibimiz size en uygun çözümü sunacak.</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-form">
-                    <h3 style="margin-bottom: 2rem; color: var(--primary-color);">Bize Ulaşın</h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Ad Soyad</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-posta</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Konu</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Mesaj</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Gönder</button>
-                    </form>
-                </div>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <h4>Adres</h4>
-                            <p>Teknokent, Ankara<br>Türkiye</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div>
-                            <h4>Telefon</h4>
-                            <p>+90 (312) 123 45 67</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div>
-                            <h4>E-posta</h4>
-                            <p>info@te-robotik.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🕒</div>
-                        <div>
-                            <h4>Çalışma Saatleri</h4>
-                            <p>Pazartesi - Cuma<br>09:00 - 18:00</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="ft-col">
+            <h5>Çözümler</h5>
+            <a href="/cozumler?id=gunes-enerjisi">Güneş Enerjisi</a>
+            <a href="/cozumler?id=tarimsal-sulama">Tarımsal Sulama</a>
+            <a href="/cozumler?id=plc-otomasyon">PLC & Otomasyon</a>
+            <a href="/cozumler?id=iot-uzak-izleme">IoT & İzleme</a>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>TE-Robotik</h4>
-                    <p>Tarımda sürdürülebilirlik ve verimliliği artıran akıllı teknoloji çözümleri.</p>
-                    <p>© 2024 TE-Robotik. Tüm hakları saklıdır.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Hızlı Erişim</h4>
-                    <a href="#home">Ana Sayfa</a>
-                    <a href="#about">Hakkımızda</a>
-                    <a href="#services">Hizmetler</a>
-                    <a href="#innovation">İnovasyon</a>
-                    <a href="#contact">İletişim</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Hizmetler</h4>
-                    <a href="#services">Akıllı Tarım Robotları</a>
-                    <a href="#services">Veri Analizi</a>
-                    <a href="#services">Hassas Tarım</a>
-                    <a href="#services">IoT Sistemleri</a>
-                    <a href="#services">Ar-Ge</a>
-                </div>
-                <div class="footer-section">
-                    <h4>İletişim</h4>
-                    <p>📍 Teknokent, Ankara</p>
-                    <p>📞 +90 (312) 123 45 67</p>
-                    <p>✉️ info@te-robotik.com</p>
-                    <div style="margin-top: 1rem;">
-                        <a href="#" style="display: inline-block; margin-right: 1rem;">LinkedIn</a>
-                        <a href="#" style="display: inline-block; margin-right: 1rem;">Twitter</a>
-                        <a href="#" style="display: inline-block;">Instagram</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>Bu website TE-Robotik Akıllı Çözümler tarafından geliştirilmiştir.</p>
-            </div>
+        <div class="ft-col">
+            <h5>İletişim</h5>
+            <p>+90 542 517 48 60</p>
+            <p>tezcansoft@gmail.com</p>
+            <p>Pzt – Cum, 09:00 – 18:00</p>
         </div>
-    </footer>
+    </div>
+    <div class="footer-bar">
+        <span>© 2025 TE Robotik Akıllı Çözümler. Tüm hakları saklıdır.</span>
+        <span>Yerli Üretim — Türkiye</span>
+    </div>
+</footer>
 
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/905425174860" target="_blank" rel="noopener" aria-label="WhatsApp ile ulaşın" style="
+    position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
+    width:56px; height:56px; border-radius:50%;
+    background:#25d366; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+    transition:transform .2s, box-shadow .2s;
+    text-decoration:none;
+" onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(0,0,0,.25)'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+</a>
+
+<script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+    // Burger / mobile nav
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobile-nav');
+    burger.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        burger.querySelectorAll('span')[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+        burger.querySelectorAll('span')[1].style.opacity = open ? '0' : '';
+        burger.querySelectorAll('span')[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
         });
+    });
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+    // Reveal
+    const io = new IntersectionObserver(
+        entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+        {threshold:.08, rootMargin:'0px 0px -20px 0px'}
+    );
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenu.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
-
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Form verilerini topla
-            const formData = new FormData(this);
-            const data = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                subject: formData.get('subject'),
-                message: formData.get('message')
-            };
-            
-            // Bu kısmı Node.js backend'inizle entegre edebilirsiniz
-            // fetch('/api/contact', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(data)
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     alert('Mesajınız başarıyla gönderildi!');
-            //     this.reset();
-            // })
-            // .catch(error => {
-            //     alert('Bir hata oluştu. Lütfen tekrar deneyin.');
-            // });
-
-            // Şimdilik basit bir alert gösterelim
-            alert('Mesajınız başarıyla alındı! En kısa sürede size dönüş yapacağız.');
-            this.reset();
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Animate service cards
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-
-        // Animate stats
-        document.querySelectorAll('.stat').forEach(stat => {
-            stat.style.opacity = '0';
-            stat.style.transform = 'translateY(30px)';
-            stat.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(stat);
-        });
-
-        // Animate contact items
-        document.querySelectorAll('.contact-item').forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateX(-30px)';
-            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(item);
-        });
-
-        // Counter animation for stats
-        function animateCounter(element, target) {
-            let current = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                element.textContent = Math.floor(current) + '+';
-                if (current >= target) {
-                    element.textContent = target + '+';
-                    clearInterval(timer);
-                }
-            }, 30);
+    // Form
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('.btn-submit');
+        btn.textContent = 'Gönderiliyor...';
+        btn.disabled = true;
+        const data = Object.fromEntries(new FormData(this).entries());
+        try {
+            const res = await fetch('/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const json = await res.json();
+            btn.textContent = json.ok ? 'Gönderildi ✓' : 'Hata, tekrar deneyin';
+            if (json.ok) { this.reset(); setTimeout(() => { btn.textContent = 'Gönder'; btn.disabled = false; }, 3000); }
+            else { setTimeout(() => { btn.textContent = 'Gönder'; btn.disabled = false; }, 3000); }
+        } catch {
+            btn.textContent = 'Hata, tekrar deneyin';
+            setTimeout(() => { btn.textContent = 'Gönder'; btn.disabled = false; }, 3000);
         }
-
-        // Trigger counter animations when stats are visible
-        const statsObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const h4 = entry.target.querySelector('h4');
-                    const target = parseInt(h4.textContent);
-                    animateCounter(h4, target);
-                    statsObserver.unobserve(entry.target);
-                }
-            });
-        });
-
-        document.querySelectorAll('.stat').forEach(stat => {
-            statsObserver.observe(stat);
-        });
-
-        // Parallax effect for hero
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            const rate = scrolled * -0.5;
-            
-            if (hero) {
-                hero.style.transform = `translateY(${rate}px)`;
-            }
-        });
-
-        // Dynamic typing effect for hero title (optional enhancement)
-        function typeWriter(element, text, speed = 50) {
-            let i = 0;
-            element.innerHTML = '';
-            element.style.opacity = '1';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize typing effect after page load
-        window.addEventListener('load', function() {
-            const heroTitle = document.querySelector('.hero h1');
-            if (heroTitle) {
-                const originalText = heroTitle.textContent;
-                setTimeout(() => {
-                    typeWriter(heroTitle, originalText, 100);
-                }, 500);
-            }
-        });
-
-        // Add hover effects to buttons
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px)';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Add loading animation
-        window.addEventListener('load', function() {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-
-        // Enhanced mobile menu functionality
-        const style = document.createElement('style');
-        style.textContent = `
-            @media (max-width: 768px) {
-                .nav-links.active {
-                    display: flex;
-                    position: fixed;
-                    top: 80px;
-                    left: 0;
-                    right: 0;
-                    background: rgba(255,255,255,0.98);
-                    backdrop-filter: blur(10px);
-                    flex-direction: column;
-                    padding: 2rem;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                    z-index: 999;
-                }
-                
-                .nav-links.active li {
-                    margin: 0.5rem 0;
-                }
-                
-                .menu-toggle.active span:nth-child(1) {
-                    transform: rotate(-45deg) translate(-5px, 6px);
-                }
-                
-                .menu-toggle.active span:nth-child(2) {
-                    opacity: 0;
-                }
-                
-                .menu-toggle.active span:nth-child(3) {
-                    transform: rotate(45deg) translate(-5px, -6px);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    });
+</script>
 </body>
 </html>

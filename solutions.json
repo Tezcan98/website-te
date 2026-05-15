@@ -1,0 +1,166 @@
+{
+  "solutions": [
+    {
+      "id": "gunes-enerjisi",
+      "title": "Güneş Enerjisi Sistemleri",
+      "shortDesc": "Uzak noktalardaki güneş enerjisi tesisatlarınızı 2G/SIM röle modülleri ile uzaktan izleyin ve kontrol edin.",
+      "photo": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+      "article": {
+        "lead": "Güneş enerjisi sistemleri, kurulumlarının büyük çoğunluğu şehir dışında veya tarım arazilerinde yer aldığından uzaktan yönetim kritik bir ihtiyaç haline gelmiştir. TE Robotik olarak bu ihtiyaca özel DC röle kontrol modüllerimizle güneş tesisatlarınıza akıllı, uzaktan erişilebilir bir kontrol katmanı ekliyoruz.",
+        "sections": [
+          {
+            "heading": "Güneş Enerjisinde Uzaktan Kontrol Ne İşe Yarar?",
+            "body": "Güneş panelleri sahadayken şarj kontrol cihazları, invertörler ve akü sistemleri sahipsiz çalışır. Herhangi bir arıza, yük kesintisi veya anormal gerilim durumunda müdahale için saate gitmek zorunda kalınabilir. EFE001-2G-SIM-DC modülümüz 5–130V DC giriş aralığıyla doğrudan panelden beslenir; SMS komutu ya da internet üzerinden röle çıkışını açıp kapatarak yüklerinizi uzaktan yönetmenizi sağlar."
+          },
+          {
+            "heading": "Hangi Uygulamalarda Kullanılır?",
+            "body": "Off-grid (şebeke bağımsız) tarımsal sulama pompası kontrolü, güneş enerjili sokak aydınlatması uzaktan reset, küçük çaplı güneş santrali yük yönetimi, çiftlik ve sera enerji kontrol sistemi, araç-üstü solar yük yönetimi (12V/24V/48V sistemler)."
+          },
+          {
+            "heading": "Teknik Altyapı",
+            "body": "EFE001-2G-SIM-DC modülü 5–130V DC giriş aralığında çalışır; 12V, 24V, 48V, 72V veya 110V sistemlerle doğrudan uyumludur. Ters kutuplama koruması ve 135V üzerinde otomatik devre dışı kalma özelliğiyle ekipmanınızı korur. 2G/GPRS üzerinden MQTT veya HTTP protokolü ile bulut platformlarına bağlanabilir ya da SMS komutuyla sahada herhangi bir operatör hattı üzerinden kontrol edilebilir."
+          },
+          {
+            "heading": "Kurulum ve Entegrasyon",
+            "body": "Modül DIN ray montajlıdır, standart elektrik panosu içine kolayca yerleşir. Mevcut şarj kontrol cihazı veya inverter devresine seri bağlanarak çalışır. Teknik kılavuz ve kurulum şeması ürünle birlikte temin edilir. İhtiyaç halinde sahadaki entegrasyon için teknik danışmanlık hizmeti sunulmaktadır."
+          }
+        ]
+      }
+    },
+    {
+      "id": "batarya-sistemleri",
+      "title": "Batarya & Enerji Depolama",
+      "shortDesc": "Akü ve batarya sistemlerinde yük kesme, şarj izleme ve uzaktan devre kontrolü için akıllı röle çözümleri.",
+      "photo": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80",
+      "article": {
+        "lead": "Enerji depolama sistemleri; tarımsal tesisler, telekomünikasyon kulesi beslemeleri ve endüstriyel yedek güç uygulamalarında kritik rol oynar. TE Robotik röle modülleri, batarya sistemlerinizi uzaktan izleme ve kontrol altına almanızı sağlar.",
+        "sections": [
+          {
+            "heading": "Batarya Sistemlerinde Akıllı Kontrol",
+            "body": "Akü bankalarında deşarj koruma, yük kesme ve yeniden bağlama işlemleri kritik süreçlerdir. EFE001-2G-SIM-DC modülü, geniş DC voltaj aralığı (5–130V) sayesinde litinyum, kurşun-asit veya jel akü sistemleriyle doğrudan uyumlu çalışır. Deşarj eşiğine ulaşıldığında uzaktan veya otomatik yük kesme komutunu destekler."
+          },
+          {
+            "heading": "Uygulama Senaryoları",
+            "body": "Telekomünikasyon kulesi DC güç sistemleri (48V/110V), tarımsal pompa istasyonu akü beslemesi, off-grid kamp ve çiftlik enerji yönetimi, araç filosu batarya izleme ve kesme, endüstriyel UPS destek sistemleri uzaktan kontrolü."
+          },
+          {
+            "heading": "İzleme ve Alarm",
+            "body": "Modül, MQTT protokolü aracılığıyla seçtiğiniz bulut platformuna (AWS IoT, Azure IoT Hub, özel sunucu) veri gönderebilir. Belirli koşullar oluştuğunda — örneğin gerilim düşüşü, uzun süreli yük aktif kalma — SMS uyarısı atılabilir. Bu sayede kritik noktalarda sahaya gitmeden anlık durum takibi yapılır."
+          },
+          {
+            "heading": "Neden TE Robotik?",
+            "body": "Ürünlerimiz Türkiye'de tasarlanmış ve üretilmiş olup CE direktiflerine uygundur. 5–130V geniş aralık, piyasada yaygın birçok DC batarya sistemini ayrı bir adaptör gerektirmeksizin kapsar. 2 yıl üretici garantisi ve yedek parça teminiyle uzun vadeli destek sağlıyoruz."
+          }
+        ]
+      }
+    },
+    {
+      "id": "plc-otomasyon",
+      "title": "PLC & Saha Otomasyonu",
+      "shortDesc": "Mevcut PLC altyapınıza 2G/SIM bağlantılı röle modülleri ekleyerek sahasız uzaktan kontrol ve izleme kapasitesi kazandırın.",
+      "photo": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80",
+      "article": {
+        "lead": "Pek çok sanayi tesisinde mevcut PLC sistemleri güvenilir şekilde çalışmaktadır ancak uzaktan müdahale veya mobil erişim imkânı sınırlıdır. TE Robotik röle modülleri, mevcut PLC ve otomasyon altyapınıza minimum değişiklikle 2G/SIM üzerinden uzaktan erişim katmanı ekler.",
+        "sections": [
+          {
+            "heading": "PLC Sistemlerine Entegrasyon",
+            "body": "EFE001-2G-SIM (AC) veya EFE001-2G-SIM-DC modülleri, PLC çıkışlarından gelen kontrol sinyalleri ile paralel çalışabilir. Mevcut sistemin çalışmasını engellemeden; uzaktan reset, devre açma/kapama, acil stop gibi komutlar SMS veya MQTT aracılığıyla gönderilebilir. DIN ray montajlı kompakt yapısıyla mevcut panoya kolayca entegre edilir."
+          },
+          {
+            "heading": "Uygulama Örnekleri",
+            "body": "Sulama istasyonu pompa kontrol panosu uzaktan yönetimi, fabrika kompresör ve motor devresi uzaktan reset, sera iklim kontrol sistemleri uzaktan müdahale, su deposu dolum/tahliye otomasyonu, küçük ölçekli SCADA sistemlerine 2G backhaul eklenmesi."
+          },
+          {
+            "heading": "Haberleşme Protokolleri",
+            "body": "Modül; MQTT, HTTP POST ve SMS olmak üzere üç farklı haberleşme yöntemi sunar. Bu sayede mevcut SCADA veya bulut platformunuza entegre etmek için ek donanım gerekmez. Türkiye'deki tüm operatörlerin 2G ağlarıyla uyumludur; GSM kapsama alanı olan her nokta erişilebilir hale gelir."
+          },
+          {
+            "heading": "Kurulum Kolaylığı",
+            "body": "Saha elektrik teknisyenleri tarafından kurulabilir; özel programlama bilgisi gerektirmez. SMS komut seti basit ve dokümante edilmiştir. Mevcut PLC programına dokunmadan, fiziksel olarak devre üzerine eklenerek çalışır. İhtiyaç halinde projeye özel entegrasyon danışmanlığı sağlanmaktadır."
+          }
+        ]
+      }
+    },
+    {
+      "id": "tarimsal-sulama",
+      "title": "Tarımsal Sulama & Kontrol",
+      "shortDesc": "Bağ, bahçe ve tarla sulamasında pompa ve vana kontrolünü SMS veya internet üzerinden yönetin; suyu doğru yere, doğru zamanda verin.",
+      "photo": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+      "article": {
+        "lead": "Tarımsal sulama, özellikle büyük arazi ve bağlarda ciddi bir lojistik sorun oluşturur: pompayı çalıştırmak ya da durdurmak için saate gitmek zaman kaybettirir. TE Robotik röle modülleri, sulama pompalarınızı cebinizdeki telefon ile yönetmenizi sağlar.",
+        "sections": [
+          {
+            "heading": "Bağda, Bahçede, Tarlada Kullanım",
+            "body": "Üzüm bağı sulama pompası, meyve bahçesi damla sulama sistemi, sera otomatik sulama, tarla yağmurlama sistemi veya büyük ölçekli sulama kanalı kapak kontrolü — tüm bu sistemler EFE001-2G-SIM (AC) veya EFE001-2G-SIM-DC modülleriyle uzaktan kontrol edilebilir hale gelir."
+          },
+          {
+            "heading": "Nasıl Çalışır?",
+            "body": "Röle modülü, pompa veya vana devresine seri bağlanır. Panoya takılı SIM kart aracılığıyla telefon üzerinden SMS gönderilerek pompa çalıştırılır ya da durdurulur. İnternet bağlantısı mevcut ortamlarda mobil uygulama veya web arayüzü üzerinden kontrol de mümkündür. Şebeke beslemeli sistemlerde AC modeli, güneş enerjili veya akü beslemeli sistemlerde DC modeli kullanılır."
+          },
+          {
+            "heading": "LoRa ile Geniş Alan Sulama Ağı",
+            "body": "Birden fazla noktada sulama kontrol ihtiyacı olan büyük arazilerde LoRa-SIM Gateway çözümümüz devreye girer. Her sulama noktasına LoRaWAN destekli sensör ve kontrol ünitesi yerleştirilerek merkezi bir gateway üzerinden yönetilen geniş alan sulama ağı oluşturulabilir. İnternet altyapısı olmayan uzak arazilerde gateway'in 2G bağlantısı, tüm ağın buluta taşınmasını sağlar."
+          },
+          {
+            "heading": "Zaman Programlama",
+            "body": "Modüller harici bir kontrol ünitesiyle entegre edilerek belirli saatlerde otomatik çalışma-durma programı oluşturulabilir. Zamanlama için uygun fiyatlı bir zaman rölesi veya Raspberry Pi/Arduino tabanlı basit bir kontrolör yeterlidir. Özel proje ihtiyaçlarınız için entegrasyon danışmanlığı sunulmaktadır."
+          }
+        ]
+      }
+    },
+    {
+      "id": "iot-uzak-izleme",
+      "title": "IoT & Uzaktan İzleme",
+      "shortDesc": "LoRa-SIM hibrit gateway ile internet altyapısı olmayan uzak noktalardaki sensör ağınızı buluta taşıyın.",
+      "photo": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      "article": {
+        "lead": "Tarımsal alanlar, uzak sanayi tesisleri ve kırsal altyapı noktaları çoğunlukla stabil internet bağlantısından yoksundur. TE Robotik LRG-100-2G LoRa-SIM Gateway, bu boşluğu kapatarak LoRaWAN sensör ağlarını 2G üzerinden buluta bağlar.",
+        "sections": [
+          {
+            "heading": "LoRa Teknolojisi Nedir, Neden Tercih Edilir?",
+            "body": "LoRa (Long Range), düşük güç tüketimiyle açık alanda 5 km'ye kadar veri iletimi sağlayan bir kablosuz haberleşme teknolojisidir. Batarya ile çalışan sensörler yıllarca bağımsız şekilde veri gönderebilir. WiFi veya GSM bağlantısı olmayan alanlarda bile çalışır; sadece gateway noktasında 2G kapsama yeterlidir."
+          },
+          {
+            "heading": "Hangi Sensörler Desteklenir?",
+            "body": "LoRaWAN standardını destekleyen tüm sensörler ile uyumludur: toprak nemi sensörü, yaprak ıslaklık sensörü, hava istasyonu (sıcaklık, nem, basınç, rüzgâr), su seviye sensörü, akış ölçer, güneş radyasyon sensörü, kapı-kapak açık/kapalı sensörü ve daha fazlası. Tek bir gateway ile 1.000'e kadar LoRa cihaz desteklenir."
+          },
+          {
+            "heading": "Veri Akışı ve Bulut Entegrasyonu",
+            "body": "Gateway, sensörlerden gelen verileri 2G/GPRS üzerinden seçtiğiniz bulut platformuna iletir. AWS IoT Core, Azure IoT Hub, Node-RED veya özel MQTT broker desteği mevcuttur. Veri görselleştirme için Grafana, ThingsBoard veya benzeri açık kaynak araçlarla entegrasyon uygundur."
+          },
+          {
+            "heading": "Tarımsal İzleme Örnek Senaryosu",
+            "body": "Bir bağ veya meyve bahçesine 10–20 toprak nemi sensörü yerleştirilir. Tüm sensörler LoRa protokolü üzerinden merkezi bir LRG-100-2G gateway'e veri gönderir. Gateway, sahada 2G kapsama ile buluta bağlıdır. Çiftçi telefon veya bilgisayarından gerçek zamanlı toprak nemi haritasını izler; sulama kararlarını veriyle destekler, su tasarrufu sağlar."
+          }
+        ]
+      }
+    },
+    {
+      "id": "kurumsal-yazilim",
+      "title": "Kurumsal Yazılım & Dijitalleşme",
+      "shortDesc": "İş insanları dernekleri, odalar ve meslek kuruluşları için uçtan uca dijital üyelik, aidat ve etkinlik yönetim platformu.",
+      "photo": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      "article": {
+        "lead": "Dernekler ve meslek kuruluşları hâlâ büyük ölçüde kâğıt tabanlı süreçlerle yönetilmektedir. Üyelik başvuruları, aidat takibi, genel kurul yönetimi ve üye iletişimi gibi kritik süreçleri dijitalleştiren bulut platformumuz, kurumunuzu 21. yüzyıla taşır.",
+        "sections": [
+          {
+            "heading": "Neden Dijital Üyelik Yönetimi?",
+            "body": "Kâğıt üyelik formları, Excel aidat tabloları ve telefon zinciri iletişim artık hem verimsiz hem de KVKK açısından risklidir. TE Robotik Üyelik Yönetim Platformu (TE-MMP v2.0), tüm bu süreçleri güvenli, yasal ve erişilebilir bir dijital ortama taşır. Yönetim kurulunuz her yerden her şeyi izleyebilir."
+          },
+          {
+            "heading": "Üyelik Süreci Dijitalleşiyor",
+            "body": "Adaylar online form üzerinden başvurur. Yönetim kurulu çok aşamalı onay akışını web panelinden yönetir. Onaylanan üyeye otomatik e-posta ile dijital üyelik kartı ve QR kodu gönderilir. Tüm süreç iz kayıtlı ve şeffaftır; itiraz durumunda belgelenmişlik sağlanır."
+          },
+          {
+            "heading": "Otomatik Aidat Takibi",
+            "body": "Sistem, belirlenen takvime göre üyelere otomatik aidat hatırlatma e-postası ve SMS gönderir. Online ödeme entegrasyonu (kredi kartı, banka havalesi) sayesinde üyeler ödemeyi platformdan gerçekleştirir. Gecikmeli aidatlar sistem tarafından işaretlenir; yönetim kurulu raporlarda borcun tam tablosunu anında görür."
+          },
+          {
+            "heading": "Etkinlik, Toplantı ve Genel Kurul",
+            "body": "Etkinlik takvimi, online katılım kaydı, toplantı tutanakları ve genel kurul yönetimi tek panelden yürütülür. Anket ve oylama modülü sayesinde üye görüşleri hızla alınır. SMS/e-posta duyuru sistemi ile tüm üyelerinize tek tıkla mesaj ulaştırılır. KVKK uyumlu veri işleme ve Türkiye'deki sunucularda depolama standart olarak sunulur."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünlerimiz | TE Robotik Akıllı Çözümler</title>
+    <meta name="description" content="TE Robotik ürün kataloğu: Akıllı röle kontrol modülleri, LoRa-SIM gateway ve yazılım platformları.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --green:  #145a32;
+            --green2: #1a7a44;
+            --light-green: #e8f5ee;
+            --navy:   #0b1a2e;
+            --white:  #fff;
+            --off:    #f7f8fa;
+            --border: #e3e7ed;
+            --text:   #1a2030;
+            --muted:  #6b7686;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: #fff; overflow-x: hidden; }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 9000;
+            background: rgba(255,255,255,.97); backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        nav.scrolled { border-bottom-color: var(--border); box-shadow: 0 1px 12px rgba(0,0,0,.07); }
+        .nav-wrap {
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            height: 66px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+        .logo-box {
+            width: 36px; height: 36px; border-radius: 6px; background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: .9rem; color: #fff; letter-spacing: -.5px;
+        }
+        .logo-txt { font-size: .95rem; font-weight: 700; color: #111; line-height: 1.25; }
+        .logo-txt small { display: block; font-size: .58rem; font-weight: 400; color: var(--muted); }
+
+        .nav-links { display: flex; align-items: center; list-style: none; gap: 0; }
+        .nav-links > li { position: relative; }
+        .nav-links > li > a {
+            display: flex; align-items: center; gap: 4px;
+            text-decoration: none; color: #333; font-size: .855rem; font-weight: 500;
+            padding: .5rem .95rem; border-radius: 6px; white-space: nowrap;
+            transition: background .15s, color .15s;
+        }
+        .nav-links > li > a:hover,
+        .nav-links > li > a.active { background: var(--off); color: var(--green); }
+        .nav-links > li > a svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform .2s; }
+        .nav-links > li:hover > a svg { transform: rotate(180deg); }
+
+        .nav-cta {
+            margin-left: .6rem; background: var(--green) !important; color: #fff !important;
+            border-radius: 6px;
+        }
+        .nav-cta:hover { background: var(--green2) !important; }
+
+        .drop {
+            position: absolute; top: calc(100% + 4px); left: 0;
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 8px; box-shadow: 0 12px 40px rgba(0,0,0,.12);
+            z-index: 9001; opacity: 0; visibility: hidden;
+            transform: translateY(6px); transition: all .18s ease;
+            min-width: 220px; padding: .5rem;
+        }
+        .nav-links > li:hover > .drop { opacity: 1; visibility: visible; transform: translateY(0); }
+        .drop a {
+            display: block; padding: .6rem .9rem; border-radius: 6px;
+            font-size: .84rem; color: #333; text-decoration: none; white-space: nowrap;
+            transition: background .12s, color .12s;
+        }
+        .drop a:hover { background: var(--off); color: var(--green); }
+        .drop-cat {
+            font-size: .68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--muted); padding: .5rem .9rem .25rem;
+        }
+        .drop-divider { height: 1px; background: var(--border); margin: .35rem 0; }
+        .drop-wide {
+            min-width: 380px; display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0; padding: 1rem;
+        }
+        .drop-wide .drop-col { padding: 0 .5rem; }
+        .drop-wide .drop-col + .drop-col { border-left: 1px solid var(--border); padding-left: 1rem; }
+
+        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .burger span { display: block; width: 22px; height: 2px; background: #444; border-radius: 2px; transition: .2s; }
+
+        .mobile-nav {
+            display: none; position: fixed; top: 66px; left: 0; right: 0; bottom: 0;
+            background: #fff; z-index: 8999; overflow-y: auto;
+            padding: 1.5rem 2rem;
+        }
+        .mobile-nav.open { display: block; }
+        .mobile-nav a { display: block; padding: .75rem 0; font-size: .95rem; color: #333; text-decoration: none; border-bottom: 1px solid var(--border); }
+        .mobile-nav a:hover { color: var(--green); }
+        .mobile-cat { font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); padding: 1.25rem 0 .4rem; }
+
+        /* ─── PAGE HEADER ─── */
+        .page-header {
+            margin-top: 66px;
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            position: relative; padding: 5rem 0 3.5rem;
+        }
+        .page-header::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to right, rgba(8,18,30,.9) 55%, rgba(8,18,30,.6) 100%);
+        }
+        .page-header-inner {
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            position: relative; z-index: 1;
+        }
+        .breadcrumb {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.78rem; color: rgba(255,255,255,.4);
+            margin-bottom: 1.25rem;
+        }
+        .breadcrumb a { color: rgba(255,255,255,.4); text-decoration: none; }
+        .breadcrumb a:hover { color: rgba(255,255,255,.8); }
+        .breadcrumb span { color: rgba(255,255,255,.22); }
+        .page-header h1 {
+            font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 800;
+            color: #fff; letter-spacing: -.5px; margin-bottom: .65rem;
+        }
+        .page-header p { font-size: .95rem; color: rgba(255,255,255,.55); max-width: 480px; line-height: 1.75; }
+
+        /* ─── LAYOUT ─── */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        .main-content { padding: 3rem 0 5rem; }
+
+        /* ─── CATEGORY TABS ─── */
+        .cat-tabs-wrap {
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 66px; z-index: 100;
+            background: white; padding-top: 1.25rem;
+        }
+        .cat-tabs { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        .cat-tab {
+            padding: .85rem 1.5rem; font-size: .875rem; font-weight: 600;
+            color: var(--muted); border: none; background: none; cursor: pointer;
+            border-bottom: 2px solid transparent; margin-bottom: -1px;
+            transition: color .2s, border-color .2s;
+            display: flex; align-items: center; gap: 7px;
+        }
+        .cat-tab:hover { color: var(--green); }
+        .cat-tab.active { color: var(--green); border-bottom-color: var(--green); }
+        .cat-tab-count {
+            background: var(--off); color: var(--muted);
+            font-size: .7rem; font-weight: 700;
+            padding: 2px 7px; border-radius: 100px;
+        }
+        .cat-tab.active .cat-tab-count { background: var(--light-green); color: var(--green); }
+
+        /* ─── PRODUCT GRID ─── */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .product-card {
+            border: 1px solid var(--border); border-radius: 8px;
+            overflow: hidden; background: white;
+            transition: border-color .2s, box-shadow .2s, transform .2s;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            border-color: var(--green2);
+            box-shadow: 0 8px 32px rgba(26,122,68,.1);
+            transform: translateY(-3px);
+        }
+        .product-card.selected {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(20,90,50,.12);
+        }
+
+        /* card photo */
+        .pc-photo {
+            width: 100%; height: 200px;
+            background-size: cover; background-position: center;
+            position: relative;
+        }
+        .pc-photo-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(8,18,30,.55) 100%);
+        }
+        .pc-badge {
+            position: absolute; top: .75rem; left: .75rem;
+            font-size: .65rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+            padding: 4px 9px; border-radius: 4px; color: white;
+        }
+
+        .pc-body { padding: 1.35rem 1.5rem 1.25rem; }
+        .pc-variant { font-size: .72rem; font-weight: 600; color: var(--muted); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .4px; }
+        .pc-name { font-size: 1rem; font-weight: 700; color: #111; margin-bottom: .3rem; }
+        .pc-model { font-size: .74rem; color: var(--muted); font-family: 'Courier New', monospace; margin-bottom: .9rem; }
+        .pc-desc { font-size: .84rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.1rem; }
+        .pc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+        .pc-tag {
+            font-size: .68rem; font-weight: 600; padding: 3px 8px;
+            background: var(--off); border: 1px solid var(--border);
+            color: var(--muted); border-radius: 100px;
+        }
+        .pc-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .pc-cta {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: .84rem; font-weight: 600; color: var(--green);
+            transition: gap .2s;
+        }
+        .product-card:hover .pc-cta { gap: 9px; }
+        .pc-cta::after { content: '→'; }
+
+        /* ─── DETAIL PANEL ─── */
+        .detail-panel-wrap {
+            margin-top: 2rem; overflow: hidden;
+            transition: max-height .5s cubic-bezier(.4,0,.2,1), opacity .4s;
+            max-height: 0; opacity: 0;
+        }
+        .detail-panel-wrap.open { max-height: 2400px; opacity: 1; }
+        .detail-panel {
+            background: var(--off); border: 1px solid var(--border);
+            border-radius: 8px; overflow: hidden;
+        }
+        .detail-panel-header {
+            background: linear-gradient(135deg, #0d2e1e, #0a2540);
+            padding: 2rem 2.5rem;
+            display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem;
+        }
+        .dp-badge { font-size: .7rem; font-weight: 700; letter-spacing: .5px; color: #5dc48a; margin-bottom: .4rem; }
+        .dp-name { font-size: 1.4rem; font-weight: 800; color: white; margin-bottom: .2rem; }
+        .dp-model { font-size: .82rem; color: rgba(255,255,255,.45); font-family: 'Courier New', monospace; }
+        .dp-close {
+            width: 34px; height: 34px; border-radius: 6px;
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+            color: white; font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s; min-width: 34px; flex-shrink: 0;
+        }
+        .dp-close:hover { background: rgba(255,255,255,.2); }
+
+        /* ─── SPEC TABS ─── */
+        .spec-tabs-bar {
+            background: white; border-bottom: 1px solid var(--border);
+            display: flex; padding: 0 2.5rem; overflow-x: auto;
+        }
+        .spec-tab {
+            padding: .9rem 1.4rem; font-size: .84rem; font-weight: 600;
+            color: var(--muted); border: none; background: none; cursor: pointer;
+            border-bottom: 2px solid transparent; white-space: nowrap;
+            transition: color .2s, border-color .2s;
+        }
+        .spec-tab:hover { color: var(--green); }
+        .spec-tab.active { color: var(--green); border-bottom-color: var(--green); }
+        .spec-content { padding: 2.5rem; display: none; }
+        .spec-content.active { display: block; }
+        .spec-section { margin-bottom: 2.25rem; }
+        .spec-section:last-child { margin-bottom: 0; }
+        .spec-section-title {
+            font-size: .85rem; font-weight: 700; color: #111;
+            padding-bottom: .55rem; border-bottom: 1px solid var(--border);
+            margin-bottom: 1.1rem;
+        }
+        .spec-list { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+        .spec-list li {
+            display: flex; align-items: flex-start; gap: 9px;
+            font-size: .875rem; color: #333; line-height: 1.6;
+        }
+        .spec-list li::before {
+            content: ''; width: 5px; height: 5px; min-width: 5px;
+            background: var(--green); border-radius: 50%; margin-top: 8px;
+        }
+        .spec-list.faq li { flex-direction: column; gap: 0; padding: .9rem 1.1rem; background: white; border-radius: 6px; border: 1px solid var(--border); }
+        .spec-list.faq li::before { display: none; }
+        .spec-list.faq li strong { font-size: .83rem; color: var(--green); margin-bottom: 3px; display: block; }
+        .spec-list.faq li span { font-size: .83rem; color: var(--muted); }
+
+        /* ─── CAT SECTION ─── */
+        .cat-section { display: none; }
+        .cat-section.active { display: block; }
+        .cat-intro {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1.25rem 1.5rem; background: var(--off); border-radius: 6px;
+            margin-bottom: 2rem; border: 1px solid var(--border);
+        }
+        .cat-intro-text h3 { font-size: .95rem; font-weight: 700; color: #111; margin-bottom: 3px; }
+        .cat-intro-text p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+        .empty-state { text-align: center; padding: 5rem 2rem; color: var(--muted); font-size: .9rem; }
+
+        /* ─── FOOTER ─── */
+        footer { background: #060e18; padding: 3rem 0 1.75rem; }
+        .footer-grid {
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        .footer-brand .logo-txt { color: #fff; }
+        .footer-brand .logo-txt small { color: rgba(255,255,255,.3); }
+        .footer-tagline { font-size: .8rem; color: rgba(255,255,255,.28); line-height: 1.7; margin-top: .8rem; max-width: 220px; }
+        .ft-col h5 { font-size: .68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 1rem; }
+        .ft-col a, .ft-col p { display: block; font-size: .8rem; color: rgba(255,255,255,.3); text-decoration: none; margin-bottom: .5rem; transition: color .15s; }
+        .ft-col a:hover { color: #5dc48a; }
+        .footer-bar {
+            max-width: 1280px; margin: 0 auto; padding: 1.25rem 2rem 0;
+            border-top: 1px solid rgba(255,255,255,.07);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: .76rem; color: rgba(255,255,255,.2);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .burger { display: flex; }
+            .product-grid { grid-template-columns: 1fr; }
+            .detail-panel-header { flex-direction: column; gap: 1rem; }
+            .spec-content { padding: 1.5rem; }
+            .spec-tabs-bar { padding: 0 1.5rem; }
+            .page-header { padding: 3.5rem 0 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bar { flex-direction: column; gap: .3rem; text-align: center; }
+        }
+        @media (max-width: 520px) {
+            .container, .nav-wrap { padding: 0 1.25rem; }
+            .cat-tabs { padding: 0 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+    <div class="nav-wrap">
+        <a href="/" class="logo">
+            <div class="logo-box">TE</div>
+            <div class="logo-txt">TE Robotik <small>Akıllı Çözümler</small></div>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="/">Anasayfa</a></li>
+            <li>
+                <a href="/urunler" class="active">Ürünlerimiz
+                    <svg viewBox="0 0 10 6"><polyline points="1,1 5,5 9,1"/></svg>
+                </a>
+                <div class="drop drop-wide">
+                    <div class="drop-col">
+                        <div class="drop-cat">Elektronik Ürünler</div>
+                        <a href="/urunler?id=efe001-ac">Röle Kontrol Modülü — AC Serisi</a>
+                        <a href="/urunler?id=efe001-dc">Röle Kontrol Modülü — DC Serisi</a>
+                        <a href="/urunler?id=lrg100">LoRa-SIM Gateway</a>
+                    </div>
+                    <div class="drop-col">
+                        <div class="drop-cat">Yazılım Ürünleri</div>
+                        <a href="/urunler?id=dernek-platform">Üyelik Yönetim Platformu</a>
+                        <div class="drop-divider"></div>
+                        <a href="/urunler" style="color:var(--green);font-weight:600;">Tüm Ürünler &rarr;</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="/cozumler">Çözümlerimiz
+                    <svg viewBox="0 0 10 6"><polyline points="1,1 5,5 9,1"/></svg>
+                </a>
+                <div class="drop">
+                    <a href="/cozumler?id=gunes-enerjisi">Güneş Enerjisi Sistemleri</a>
+                    <a href="/cozumler?id=batarya-sistemleri">Batarya & Enerji Depolama</a>
+                    <a href="/cozumler?id=plc-otomasyon">PLC & Saha Otomasyonu</a>
+                    <a href="/cozumler?id=tarimsal-sulama">Tarımsal Sulama & Kontrol</a>
+                    <a href="/cozumler?id=iot-uzak-izleme">IoT & Uzaktan İzleme</a>
+                    <a href="/cozumler?id=kurumsal-yazilim">Kurumsal Yazılım & Dijitalleşme</a>
+                    <div class="drop-divider"></div>
+                    <a href="/cozumler" style="color:var(--green);font-weight:600;">Tüm Çözümler &rarr;</a>
+                </div>
+            </li>
+            <li><a href="/#hakkimizda">Hakkımızda</a></li>
+            <li><a href="/#iletisim">İletişim</a></li>
+            <li><a href="/#iletisim" class="nav-cta">İletişime Geç</a></li>
+        </ul>
+
+        <button class="burger" id="burger" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+    <a href="/">Anasayfa</a>
+    <div class="mobile-cat">Ürünlerimiz</div>
+    <a href="/urunler?id=efe001-ac" style="padding-left:1rem;font-size:.88rem;">Röle Modülü — AC Serisi</a>
+    <a href="/urunler?id=efe001-dc" style="padding-left:1rem;font-size:.88rem;">Röle Modülü — DC Serisi</a>
+    <a href="/urunler?id=lrg100" style="padding-left:1rem;font-size:.88rem;">LoRa-SIM Gateway</a>
+    <a href="/urunler?id=dernek-platform" style="padding-left:1rem;font-size:.88rem;">Üyelik Yönetim Platformu</a>
+    <div class="mobile-cat">Çözümlerimiz</div>
+    <a href="/cozumler?id=gunes-enerjisi" style="padding-left:1rem;font-size:.88rem;">Güneş Enerjisi Sistemleri</a>
+    <a href="/cozumler?id=batarya-sistemleri" style="padding-left:1rem;font-size:.88rem;">Batarya & Enerji Depolama</a>
+    <a href="/cozumler?id=plc-otomasyon" style="padding-left:1rem;font-size:.88rem;">PLC & Saha Otomasyonu</a>
+    <a href="/cozumler?id=tarimsal-sulama" style="padding-left:1rem;font-size:.88rem;">Tarımsal Sulama & Kontrol</a>
+    <a href="/cozumler?id=iot-uzak-izleme" style="padding-left:1rem;font-size:.88rem;">IoT & Uzaktan İzleme</a>
+    <a href="/cozumler?id=kurumsal-yazilim" style="padding-left:1rem;font-size:.88rem;">Kurumsal Yazılım</a>
+    <a href="/#hakkimizda">Hakkımızda</a>
+    <a href="/#iletisim">İletişim</a>
+</div>
+
+<!-- ─── PAGE HEADER ─── -->
+<div class="page-header">
+    <div class="page-header-inner">
+        <div class="breadcrumb">
+            <a href="/">Anasayfa</a>
+            <span>›</span>
+            <span style="color:rgba(255,255,255,.65)">Ürünlerimiz</span>
+        </div>
+        <h1>Ürün Kataloğu</h1>
+        <p>Elektronik kontrol modüllerinden LoRa IoT ağlarına, yazılım platformlarına kadar tüm ürünlerimiz.</p>
+    </div>
+</div>
+
+<!-- ─── TABS ─── -->
+<div class="cat-tabs-wrap" id="cat-tabs-wrap">
+    <div class="cat-tabs" id="cat-tabs">
+        <!-- JS ile doldurulur -->
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container" id="products-container">
+        <div class="empty-state">Yükleniyor...</div>
+    </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="logo">
+                <div class="logo-box">TE</div>
+                <div class="logo-txt">TE Robotik <small>Akıllı Çözümler</small></div>
+            </div>
+            <p class="footer-tagline">Tarımsal ve endüstriyel ihtiyaçlarınız için yerli teknoloji ile çözüm üretiyoruz.</p>
+        </div>
+        <div class="ft-col">
+            <h5>Ürünler</h5>
+            <a href="/urunler?id=efe001-ac">Röle Modülü — AC</a>
+            <a href="/urunler?id=efe001-dc">Röle Modülü — DC</a>
+            <a href="/urunler?id=lrg100">LoRa-SIM Gateway</a>
+            <a href="/urunler?id=dernek-platform">Üyelik Platformu</a>
+        </div>
+        <div class="ft-col">
+            <h5>Çözümler</h5>
+            <a href="/cozumler?id=gunes-enerjisi">Güneş Enerjisi</a>
+            <a href="/cozumler?id=tarimsal-sulama">Tarımsal Sulama</a>
+            <a href="/cozumler?id=iot-uzak-izleme">IoT & İzleme</a>
+            <a href="/cozumler?id=kurumsal-yazilim">Kurumsal Yazılım</a>
+        </div>
+        <div class="ft-col">
+            <h5>İletişim</h5>
+            <p>+90 542 517 48 60</p>
+            <p>tezcansoft@gmail.com</p>
+            <a href="/#iletisim">Teklif Formu</a>
+        </div>
+    </div>
+    <div class="footer-bar">
+        <span>© 2025 TE Robotik Akıllı Çözümler</span>
+        <span>Tüm hakları saklıdır.</span>
+    </div>
+</footer>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/905425174860" target="_blank" rel="noopener" aria-label="WhatsApp ile ulaşın" style="
+    position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
+    width:56px; height:56px; border-radius:50%;
+    background:#25d366; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+    transition:transform .2s, box-shadow .2s;
+    text-decoration:none;
+" onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(0,0,0,.25)'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+</a>
+
+<script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+
+    // Mobile burger
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobile-nav');
+    burger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+    // State
+    let data = null;
+    let activeCat = null;
+    let activeProduct = null;
+
+    // Product photos map by product id
+    const PHOTOS = {
+        'efe001-ac':       'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+        'efe001-dc':       'https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=800&q=80',
+        'lrg100':          'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+        'dernek-platform': 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80',
+    };
+
+    // Check URL for product id
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlProductId = urlParams.get('id');
+
+    fetch('/api/products')
+        .then(r => r.json())
+        .then(json => {
+            data = json;
+            if (urlProductId) {
+                // Find which category this product belongs to
+                for (const cat of data.categories) {
+                    if (cat.products.find(p => p.id === urlProductId)) {
+                        activeCat = cat.id;
+                        activeProduct = urlProductId;
+                        break;
+                    }
+                }
+            }
+            render();
+            if (urlProductId && activeProduct) {
+                setTimeout(() => openProduct(activeProduct), 100);
+            }
+        })
+        .catch(() => {
+            document.getElementById('products-container').innerHTML =
+                '<div class="empty-state">Ürünler yüklenemedi. Lütfen sayfayı yenileyin.</div>';
+        });
+
+    function render() {
+        if (!data) return;
+        if (!activeCat) activeCat = data.categories[0].id;
+        renderTabs();
+        renderProducts();
+    }
+
+    function renderTabs() {
+        const tabsEl = document.getElementById('cat-tabs');
+        tabsEl.innerHTML = data.categories.map(cat => `
+            <button class="cat-tab ${cat.id === activeCat ? 'active' : ''}"
+                    onclick="setCategory('${cat.id}')">
+                ${cat.name}
+                <span class="cat-tab-count">${cat.products.length}</span>
+            </button>
+        `).join('');
+    }
+
+    function renderProducts() {
+        const container = document.getElementById('products-container');
+        const cat = data.categories.find(c => c.id === activeCat);
+        if (!cat) return;
+
+        container.innerHTML = `
+            <div class="cat-section active">
+                <div class="cat-intro">
+                    <div class="cat-intro-text">
+                        <h3>${cat.name}</h3>
+                        <p>${cat.description}</p>
+                    </div>
+                </div>
+                <div class="product-grid" id="product-grid">
+                    ${cat.products.map(p => renderProductCard(p)).join('')}
+                </div>
+                <div class="detail-panel-wrap" id="detail-panel-wrap">
+                    <div class="detail-panel" id="detail-panel"></div>
+                </div>
+            </div>
+        `;
+
+        if (activeProduct) {
+            const stillExists = cat.products.find(p => p.id === activeProduct);
+            if (stillExists) {
+                setTimeout(() => openProduct(activeProduct), 50);
+            } else {
+                activeProduct = null;
+            }
+        }
+    }
+
+    function renderProductCard(p) {
+        const isSelected = activeProduct === p.id;
+        const photo = PHOTOS[p.id] || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80';
+        return `
+            <div class="product-card ${isSelected ? 'selected' : ''}" onclick="toggleProduct('${p.id}')" id="card-${p.id}">
+                <div class="pc-photo" style="background-image:url('${photo}')">
+                    <div class="pc-photo-overlay"></div>
+                    <span class="pc-badge" style="background:${p.badgeColor}">${p.badge}</span>
+                </div>
+                <div class="pc-body">
+                    ${p.variant ? `<div class="pc-variant">${p.variant}</div>` : ''}
+                    <div class="pc-name">${p.name}</div>
+                    <div class="pc-model">${p.model}</div>
+                    <div class="pc-desc">${p.shortDesc}</div>
+                    <div class="pc-tags">
+                        ${p.tags.map(t => `<span class="pc-tag">${t}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="pc-footer">
+                    <span class="pc-cta">${isSelected ? 'Kapat' : 'Teknik Detaylar'}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    function setCategory(catId) {
+        activeCat = catId;
+        activeProduct = null;
+        render();
+    }
+
+    function toggleProduct(productId) {
+        if (activeProduct === productId) {
+            closeDetail();
+        } else {
+            activeProduct = productId;
+            renderProducts();
+            setTimeout(() => openProduct(productId), 50);
+        }
+    }
+
+    function openProduct(productId) {
+        const cat = data.categories.find(c => c.id === activeCat);
+        const product = cat ? cat.products.find(p => p.id === productId) : null;
+        if (!product) return;
+
+        const wrap = document.getElementById('detail-panel-wrap');
+        const panel = document.getElementById('detail-panel');
+        if (!wrap || !panel) return;
+
+        const tabNames = Object.keys(product.specs);
+
+        panel.innerHTML = `
+            <div class="detail-panel-header">
+                <div>
+                    <div class="dp-badge">${product.variant || product.badge}</div>
+                    <div class="dp-name">${product.name}</div>
+                    <div class="dp-model">${product.model}</div>
+                </div>
+                <button class="dp-close" onclick="closeDetail()" title="Kapat">✕</button>
+            </div>
+            <div class="spec-tabs-bar">
+                ${tabNames.map((tab, i) => `
+                    <button class="spec-tab ${i === 0 ? 'active' : ''}"
+                            onclick="switchTab('${escapeAttr(tab)}', this)"
+                            data-tab="${escapeAttr(tab)}">
+                        ${tab}
+                    </button>
+                `).join('')}
+            </div>
+            ${tabNames.map((tab, i) => `
+                <div class="spec-content ${i === 0 ? 'active' : ''}" data-content="${escapeAttr(tab)}">
+                    ${renderSpecContent(product.specs[tab], tab)}
+                </div>
+            `).join('')}
+        `;
+
+        wrap.classList.add('open');
+
+        const card = document.getElementById(`card-${productId}`);
+        if (card) {
+            setTimeout(() => {
+                const offset = card.getBoundingClientRect().top + window.scrollY - 140;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+            }, 80);
+        }
+    }
+
+    function closeDetail() {
+        activeProduct = null;
+        const wrap = document.getElementById('detail-panel-wrap');
+        if (wrap) wrap.classList.remove('open');
+        const cat = data.categories.find(c => c.id === activeCat);
+        const grid = document.getElementById('product-grid');
+        if (grid && cat) {
+            grid.innerHTML = cat.products.map(p => renderProductCard(p)).join('');
+        }
+    }
+
+    function switchTab(tabName, btn) {
+        const panel = document.getElementById('detail-panel');
+        panel.querySelectorAll('.spec-tab').forEach(t => t.classList.remove('active'));
+        panel.querySelectorAll('.spec-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        panel.querySelector(`[data-content="${escapeAttr(tabName)}"]`).classList.add('active');
+    }
+
+    function renderSpecContent(sections, tabName) {
+        if (!sections || sections.length === 0) return '<p style="color:var(--muted);font-size:.875rem;">İçerik yakında eklenecektir.</p>';
+        const isFaq = tabName === 'S.S.S';
+        return sections.map(sec => `
+            <div class="spec-section">
+                <div class="spec-section-title">${sec.title}</div>
+                <ul class="spec-list ${isFaq ? 'faq' : ''}">
+                    ${sec.items.map(item => {
+                        if (isFaq) {
+                            const idx = item.indexOf('→');
+                            if (idx > -1) {
+                                const q = item.substring(0, idx).trim();
+                                const a = item.substring(idx + 1).trim();
+                                return `<li><strong>${q}</strong><span>${a}</span></li>`;
+                            }
+                        }
+                        return `<li>${escapeHtml(item)}</li>`;
+                    }).join('')}
+                </ul>
+            </div>
+        `).join('');
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function escapeAttr(str) {
+        return str.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+</script>
+</body>
+</html>
