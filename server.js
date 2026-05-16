@@ -202,6 +202,17 @@ const server = http.createServer((req, res) => {
         console.log(`Control panel erişimi - Cihaz ID: ${query.device}`);
       }
     }
+    else if (pathname.match(/\.(png|jpg|jpeg|webp|svg|gif)$/i)) {
+        const imgPath = path.join(__dirname, pathname);
+        const ext = path.extname(pathname).toLowerCase();
+        const mimeMap = { '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.svg':'image/svg+xml', '.gif':'image/gif' };
+        fs.readFile(imgPath, (err, content) => {
+            if (err) { res.writeHead(404); res.end('404'); return; }
+            res.writeHead(200, { 'Content-Type': mimeMap[ext] || 'image/png' });
+            res.end(content);
+        });
+        return;
+    }
     else if (pathname.endsWith('.apk')) {
         const filePath = path.join(__dirname, pathname);
         fs.readFile(filePath, (err, content) => {
