@@ -176,28 +176,20 @@ const server = http.createServer((req, res) => {
     let fileName;
     
     if (pathname === '/') {
-    
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end(renderer.renderIndex());
-  return;
-}
-else if (pathname === '/urunler') {
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end(productsRenderer.renderProductList());
-  return;
-}
-else if (pathname.startsWith('/urun/')) {
-  var productId = pathname.replace('/urun/', '');
-  var html = productsRenderer.renderProductDetail(productId);
-  if (html) {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(html);
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('404: Ürün bulunamadı');
-  }
-  return;
-}
+      fileName = 'index.html';
+    }
+    else if (pathname === '/urunler') {
+      fileName = 'products.html';
+    }
+    else if (pathname === '/cozumler') {
+      fileName = 'solutions.html';
+    }
+    else if (pathname === '/api/products') {
+      fileName = 'products.json';
+    }
+    else if (pathname === '/api/solutions') {
+      fileName = 'solutions.json';
+    }
     else if (pathname === '/iosekrani') {
       fileName = 'ios.html';
     }   
