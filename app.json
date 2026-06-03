@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Dijital Çiftçi",
+    "slug": "dijital-ciftci",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./icon.webp",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "../../node_modules/@notifee/react-native/android/libs"
+            ]
+          }
+        }
+      ]
+    ],
+    "splash": {
+      "image": "./splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kumanda"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./icon.webp",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.kumanda"
+    },
+    "web": {
+      "favicon": "./icon.webp"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1feac396-ee9a-4b35-a0cb-05629f5333cf"
+      }
+    }
+  }
+}

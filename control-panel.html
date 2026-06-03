@@ -453,7 +453,15 @@
                 startInfiniteRun();
             }
         }
-
+	function formatTime(seconds) {
+	    const h = Math.floor(seconds / 3600);
+	    const m = Math.floor((seconds % 3600) / 60);
+	    const s = seconds % 60;
+	    if (h > 0) {
+		return h + 's ' + String(m).padStart(2,'0') + 'd ' + String(s).padStart(2,'0') + 'sn';
+	    }
+	    return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+	}
         // ===== STATUS VERİSİ İŞLEME =====
         function handleStatusData(data) {
             const status = parseInt(data.status);
@@ -475,33 +483,32 @@
             }
         }
 
-        function updateDeviceStatus(status, timerValue) {
-            const statusTextMap = {
-                0: 'Bilinmeyen',
-                1: 'Hazır',
-                2: 'Çalışıyor',
-                3: 'Süreli Çalışıyor',
-                4: 'Arızalı'
-            };
-            
-            let statusText = statusTextMap[status] || 'Bilinmeyen';
-            
-            // Protokole göre zaman bilgilerini göster
-            if (status === StatusEnum.TIME_RUNNING && remainingTime > 0) {
-                statusText += ' - Kalan: ' + formatTime(remainingTime);
-            } else if (status === StatusEnum.RUNNING && runTime > 0) {
-                statusText += ' - Süre: ' + formatTime(runTime);
-            } else if ((status === StatusEnum.READY || status === StatusEnum.FAULT) && runTime > 0) {
-                statusText += ' - Toplam: ' + formatTime(runTime);
-            }
-            
-            document.getElementById('statusText').textContent = statusText;
-             
-            updateTimerDisplay();
-            
-            isRunning = (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
-            updatePlayButton(isRunning);
-        }
+       function updateDeviceStatus(status) {
+	    const statusTextMap = {
+		0: 'Bilinmeyen',
+		1: 'Hazır',
+		2: 'Çalışıyor',
+		3: 'Süreli Çalışıyor',
+		4: 'Arızalı'
+	    };
+	    
+	    let statusText = statusTextMap[status] || 'Bilinmeyen';
+	    
+	    // timerSeconds zaten global — onu kullan
+	    if (status === StatusEnum.TIME_RUNNING && timerSeconds > 0) {
+		statusText += ' - Kalan: ' + formatTime(timerSeconds);
+	    } else if (status === StatusEnum.RUNNING && timerSeconds > 0) {
+		statusText += ' - Süre: ' + formatTime(timerSeconds);
+	    } else if ((status === StatusEnum.READY || status === StatusEnum.FAULT) && timerSeconds > 0) {
+		statusText += ' - Toplam: ' + formatTime(timerSeconds);
+	    }
+	    
+	    document.getElementById('statusText').textContent = statusText;
+	    updateTimerDisplay();
+	    
+	    isRunning = (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
+	    updatePlayButton(isRunning);
+	}
 
         function updatePlayButton(running) {
             const playBtn = document.getElementById('playBtn');
