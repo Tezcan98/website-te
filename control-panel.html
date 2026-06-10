@@ -271,10 +271,15 @@
 
         // ===== BİLDİRİM GÖNDER =====
         function sendNotification(title, body) {
-            if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification(title, { body: body, icon: '/favicon.ico' });
-            }
+    try {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification(title, { body: body, icon: '/favicon.ico' });
         }
+    } catch (e) {
+        // Android Chrome new Notification()'a izin vermez; sessiz geç
+        console.warn('Bildirim gösterilemedi:', e.message);
+    }
+}
 
         // ===== SSE BAĞLANTISI (Anlık bildirim) =====
         function connectSSE() {
@@ -468,7 +473,14 @@
             const serverTimerValue = parseInt(data.timerValue) || 0;
 
             currentStatus = status;
-
+	if (status === StatusEnum.FAULT) {
+    updateDeviceStatus(status);   // önce ekranı güncelle
+    stopLocalTimer();
+    timerSeconds = 0;
+    updateTimerDisplay();
+    sendNotification('⚠️ Arıza!', currentDeviceCode + ' cihazında arıza tespit edildi!');
+    return;
+}
             const isLocalTimerActive = timerInterval !== null;
             if (!isLocalTimerActive || Math.abs(serverTimerValue - timerSeconds) > 5) {
                 timerSeconds = serverTimerValue;
@@ -478,8 +490,13 @@
 
             if (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING) {
                 if (!isLocalTimerActive) startLocalTimer();
-            } else {
+            } 
+            else {
                 stopLocalTimer();
+                 if (status === StatusEnum.FAULT || status === StatusEnum.READY) {
+			timerSeconds = 0;
+			updateTimerDisplay();
+		 }
             }
         }
 
@@ -489,27 +506,29 @@
 		1: 'Hazır',
 		2: 'Çalışıyor',
 		3: 'Süreli Çalışıyor',
-		4: 'Arızalı'
+		4: 'ARIZA!'
 	    };
 	    
 	    let statusText = statusTextMap[status] || 'Bilinmeyen';
-	    
-	    // timerSeconds zaten global — onu kullan
-	    if (status === StatusEnum.TIME_RUNNING && timerSeconds > 0) {
-		statusText += ' - Kalan: ' + formatTime(timerSeconds);
-	    } else if (status === StatusEnum.RUNNING && timerSeconds > 0) {
-		statusText += ' - Süre: ' + formatTime(timerSeconds);
-	    } else if ((status === StatusEnum.READY || status === StatusEnum.FAULT) && timerSeconds > 0) {
-		statusText += ' - Toplam: ' + formatTime(timerSeconds);
-	    }
-	    
 	    document.getElementById('statusText').textContent = statusText;
 	    updateTimerDisplay();
+	    
+	    // --- GÖRSEL GÜNCELLEME (ARIZA İÇİN) ---
+	    const mainCircle = document.querySelector('.main-circle');
+	    if (status === StatusEnum.FAULT) {
+		mainCircle.style.borderColor = '#f44336'; // Kırmızı çerçeve
+		mainCircle.style.background = 'rgba(244, 67, 54, 0.1)'; // Hafif kırmızı arka plan
+		document.getElementById('statusText').style.color = '#f44336';
+	    } else {
+		mainCircle.style.borderColor = ''; // Varsayılana dön
+		mainCircle.style.background = '';
+		document.getElementById('statusText').style.color = '';
+	    }
+	    // -------------------------------------
 	    
 	    isRunning = (status === StatusEnum.RUNNING || status === StatusEnum.TIME_RUNNING);
 	    updatePlayButton(isRunning);
 	}
-
         function updatePlayButton(running) {
             const playBtn = document.getElementById('playBtn');
             const playIcon = document.getElementById('playIcon');
