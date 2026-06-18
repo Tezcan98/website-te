@@ -4,7 +4,6 @@ const path = require('path');
 const querystring = require('querystring'); 
 const url = require('url');
 const mqtt = require('mqtt');
-const renderer = require('./db-renderer');
 const productsRenderer = require('./products-renderer');
 const hostname = '0.0.0.0';
 const port = 3000;
@@ -175,7 +174,7 @@ const server = http.createServer((req, res) => {
   if (method === 'GET') {
     let fileName;
     
-    if (pathname === '/') {
+if (pathname === '/') {
     
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(renderer.renderIndex());

@@ -274,18 +274,8 @@
 });
 		
 	function handleAndroidDownload() {
-	    // ... (Mevcut APK indirme kodu)
-	    const downloadLink = document.createElement('a');
-		downloadLink.href = 'sulama.apk'; // public klasöründe durmalı
-		downloadLink.download = 'sulama.apk';
-
-		document.body.appendChild(downloadLink);
-		downloadLink.click();
-		document.body.removeChild(downloadLink);
-
-		alert('APK dosyası indiriliyor...\n\nDikkat: Bilinmeyen kaynaklardan uygulama yüklemesine izin vermeniz gerekebilir.');
-		console.log('APK indirme işlemi başlatıldı...');
-	}
+	 window.location.href = 'https://play.google.com/store/apps/details?id=com.kumanda';
+        }
 
 	function handleIOSRedirect() {
 	    // Cihaz kodu giriş sayfasına (init.html) yönlendirme için sunucudaki rotayı kullan
