@@ -175,10 +175,8 @@ const server = http.createServer((req, res) => {
     let fileName;
     
 if (pathname === '/') {
-    
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end(renderer.renderIndex());
-  return;
+    fileName = 'index.html';
+
 }
 else if (pathname === '/urunler') {
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
