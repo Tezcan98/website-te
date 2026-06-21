@@ -170,10 +170,82 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // ===== UNIVERSAL LINK / APP LINK DOĞRULAMA DOSYALARI =====
+  // Android: cihaz uygulamasını otomatik açmak için imza parmak izi doğrulaması
+  if (pathname === '/.well-known/assetlinks.json') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify([
+      {
+        relation: ["delegate_permission/common.handle_all_urls"],
+        target: {
+          namespace: "android_app",
+          package_name: "com.kumanda",
+          sha256_cert_fingerprints: ["DB:6A:DA:6F:A6:11:1D:1B:C1:58:F4:3A:5B:86:CA:1B:DB:13:FD:11:52:BD:09:52:9C:DA:62:AE:9A:07:13:6E"]
+        }
+      }
+    ]));
+    return;
+  }
+
+  // iOS: Apple Team ID henüz bilinmiyor, gelince REPLACE_WITH_TEAM_ID güncellenmeli
+  if (pathname === '/.well-known/apple-app-site-association') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      applinks: {
+        apps: [],
+        details: [
+          {
+            appID: "REPLACE_WITH_TEAM_ID.com.kumanda",
+            paths: ["/ekle", "/ekle/*"]
+          }
+        ]
+      }
+    }));
+    return;
+  }
+
+  // ===== CİHAZ PAYLAŞIM LİNKİ =====
+  // Uygulama yüklüyse Universal/App Link bu sayfaya hiç gelmeden uygulamayı açar.
+  // Yüklü değilse burası mağaza linklerini gösteren bir fallback sayfasıdır.
+  if (pathname === '/ekle') {
+    const code = query.code || '';
+    const isim = query.isim || '';
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(`<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cihaz Ekle - Akıllı Sulama</title>
+<style>
+  body { font-family: -apple-system, Roboto, Arial, sans-serif; background:#F5F5F5; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; padding:20px; }
+  .card { background:#fff; border-radius:20px; padding:32px 24px; max-width:400px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+  h1 { font-size:20px; color:#1a1a1a; margin-bottom:8px; }
+  p { color:#666; font-size:14px; margin-bottom:24px; }
+  .device { background:#E8F5E9; border-radius:12px; padding:14px; margin-bottom:24px; }
+  .device b { color:#2E7D32; font-size:16px; }
+  a.btn { display:block; padding:14px; border-radius:12px; text-decoration:none; font-weight:600; margin-bottom:12px; }
+  .android { background:#30913F; color:#fff; }
+  .ios { background:#000; color:#fff; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>💧 Akıllı Sulama</h1>
+    <p>Bu cihazı eklemek için uygulamayı indirin. Uygulama zaten yüklüyse bu link otomatik olarak içinde açılır.</p>
+    ${isim ? `<div class="device">Cihaz: <b>${isim}</b></div>` : ''}
+    <a class="btn android" href="https://play.google.com/store/apps/details?id=com.kumanda">Android'de İndir</a>
+    <a class="btn ios" href="https://apps.apple.com/app/com.kumanda">iPhone'da İndir</a>
+  </div>
+</body>
+</html>`);
+    return;
+  }
+
   // ===== NORMAL SAYFA İSTEKLERİ =====
   if (method === 'GET') {
     let fileName;
-    
+
 if (pathname === '/') {
     fileName = 'index.html';
 
