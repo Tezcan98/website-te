@@ -216,10 +216,15 @@
                     <div class="platform-icon">🤖</div>
                     <div class="platform-name">Android</div>
                 </div>
-                
+
                 <div class="platform-btn" data-platform="ios">
-                    <div class="platform-icon">🌐</div>
-                    <div class="platform-name">iOS / Windows</div>
+                    <div class="platform-icon">🍎</div>
+                    <div class="platform-name">iOS</div>
+                </div>
+
+                <div class="platform-btn" data-platform="windows">
+                    <div class="platform-icon">🖥️</div>
+                    <div class="platform-name">Windows</div>
                 </div>
             </div>
         </div>
@@ -265,21 +270,26 @@
         
         continueBtn.addEventListener('click', () => {
     if (selectedPlatform === 'android') {
-        // Android APK indirme (BU KISIM DEĞİŞMEDİ)
-        handleAndroidDownload(); 
+        handleAndroidDownload();
     } else if (selectedPlatform === 'ios') {
-        // iOS/Windows web sitesine yönlendirme: Yeni rotamızı kullanıyoruz.
         handleIOSRedirect();
+    } else if (selectedPlatform === 'windows') {
+        handleWindowsRedirect();
     }
 });
-		
+
 	function handleAndroidDownload() {
 	 window.location.href = 'https://play.google.com/store/apps/details?id=com.kumanda';
         }
 
 	function handleIOSRedirect() {
-	    // Cihaz kodu giriş sayfasına (init.html) yönlendirme için sunucudaki rotayı kullan
-	    window.location.href = '/iosekrani'; // <-- BURASI DEĞİŞTİ!
+	    // Uygulama App Store'da yayında, doğrudan mağazaya yönlendir
+	    window.location.href = 'https://apps.apple.com/us/app/dijital-%C3%A7ift%C3%A7i/id6778957557';
+	}
+
+	function handleWindowsRedirect() {
+	    // Cihaz kodu giriş sayfası üzerinden web kontrol paneline yönlendir
+	    window.location.href = '/iosekrani';
 	}
         // Klavye desteği
         document.addEventListener('keydown', (e) => {
@@ -287,6 +297,8 @@
                 document.querySelector('[data-platform="android"]').click();
             } else if (e.key === '2') {
                 document.querySelector('[data-platform="ios"]').click();
+            } else if (e.key === '3') {
+                document.querySelector('[data-platform="windows"]').click();
             } else if (e.key === 'Enter' && selectedPlatform) {
                 continueBtn.click();
             }

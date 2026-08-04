@@ -235,7 +235,7 @@ const server = http.createServer((req, res) => {
     <p>Bu cihazı eklemek için uygulamayı indirin. Uygulama zaten yüklüyse bu link otomatik olarak içinde açılır.</p>
     ${isim ? `<div class="device">Cihaz: <b>${isim}</b></div>` : ''}
     <a class="btn android" href="https://play.google.com/store/apps/details?id=com.kumanda">Android'de İndir</a>
-    <a class="btn ios" href="https://apps.apple.com/app/com.kumanda">iPhone'da İndir</a>
+    <a class="btn ios" href="https://apps.apple.com/us/app/dijital-%C3%A7ift%C3%A7i/id6778957557">iPhone'da İndir</a>
   </div>
 </body>
 </html>`);
@@ -268,8 +268,17 @@ else if (pathname.startsWith('/urun/')) {
   return;
 }
     else if (pathname === '/iosekrani') {
+      // Gerçek iPhone/iPad ziyaretçisini doğrudan App Store'a yönlendir.
+      // Windows/masaüstü ziyaretçileri (aynı butonu paylaşıyorlar) eskisi gibi
+      // cihaz kodu formuna düşüp kontrol paneline devam ediyor.
+      const userAgent = req.headers['user-agent'] || '';
+      if (/iPhone|iPad|iPod/i.test(userAgent)) {
+        res.writeHead(302, { 'Location': 'https://apps.apple.com/us/app/dijital-%C3%A7ift%C3%A7i/id6778957557' });
+        res.end();
+        return;
+      }
       fileName = 'ios.html';
-    }   
+    }
     else if (pathname === '/cihazkayit') {
       fileName = 'init.html';
     } 
