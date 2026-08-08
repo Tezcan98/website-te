@@ -70,15 +70,14 @@ function parseIni(filePath) {
   return result;
 }
 
-// --- APP.JSON OKUYUCU (Ana versiyon kaynağı) ---
-function getAppVersion() {
+// --- APP.JSON OKUYUCU (config.ini'de version yoksa yedek kaynak) ---
+function getAppVersionFromJson() {
   try {
     const appJsonPath = path.join(__dirname, 'app.json');
     const appJson = JSON.parse(fs.readFileSync(appJsonPath, 'utf-8'));
-    return appJson.expo?.version || '0.0.0';
+    return appJson.expo?.version || null;
   } catch (err) {
-    console.error('app.json okunamadı:', err.message);
-    return '0.0.0';
+    return null;
   }
 }
 
@@ -93,12 +92,14 @@ const DEFAULT_REGISTRATION_URL = 'https://te-robotik.com.tr/cihaz-kayit';
 function loadConfig() {
   let notificationMessage = '';
   let deviceRegistrationUrl = DEFAULT_REGISTRATION_URL;
+  let versionFromIni = null;
 
   try {
     if (fs.existsSync(INI_PATH)) {
       const ini = parseIni(INI_PATH);
       notificationMessage = ini.app?.notification?.trim() || '';
       deviceRegistrationUrl = ini.app?.device_registration_url?.trim() || DEFAULT_REGISTRATION_URL;
+      versionFromIni = ini.app?.version?.trim() || null;
     }
   } catch (err) {
     console.error('config.ini okunamadı:', err.message);
@@ -107,30 +108,41 @@ function loadConfig() {
   return {
     notificationMessage,
     deviceRegistrationUrl,
+    versionFromIni,
   };
 }
 
+// Öncelik: config.ini'deki [app] version -> app.json -> '0.0.0'
+function resolveVersion(config) {
+  return config.versionFromIni || getAppVersionFromJson() || '0.0.0';
+}
+
 let CONFIG = loadConfig();
-let CACHED_VERSION = getAppVersion();
+let CACHED_VERSION = resolveVersion(CONFIG);
 
 // --- OTOMATİK YENİDEN YÜKLEME ---
 
-// config.ini değişikliği
+// config.ini değişikliği (versiyon artık öncelikli olarak burada okunuyor)
 try {
   fs.watch(INI_PATH, () => {
     console.log('config.ini değişti, yeniden yükleniyor...');
     CONFIG = loadConfig();
+    const newVersion = resolveVersion(CONFIG);
+    if (newVersion !== CACHED_VERSION) {
+      CACHED_VERSION = newVersion;
+      console.log(`🚀 Versiyon güncellendi: ${CACHED_VERSION}`);
+    }
     console.log(`Yeni bildiri: ${CONFIG.notificationMessage || 'Yok'}`);
   });
 } catch (e) {
   // config.ini yoksa sorun değil
 }
 
-// app.json değişikliği (versiyon güncellemesi)
+// app.json değişikliği (sadece config.ini'de version tanımlı değilse etkili olur)
 try {
   const APP_JSON_PATH = path.join(__dirname, 'app.json');
   fs.watch(APP_JSON_PATH, () => {
-    const newVersion = getAppVersion();
+    const newVersion = resolveVersion(CONFIG);
     if (newVersion !== CACHED_VERSION) {
       CACHED_VERSION = newVersion;
       console.log(`🚀 Versiyon güncellendi: ${CACHED_VERSION}`);
