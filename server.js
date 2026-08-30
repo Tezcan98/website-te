@@ -9,11 +9,12 @@ const hostname = '0.0.0.0';
 const port = 3000;
 
 // ===== MQTT AYARLARI =====
-const MQTT_CONFIG = { 
-    host: '31.58.245.116', 
-    port: 1883,
-    username: 'myuser', 
-    password: 'qwert159' 
+// Gerçek değerler ortam değişkenlerinden okunur (bkz. .env.example).
+const MQTT_CONFIG = {
+    host: process.env.MQTT_HOST || '31.58.245.116',
+    port: parseInt(process.env.MQTT_PORT, 10) || 1883,
+    username: process.env.MQTT_USERNAME || 'myuser',
+    password: process.env.MQTT_PASSWORD || 'qwert159'
 };
 
 let mqttClient = null;

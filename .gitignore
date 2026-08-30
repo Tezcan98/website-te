@@ -1,2 +1,26 @@
+# Dependencies
+node_modules/
+
+# Secrets / credentials
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.p12
+*.pem
+
+# Build artifacts
 *.apk
-node_modules/*
+*.aab
+
+# Logs
+logs/
+*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
