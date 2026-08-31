@@ -140,7 +140,7 @@
       "id": 1,
       "icon": "📍",
       "title": "Adres",
-      "line1": "Teknokent, Ankara",
+      "line1": "Kocaeli",
       "line2": "Türkiye",
       "sort_order": 1
     },
@@ -156,7 +156,7 @@
       "id": 3,
       "icon": "✉️",
       "title": "E-posta",
-      "line1": "info@te-robotik.com",
+      "line1": "info@te-robotik.com.tr",
       "line2": null,
       "sort_order": 3
     },

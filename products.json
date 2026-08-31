@@ -12,23 +12,24 @@
       "products": [
         {
           "id": "efe001-ac",
+          "image": "/ac-katolog.png",
           "name": "Akıllı Röle Kontrol Modülü",
-          "model": "EFE001-2G-SIM",
+          "model": "EFE001-M2M-SIM",
           "variant": "AC Serisi",
-          "shortDesc": "100-240V AC girişli, 2G SIM destekli uzaktan röle kontrol modülü. SMS veya internet üzerinden her yerden kontrol edin.",
+          "shortDesc": "100-240V AC girişli, M2M SIM destekli uzaktan röle kontrol modülü. SMS veya internet üzerinden her yerden kontrol edin.",
           "badge": "AC",
           "badgeColor": "#e74c3c",
           "highlight": "100–240V AC",
-          "tags": ["2G/SIM", "Uzaktan Kontrol", "Yerli Üretim", "CE"],
+          "tags": ["M2M/SIM", "Uzaktan Kontrol", "Yerli Üretim", "CE"],
           "specs": {
             "Ürün Özellikleri": [
               {
                 "title": "Genel Özellikler",
                 "items": [
-                  "Model Kodu: EFE001-2G-SIM",
+                  "Model Kodu: EFE001-M2M-SIM",
                   "Giriş Voltajı: 100–240V AC, 50/60 Hz, 0.2A Max",
                   "Çıkış Voltajı: Maks. 10A / 250V AC",
-                  "Haberleşme: 2G/GPRS (SIM Kart)",
+                  "Haberleşme: M2M/GPRS (SIM Kart)",
                   "Çalışma Sıcaklığı: -10°C ~ +55°C",
                   "Nem: %5 ~ %95 (yoğuşmasız)",
                   "Boyutlar: 85 × 45 × 30 mm",
@@ -38,7 +39,7 @@
               {
                 "title": "Haberleşme",
                 "items": [
-                  "2G/GPRS (Quad-band) desteği",
+                  "M2M/GPRS (Quad-band) desteği",
                   "SMS komutu ile uzaktan kontrol",
                   "MQTT / HTTP protokol desteği",
                   "Standart SIM kart yuvası",
@@ -75,7 +76,7 @@
               {
                 "title": "Sık Sorulan Sorular",
                 "items": [
-                  "S: Hangi operatörlerin SIM kartları destekleniyor? → Türkiye'deki tüm 2G/GPRS destekli operatörler (Turkcell, Vodafone, Türk Telekom) ile uyumludur.",
+                  "S: Hangi operatörlerin SIM kartları destekleniyor? → Türkiye'deki tüm M2M/GPRS destekli operatörler (Turkcell, Vodafone, Türk Telekom) ile uyumludur.",
                   "S: Kurulum için teknik bilgi gerekiyor mu? → Temel elektrik bilgisi yeterlidir. Ürünle birlikte detaylı kurulum kılavuzu verilmektedir.",
                   "S: Uzaktan kontrol nasıl yapılıyor? → SMS komutu veya mobil uygulamamız üzerinden kontrol edebilirsiniz.",
                   "S: Garanti süresi nedir? → 2 yıl üretici garantisi mevcuttur.",
@@ -87,23 +88,24 @@
         },
         {
           "id": "efe001-dc",
+          "image": "/dc-katolog.png",
           "name": "Akıllı Röle Kontrol Modülü",
-          "model": "EFE001-2G-SIM-DC",
+          "model": "EFE001-M2M-SIM-DC",
           "variant": "DC Serisi",
           "shortDesc": "5–130V DC girişli geniş gerilim aralıklı röle kontrol modülü. Güneş enerjisi, araç ve tarımsal sistemler için ideal.",
           "badge": "DC",
           "badgeColor": "#2980b9",
           "highlight": "5–130V DC",
-          "tags": ["Geniş DC Aralığı", "Güneş Uyumlu", "2G/SIM", "Yerli Üretim"],
+          "tags": ["Geniş DC Aralığı", "Güneş Uyumlu", "M2M/SIM", "Yerli Üretim"],
           "specs": {
             "Ürün Özellikleri": [
               {
                 "title": "Genel Özellikler",
                 "items": [
-                  "Model Kodu: EFE001-2G-SIM-DC",
+                  "Model Kodu: EFE001-M2M-SIM-DC",
                   "Giriş Voltajı: 5–130V DC",
                   "Çıkış: Maks. 10A / 30V DC veya 10A / 250V AC",
-                  "Haberleşme: 2G/GPRS (SIM Kart)",
+                  "Haberleşme: M2M/GPRS (SIM Kart)",
                   "Çalışma Sıcaklığı: -20°C ~ +60°C",
                   "Nem: %5 ~ %95 (yoğuşmasız)",
                   "Boyutlar: 85 × 45 × 30 mm",
@@ -123,7 +125,7 @@
               {
                 "title": "Haberleşme",
                 "items": [
-                  "2G/GPRS (Quad-band) desteği",
+                  "M2M/GPRS (Quad-band) desteği",
                   "SMS komutu ile uzaktan kontrol",
                   "MQTT / HTTP protokol desteği",
                   "Standart SIM kart yuvası"
@@ -158,14 +160,15 @@
         },
         {
           "id": "lrg100",
+          "image": "/gateway.jpeg",
           "name": "LoRa-SIM Gateway",
-          "model": "LRG-100-2G",
+          "model": "LRG-100-M2M",
           "variant": "",
-          "shortDesc": "LoRa ve 2G/SIM hibrit gateway. IoT sensör ağınızı kapsama interneti olmayan bölgelerde de buluta taşıyın.",
+          "shortDesc": "LoRa ve M2M/SIM hibrit gateway. IoT sensör ağınızı kapsama interneti olmayan bölgelerde de buluta taşıyın.",
           "badge": "LoRa",
           "badgeColor": "#8e44ad",
-          "highlight": "LoRa + 2G Hibrit",
-          "tags": ["LoRaWAN", "2G Backhaul", "IP65", "Güneş Uyumlu"],
+          "highlight": "LoRa + M2M Hibrit",
+          "tags": ["LoRaWAN", "M2M Backhaul", "IP65", "Güneş Uyumlu"],
           "specs": {
             "Ürün Özellikleri": [
               {
@@ -182,7 +185,7 @@
               {
                 "title": "Hücresel Bağlantı",
                 "items": [
-                  "2G/GPRS: Quad-band (850/900/1800/1900 MHz)",
+                  "M2M/GPRS: Quad-band (850/900/1800/1900 MHz)",
                   "SIM kart yuvası: Standart / Micro SIM",
                   "Veri aktarım hızı: 85.6 kbps (GPRS Class 10)",
                   "Desteklenen: AWS IoT, Azure IoT Hub, özel MQTT broker"
@@ -218,7 +221,7 @@
                 "title": "Sık Sorulan Sorular",
                 "items": [
                   "S: Kaç adet LoRa cihazı bağlanabilir? → Ağ yüküne bağlı olarak 1.000'e kadar end-device desteklenir.",
-                  "S: İnternet altyapısı olmayan alanlarda çalışır mı? → Evet, 2G kapsama alanı olan her yerde çalışır.",
+                  "S: İnternet altyapısı olmayan alanlarda çalışır mı? → Evet, M2M kapsama alanı olan her yerde çalışır.",
                   "S: Hangi sensörler ile uyumlu? → LoRaWAN standardını destekleyen tüm sensörlerle uyumludur.",
                   "S: Garanti süresi nedir? → 2 yıl üretici garantisi mevcuttur."
                 ]
@@ -236,6 +239,7 @@
       "products": [
         {
           "id": "dernek-platform",
+          "image": "/img-dernek-platform.svg",
           "name": "Dernek & Kurum Üyelik Yönetim Platformu",
           "model": "TE-MMP v2.0",
           "variant": "",
@@ -315,6 +319,7 @@
       "products": [
         {
           "id": "epias-ges-kontrol",
+          "image": "/img-epias-ges.svg",
           "name": "EPİAŞ Bazlı GES Otomasyon Sistemi",
           "model": "TE-EPS100",
           "variant": "",
@@ -353,7 +358,7 @@
                 "items": [
                   "Giriş Voltajı: 100–240V AC, 50/60 Hz",
                   "Röle Çıkış Kapasitesi: 16A @ 250V AC",
-                  "Haberleşme: Wi-Fi / Ethernet / 2G Yedekli",
+                  "Haberleşme: Wi-Fi / Ethernet / M2M Yedekli",
                   "Bulut Platformu: MQTT üzerinden gerçek zamanlı veri akışı",
                   "Mobil uygulama üzerinden anlık bildirim ve raporlama"
                 ]
@@ -375,6 +380,7 @@
         },
         {
           "id": "rs485-solar-surucu",
+          "image": "/img-rs485-surucu.svg",
           "name": "RS485 Solar Panel Sürücü Kontrol Modülü",
           "model": "TE-RSD200",
           "variant": "",
@@ -412,7 +418,7 @@
                 "items": [
                   "Giriş Gerilimi: 12–24V DC",
                   "RS485 Haberleşme Hızı: 9600–115200 bps (yapılandırılabilir)",
-                  "Bulut Bağlantısı: Wi-Fi / Ethernet / 2G üzerinden MQTT",
+                  "Bulut Bağlantısı: Wi-Fi / Ethernet / M2M üzerinden MQTT",
                   "Veri Kayıt Aralığı: 1 dakikadan başlayan yapılandırılabilir periyot",
                   "Yerel veri tamponlama: Bağlantı kesintisinde otomatik senkronizasyon"
                 ]
