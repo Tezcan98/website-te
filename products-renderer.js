@@ -9,6 +9,44 @@ var SITE_DATA_PATH = path.join(__dirname, 'site-data.json');
 function loadProducts() { return JSON.parse(fs.readFileSync(PRODUCTS_PATH, 'utf8')); }
 function loadSite()     { return JSON.parse(fs.readFileSync(SITE_DATA_PATH, 'utf8')); }
 
+// products.json ürünleri kategoriler içine iç içe tutar (categories[].products[]).
+// Sayfa oluşturucular tek düz bir liste bekler; burada kategori bilgisini
+// (id/isim/ikon) her ürüne taşıyarak düzleştiriyoruz.
+function flattenProducts(data) {
+  var all = [];
+  data.categories.forEach(function(c) {
+    c.products.forEach(function(p) {
+      var merged = {};
+      for (var key in p) { merged[key] = p[key]; }
+      merged.category     = c.id;
+      merged.categoryName = c.name;
+      merged.categoryIcon = c.icon;
+      all.push(merged);
+    });
+  });
+  return all;
+}
+
+// Nested { "Sekme Adı": [ { title, items[] } ] } özellik verisini
+// sekmeli bir bölüm listesi olarak render eder.
+function renderSpecs(specs) {
+  if (!specs) return '';
+  var out = '';
+  Object.keys(specs).forEach(function(tabName) {
+    out += '<div class="spec-tab-group">'
+      + '<h3 class="spec-tab-title">' + tabName + '</h3>';
+    specs[tabName].forEach(function(block) {
+      out += '<div class="spec-block">'
+        + '<h4 class="spec-block-title">' + block.title + '</h4>'
+        + '<ul class="spec-items">'
+        + block.items.map(function(item) { return '<li>' + item + '</li>'; }).join('')
+        + '</ul></div>';
+    });
+    out += '</div>';
+  });
+  return out;
+}
+
 // ── Ortak nav/footer parçaları ────────────────────────────────────────────────
 function navHTML(site) {
   return '<nav id="navbar">'
@@ -90,26 +128,28 @@ function renderProductList() {
   var sc = site.settings.secondary_color|| '#4a7c59';
   var ac = site.settings.accent_color   || '#7cb342';
 
+  var allProducts = flattenProducts(data);
+
   var catTabs = data.categories.map(function(c, i) {
-    return '<button class="cat-tab' + (i===0?' active':'') + '" data-cat="' + c.id + '">' + c.label + '</button>';
+    return '<button class="cat-tab' + (i===0?' active':'') + '" data-cat="' + c.id + '">' + c.name + '</button>';
   }).join('');
 
-  var cards = data.products.map(function(p) {
+  var cards = allProducts.map(function(p) {
     var badge = p.badge
-      ? '<span class="badge" style="background:' + p.badge_color + '">' + p.badge + '</span>'
+      ? '<span class="badge" style="background:' + p.badgeColor + '">' + p.badge + '</span>'
       : '';
     return '<div class="product-card" data-cat="' + p.category + '" onclick="location.href=\'/urun/' + p.id + '\'">'
       + '<div class="card-img">'
       + badge
-      + '<span class="card-emoji">' + p.image_emoji + '</span>'
+      + '<span class="card-emoji">' + p.categoryIcon + '</span>'
       + '</div>'
       + '<div class="card-body">'
-      + '<p class="card-cat">' + data.categories.find(function(c){return c.id===p.category;}).label + '</p>'
+      + '<p class="card-cat">' + p.categoryName + '</p>'
       + '<h3 class="card-name">' + p.name + '</h3>'
-      + '<p class="card-tagline">' + p.tagline + '</p>'
-      + '<p class="card-desc">' + p.short_desc + '</p>'
+      + '<p class="card-tagline">' + (p.highlight || p.variant || '') + '</p>'
+      + '<p class="card-desc">' + p.shortDesc + '</p>'
       + '<div class="card-footer">'
-      + '<span class="card-price">' + p.price + '</span>'
+      + '<span class="card-price">' + (p.price || 'Fiyat için iletişime geçin') + '</span>'
       + '<span class="card-cta">Detaylar →</span>'
       + '</div>'
       + '</div></div>';
@@ -200,34 +240,31 @@ function renderProductDetail(productId) {
   var sc = site.settings.secondary_color|| '#4a7c59';
   var ac = site.settings.accent_color   || '#7cb342';
 
+  var allProducts = flattenProducts(data);
+
   var p = null;
-  for (var i=0; i<data.products.length; i++) {
-    if (data.products[i].id === productId) { p = data.products[i]; break; }
+  for (var i=0; i<allProducts.length; i++) {
+    if (allProducts[i].id === productId) { p = allProducts[i]; break; }
   }
   if (!p) return null;
 
-  var catLabel = '';
-  for (var j=0; j<data.categories.length; j++) {
-    if (data.categories[j].id === p.category) { catLabel = data.categories[j].label; break; }
-  }
+  var catLabel = p.categoryName;
 
-  var specsHTML = p.specs.map(function(sp) {
-    return '<div class="spec-item"><span class="spec-label">' + sp.label + '</span><span class="spec-value">' + sp.value + '</span></div>';
-  }).join('');
+  var specsHTML = renderSpecs(p.specs);
 
-  var featuresHTML = p.features.map(function(f) {
+  var featuresHTML = (p.tags || []).map(function(f) {
     return '<li><span class="feat-check">✓</span>' + f + '</li>';
   }).join('');
 
   // İlgili ürünler (aynı kategori, kendisi hariç, max 3)
-  var related = data.products.filter(function(x){ return x.id!==p.id && x.category===p.category; }).slice(0,3);
+  var related = allProducts.filter(function(x){ return x.id!==p.id && x.category===p.category; }).slice(0,3);
   var relatedHTML = related.length > 0
     ? '<section class="related"><div class="container"><h2>İlgili Ürünler</h2><div class="related-grid">'
       + related.map(function(r){
           return '<div class="rel-card" onclick="location.href=\'/urun/'+r.id+'\'">'
-            + '<div class="rel-img">' + r.image_emoji + '</div>'
+            + '<div class="rel-img">' + r.categoryIcon + '</div>'
             + '<h4>' + r.name + '</h4>'
-            + '<p>' + r.tagline + '</p>'
+            + '<p>' + (r.highlight || r.variant || '') + '</p>'
             + '<span>Detaylar →</span>'
             + '</div>';
         }).join('')
@@ -235,7 +272,7 @@ function renderProductDetail(productId) {
     : '';
 
   var badge = p.badge
-    ? '<span class="detail-badge" style="background:' + p.badge_color + '">' + p.badge + '</span>'
+    ? '<span class="detail-badge" style="background:' + p.badgeColor + '">' + p.badge + '</span>'
     : '';
 
   return '<!DOCTYPE html><html lang="tr"><head>'
@@ -270,11 +307,16 @@ function renderProductDetail(productId) {
     + '.features-list li { display:flex; align-items:flex-start; gap:.75rem; padding:.6rem 0; border-bottom:1px solid #f0f0f0; font-size:.95rem; color:var(--text); }\n'
     + '.features-list li:last-child { border:none; }\n'
     + '.feat-check { color:var(--ac); font-weight:800; flex-shrink:0; }\n'
-    + '.specs-card { background:#fff; border-radius:20px; box-shadow:var(--shadow); padding:2rem; }\n'
-    + '.spec-item { display:flex; justify-content:space-between; align-items:center; padding:.75rem 0; border-bottom:1px solid #f5f5f5; }\n'
-    + '.spec-item:last-child { border:none; }\n'
-    + '.spec-label { font-size:.9rem; color:var(--light); }\n'
-    + '.spec-value { font-size:.9rem; font-weight:700; color:var(--pc); }\n'
+    + '.specs-card { background:#fff; border-radius:20px; box-shadow:var(--shadow); padding:2rem; max-height:520px; overflow-y:auto; }\n'
+    + '.spec-tab-group { margin-bottom:1.5rem; }\n'
+    + '.spec-tab-group:last-child { margin-bottom:0; }\n'
+    + '.spec-tab-title { font-size:1rem; font-weight:800; color:var(--pc); margin-bottom:.75rem; }\n'
+    + '.spec-block { margin-bottom:1rem; }\n'
+    + '.spec-block:last-child { margin-bottom:0; }\n'
+    + '.spec-block-title { font-size:.85rem; font-weight:700; color:var(--light); margin-bottom:.4rem; }\n'
+    + '.spec-items { list-style:none; }\n'
+    + '.spec-items li { font-size:.88rem; color:var(--text); padding:.4rem 0; border-bottom:1px solid #f5f5f5; }\n'
+    + '.spec-items li:last-child { border:none; }\n'
     + '.cta-band { background:var(--grad); border-radius:24px; padding:3rem; text-align:center; color:#fff; margin:0 0 4rem; }\n'
     + '.cta-band h3 { font-size:1.8rem; font-weight:800; margin-bottom:.75rem; }\n'
     + '.cta-band p { opacity:.85; margin-bottom:1.5rem; }\n'
@@ -302,15 +344,15 @@ function renderProductDetail(productId) {
     + '<div class="detail-hero-inner">'
     + '<div class="detail-visual">'
     + badge
-    + '<span class="detail-emoji">' + p.image_emoji + '</span>'
+    + '<span class="detail-emoji">' + p.categoryIcon + '</span>'
     + '</div>'
     + '<div class="detail-info">'
     + '<p class="breadcrumb"><a href="/">Ana Sayfa</a> / <a href="/urunler">Ürünler</a> / ' + p.name + '</p>'
     + '<p class="detail-cat">' + catLabel + '</p>'
     + '<h1 class="detail-name">' + p.name + '</h1>'
-    + '<p class="detail-tagline">' + p.tagline + '</p>'
+    + '<p class="detail-tagline">' + (p.highlight || p.variant || '') + '</p>'
     + '<div class="detail-price-row">'
-    + '<span class="detail-price">' + p.price + '</span>'
+    + '<span class="detail-price">' + (p.price || 'Fiyat için iletişime geçin') + '</span>'
     + '<a href="/#contact" class="btn-contact">Teklif Al</a>'
     + '<a href="/urunler" class="btn-outline">← Ürünler</a>'
     + '</div>'
@@ -321,7 +363,7 @@ function renderProductDetail(productId) {
     + '<div>'
     + '<p class="section-label">Ürün Hakkında</p>'
     + '<h2 class="sec-title">Detaylı Açıklama</h2>'
-    + '<p class="detail-desc">' + p.detail_desc + '</p>'
+    + '<p class="detail-desc">' + p.shortDesc + '</p>'
     + '<br><h2 class="sec-title">Öne Çıkan Özellikler</h2>'
     + '<ul class="features-list">' + featuresHTML + '</ul>'
     + '</div>'
