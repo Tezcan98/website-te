@@ -306,6 +306,133 @@
           }
         }
       ]
+    },
+    {
+      "id": "enerji",
+      "name": "Enerji Yönetim Sistemleri",
+      "icon": "🔆",
+      "description": "EPİAŞ piyasa verileriyle entegre otomasyon ve RS485/Modbus tabanlı izleme-kontrol çözümleriyle güneş enerjisi sistemlerini akıllandırıyoruz",
+      "products": [
+        {
+          "id": "epias-ges-kontrol",
+          "name": "EPİAŞ Bazlı GES Otomasyon Sistemi",
+          "model": "TE-EPS100",
+          "variant": "",
+          "shortDesc": "EPİAŞ piyasa takas fiyatı (PTF) verilerini gerçek zamanlı izleyerek güneş enerjisi santralinizi (GES) en avantajlı saatlerde otomatik devreye alan/kapatan akıllı enerji yönetim sistemi.",
+          "badge": "EPİAŞ",
+          "badgeColor": "#f39c12",
+          "highlight": "Otomatik PTF Takibi",
+          "tags": ["EPİAŞ Entegrasyonu", "Otomatik Devreye Alma", "Uzaktan İzleme", "Enerji Verimliliği"],
+          "specs": {
+            "Ürün Özellikleri": [
+              {
+                "title": "Genel Özellikler",
+                "items": [
+                  "Model Kodu: TE-EPS100",
+                  "EPİAŞ Şeffaflık Platformu API entegrasyonu",
+                  "Kullanıcı tanımlı PTF eşik değeri ile otomatik röle kontrolü",
+                  "Negatif/düşük fiyat saatlerinde otomatik devre dışı bırakma",
+                  "Manuel geçersiz kılma (override) modu",
+                  "Çalışma Sıcaklığı: -10°C ~ +55°C",
+                  "Montaj: DIN Ray"
+                ]
+              },
+              {
+                "title": "EPİAŞ Entegrasyonu",
+                "items": [
+                  "PTF (Piyasa Takas Fiyatı) verisi 15 dakikada bir güncellenir",
+                  "Saatlik/günlük fiyat tahmin verisiyle önceden planlama",
+                  "Fiyat geçmişi ve karar loglarının bulutta saklanması",
+                  "API bağlantı kopmasında son bilinen kurala göre güvenli çalışma modu"
+                ]
+              }
+            ],
+            "Teknik Veriler": [
+              {
+                "title": "Elektriksel & İletişim Özellikleri",
+                "items": [
+                  "Giriş Voltajı: 100–240V AC, 50/60 Hz",
+                  "Röle Çıkış Kapasitesi: 16A @ 250V AC",
+                  "Haberleşme: Wi-Fi / Ethernet / 2G Yedekli",
+                  "Bulut Platformu: MQTT üzerinden gerçek zamanlı veri akışı",
+                  "Mobil uygulama üzerinden anlık bildirim ve raporlama"
+                ]
+              }
+            ],
+            "S.S.S": [
+              {
+                "title": "Sık Sorulan Sorular",
+                "items": [
+                  "S: EPİAŞ verisine nasıl erişiliyor? → EPİAŞ Şeffaflık Platformu'nun herkese açık API'si üzerinden.",
+                  "S: İnternet bağlantısı kesilirse ne olur? → Cihaz son bilinen kurala göre güvenli modda çalışmaya devam eder.",
+                  "S: Mevcut GES invertörüme entegre edilebilir mi? → Evet, çoğu invertör ve kontaktör sistemiyle uyumludur.",
+                  "S: Eşik değerleri değiştirilebilir mi? → Evet, mobil uygulama veya web panelinden anlık olarak güncellenebilir.",
+                  "S: Garanti süresi nedir? → 2 yıl üretici garantisi mevcuttur."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rs485-solar-surucu",
+          "name": "RS485 Solar Panel Sürücü Kontrol Modülü",
+          "model": "TE-RSD200",
+          "variant": "",
+          "shortDesc": "RS485/Modbus RTU protokolü üzerinden solar panel sürücülerini (tracker/invertör) kontrol eden, mobil uygulama üzerinden gerçek zamanlı izleme ve yönetim imkanı sunan endüstriyel kontrol modülü.",
+          "badge": "RS485",
+          "badgeColor": "#16a085",
+          "highlight": "Mobil İzleme & Kontrol",
+          "tags": ["RS485/Modbus RTU", "Mobil Uygulama", "Gerçek Zamanlı İzleme", "Uzaktan Kontrol"],
+          "specs": {
+            "Ürün Özellikleri": [
+              {
+                "title": "Genel Özellikler",
+                "items": [
+                  "Model Kodu: TE-RSD200",
+                  "RS485/Modbus RTU master-slave sürücü kontrolü",
+                  "Çoklu cihaz desteği: Aynı hatta 32 adede kadar sürücü",
+                  "Panel açı/pozisyon verisi, akım ve gerilim izleme",
+                  "Çalışma Sıcaklığı: -20°C ~ +60°C",
+                  "Koruma Sınıfı: IP65 (saha tipi kutu)"
+                ]
+              },
+              {
+                "title": "Mobil İzleme & Kontrol",
+                "items": [
+                  "iOS/Android mobil uygulama üzerinden anlık izleme",
+                  "Uzaktan manuel/otomatik sürücü konumlandırma komutu",
+                  "Arıza ve anormal değer bildirimleri (push notification)",
+                  "Çoklu saha ve çoklu cihaz yönetim paneli"
+                ]
+              }
+            ],
+            "Teknik Veriler": [
+              {
+                "title": "Elektriksel & Haberleşme Özellikleri",
+                "items": [
+                  "Giriş Gerilimi: 12–24V DC",
+                  "RS485 Haberleşme Hızı: 9600–115200 bps (yapılandırılabilir)",
+                  "Bulut Bağlantısı: Wi-Fi / Ethernet / 2G üzerinden MQTT",
+                  "Veri Kayıt Aralığı: 1 dakikadan başlayan yapılandırılabilir periyot",
+                  "Yerel veri tamponlama: Bağlantı kesintisinde otomatik senkronizasyon"
+                ]
+              }
+            ],
+            "S.S.S": [
+              {
+                "title": "Sık Sorulan Sorular",
+                "items": [
+                  "S: Hangi sürücü/invertör markalarıyla uyumlu? → Standart Modbus RTU protokolünü destekleyen tüm sürücülerle uyumludur.",
+                  "S: Mobil uygulama hangi platformlarda mevcut? → iOS ve Android için ayrı uygulamalarımız bulunmaktadır.",
+                  "S: Kaç adet sürücü tek hatta yönetilebilir? → Bir RS485 hattında 32 adede kadar sürücü desteklenir.",
+                  "S: Kurulum için özel bir eğitim gerekiyor mu? → Hayır, ürünle birlikte detaylı kurulum kılavuzu ve uzaktan destek sağlanır.",
+                  "S: Garanti süresi nedir? → 2 yıl üretici garantisi mevcuttur."
+                ]
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

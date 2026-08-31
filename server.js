@@ -4,9 +4,21 @@ const path = require('path');
 const querystring = require('querystring'); 
 const url = require('url');
 const mqtt = require('mqtt');
+const nodemailer = require('nodemailer');
 const productsRenderer = require('./products-renderer');
 const hostname = '0.0.0.0';
 const port = 3000;
+
+// ===== E-POSTA (İletişim Formu) AYARLARI =====
+// Sunucu te-robotik.com.tr için postfix ile mail relay'i yapıyor,
+// bu yüzden kimlik doğrulama gerekmeden localhost üzerinden gönderim yapılabiliyor.
+const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO || 'info@te-robotik.com.tr';
+const mailTransporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'localhost',
+    port: parseInt(process.env.SMTP_PORT, 10) || 25,
+    secure: false,
+    tls: { rejectUnauthorized: false }
+});
 
 // ===== MQTT AYARLARI =====
 // Gerçek değerler ortam değişkenlerinden okunur (bkz. .env.example).
@@ -171,6 +183,59 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // İletişim formu: web sitesinden gelen mesajı info@te-robotik.com.tr'e mail olarak yollar
+  if (pathname === '/contact' && method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      let data;
+      try {
+        data = JSON.parse(body);
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: false, error: 'Geçersiz istek' }));
+        return;
+      }
+
+      const name = (data.name || '').toString().trim();
+      const email = (data.email || '').toString().trim();
+      const phone = (data.phone || '').toString().trim();
+      const subject = (data.subject || '').toString().trim();
+      const message = (data.message || '').toString().trim();
+
+      if (!name || !email || !message) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: false, error: 'Ad, e-posta ve mesaj zorunludur' }));
+        return;
+      }
+
+      mailTransporter.sendMail({
+        from: '"TE-Robotik Web Sitesi" <no-reply@te-robotik.com.tr>',
+        to: CONTACT_EMAIL_TO,
+        replyTo: email,
+        subject: 'Web Sitesinden Yeni Mesaj' + (subject ? ' - ' + subject : ''),
+        text:
+          'Web sitesi iletişim formundan yeni bir mesaj alındı.\n\n' +
+          'Ad Soyad: ' + name + '\n' +
+          'E-posta: ' + email + '\n' +
+          'Telefon: ' + (phone || '-') + '\n' +
+          'Konu: ' + (subject || '-') + '\n\n' +
+          'Mesaj:\n' + message + '\n'
+      }, (err) => {
+        if (err) {
+          console.error('İletişim formu maili gönderilemedi:', err.message);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: false, error: 'Mail gönderilemedi' }));
+          return;
+        }
+        console.log(`İletişim formu maili gönderildi - Gönderen: ${name} <${email}>`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true }));
+      });
+    });
+    return;
+  }
+
   // ===== UNIVERSAL LINK / APP LINK DOĞRULAMA DOSYALARI =====
   // Android: cihaz uygulamasını otomatik açmak için imza parmak izi doğrulaması
   if (pathname === '/.well-known/assetlinks.json') {
@@ -304,6 +369,31 @@ else if (pathname.startsWith('/urun/')) {
         return;
     }
     else {
+      // Bilinen statik dosya uzantıları (görsel, font, vb.) için köke bakılır.
+      const STATIC_MIME_TYPES = {
+        '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+        '.gif': 'image/gif', '.webp': 'image/webp', '.svg': 'image/svg+xml',
+        '.ico': 'image/x-icon', '.css': 'text/css', '.woff': 'font/woff',
+        '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.pdf': 'application/pdf'
+      };
+      const ext = path.extname(pathname).toLowerCase();
+      const staticPath = path.normalize(path.join(__dirname, pathname));
+      const isSafePath = staticPath.startsWith(__dirname + path.sep);
+
+      if (STATIC_MIME_TYPES[ext] && isSafePath) {
+        fs.readFile(staticPath, (err, content) => {
+          if (err) {
+            console.log(`404: Statik dosya bulunamadı - ${pathname}`);
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('404: Sayfa bulunamadı');
+            return;
+          }
+          res.writeHead(200, { 'Content-Type': STATIC_MIME_TYPES[ext] });
+          res.end(content);
+        });
+        return;
+      }
+
       console.log(`404: Bilinmeyen sayfa istendi - ${pathname}`);
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('404: Sayfa bulunamadı');
