@@ -394,5 +394,9 @@ function renderProductDetail(productId) {
 
 module.exports = {
   renderProductList:   renderProductList,
-  renderProductDetail: renderProductDetail
+  renderProductDetail: renderProductDetail,
+  navHTML:    navHTML,
+  footerHTML: footerHTML,
+  commonCSS:  commonCSS,
+  loadSite:   loadSite
 };

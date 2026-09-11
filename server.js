@@ -6,6 +6,7 @@ const url = require('url');
 const mqtt = require('mqtt');
 const nodemailer = require('nodemailer');
 const productsRenderer = require('./products-renderer');
+const solutionsRenderer = require('./solutions-renderer');
 const hostname = '0.0.0.0';
 const port = 3000;
 
@@ -210,7 +211,7 @@ const server = http.createServer((req, res) => {
       }
 
       mailTransporter.sendMail({
-        from: '"TE-Robotik Web Sitesi" <no-reply@te-robotik.com.tr>',
+        from: '"TE-Robotik Web Sitesi" <' + CONTACT_EMAIL_TO + '>',
         to: CONTACT_EMAIL_TO,
         replyTo: email,
         subject: 'Web Sitesinden Yeni Mesaj' + (subject ? ' - ' + subject : ''),
@@ -330,6 +331,22 @@ else if (pathname.startsWith('/urun/')) {
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('404: Ürün bulunamadı');
+  }
+  return;
+}
+else if (pathname === '/cozumler') {
+  if (query.id) {
+    var solutionHtml = solutionsRenderer.renderSolutionDetail(query.id);
+    if (solutionHtml) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(solutionHtml);
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('404: Çözüm bulunamadı');
+    }
+  } else {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(solutionsRenderer.renderSolutionList());
   }
   return;
 }
