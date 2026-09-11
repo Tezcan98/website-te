@@ -238,60 +238,45 @@
       "description": "İş süreçlerini dijitalleştiren, üyelik yönetiminden akıllı raporlamaya kadar bulut tabanlı yazılım platformları",
       "products": [
         {
-          "id": "dernek-platform",
-          "image": "/img-dernek-platform.svg",
-          "name": "Dernek & Kurum Üyelik Yönetim Platformu",
-          "model": "TE-MMP v2.0",
+          "id": "kurumsal-web-mail",
+          "image": "/img-kurumsal-web-mail.svg",
+          "name": "Kurumsal Web Sitesi & E-posta Hizmetleri",
+          "model": "TE-WEB100",
           "variant": "",
-          "shortDesc": "İş insanları dernekleri, odalar ve meslek kuruluşları için uçtan uca dijital üyelik, aidat ve etkinlik yönetim sistemi. Kağıtsız, hatasız, her yerden erişilebilir.",
-          "badge": "SaaS",
+          "shortDesc": "Şirketinize özel tasarlanan kurumsal web sitesi, profesyonel kurumsal e-posta (ad@firmaniz.com.tr) ve sunucu altyapısını kurulumdan bakıma kadar uçtan uca yönetiyoruz.",
+          "badge": "Kurumsal",
           "badgeColor": "#27ae60",
-          "highlight": "Bulut Tabanlı",
-          "tags": ["Online Üyelik", "Aidat Takibi", "KVKK Uyumlu", "Mobil"],
+          "highlight": "Web + Mail Bir Arada",
+          "tags": ["Özel Tasarım", "Kurumsal E-posta", "SSL & Güvenlik", "Sunucu Yönetimi"],
           "specs": {
             "Ürün Özellikleri": [
               {
-                "title": "Üyelik Yönetimi",
+                "title": "Web Sitesi",
                 "items": [
-                  "Tamamen özelleştirilebilir online başvuru formu",
-                  "Çok aşamalı yönetim kurulu onay akışı",
-                  "Sınırsız üye kategorisi: Asil, fahri, kurumsal vb.",
-                  "Otomatik üyelik numarası ve QR kod üretimi",
-                  "Dijital üyelik kartı oluşturma ve e-posta gönderimi",
-                  "Toplu üye içe aktarma (Excel / CSV)"
+                  "Kurumsal kimliğinize özel, mobil uyumlu tasarım",
+                  "SEO uyumlu sayfa yapısı ve hızlı yükleme performansı",
+                  "İletişim formu, ürün/hizmet sayfaları, çoklu dil desteği (isteğe bağlı)",
+                  "İçerik güncelleme ve düzenli bakım desteği"
                 ]
               },
               {
-                "title": "Aidat & Finans Modülü",
+                "title": "Kurumsal E-posta",
                 "items": [
-                  "Otomatik aidat takvimi ve dönem yönetimi",
-                  "Online ödeme entegrasyonu (kredi kartı, banka havalesi)",
-                  "Aidat gecikme takibi ve otomatik uyarı sistemi",
-                  "Gelir-gider raporları ve bütçe takibi",
-                  "Makbuz ve fatura otomasyonu",
-                  "Mali dönem sonu raporları"
+                  "ad@firmaniz.com.tr formatında kurumsal e-posta kutuları",
+                  "Webmail, Outlook/Gmail uygulaması entegrasyonu (IMAP/SMTP)",
+                  "Spam ve virüs filtreleme",
+                  "Departman yönlendirmeleri ve dağıtım listeleri (info@, destek@ vb.)"
                 ]
-              },
+              }
+            ],
+            "Teknik Veriler": [
               {
-                "title": "Etkinlik & İletişim",
+                "title": "Altyapı & Güvenlik",
                 "items": [
-                  "Etkinlik takvimi ve online katılım kaydı",
-                  "Otomatik e-posta ve SMS bildirim sistemi",
-                  "Duyuru ve bülten yönetimi",
-                  "Anket ve oylama modülü",
-                  "Genel kurul ve toplantı yönetimi",
-                  "Üye mesajlaşma ve forum"
-                ]
-              },
-              {
-                "title": "Teknik Altyapı",
-                "items": [
-                  "Bulut tabanlı SaaS mimarisi — 7/24 kesintisiz erişim",
-                  "Mobil uyumlu arayüz (iOS & Android tarayıcı)",
-                  "KVKK uyumlu veri saklama ve işleme",
-                  "SSL şifreli güvenli bağlantı",
+                  "SSL sertifikası dahil (HTTPS)",
                   "Günlük otomatik yedekleme",
-                  "Sınırsız üye ve işlem kapasitesi"
+                  "DKIM/SPF/DMARC ile e-posta kimlik doğrulama",
+                  "7/24 sunucu izleme ve %99.9 erişilebilirlik hedefi"
                 ]
               }
             ],
@@ -299,11 +284,11 @@
               {
                 "title": "Sık Sorulan Sorular",
                 "items": [
-                  "S: Kurulum gerekiyor mu? → Hayır, tamamen bulut tabanlıdır. Tarayıcıdan anında kullanmaya başlarsınız.",
-                  "S: Mevcut üye listesini aktarabilir miyim? → Evet, Excel veya CSV formatında toplu aktarım desteklenmektedir.",
-                  "S: KVKK uyumlu mu? → Evet, tüm veriler Türkiye'deki sunucularda tutulur ve KVKK gerekliliklerine uygun işlenir.",
-                  "S: Fiyatlandırma nasıl? → Üye sayısı ve modüle göre aylık / yıllık abonelik modeliyle sunulmaktadır.",
-                  "S: Demo talep edebilir miyim? → Evet, iletişim formumuzdan demo talebinde bulunabilirsiniz."
+                  "S: Mevcut alan adımı (domain) kullanabilir miyim? → Evet, mevcut domaininizi yönlendirerek veya yeni domain kaydıyla hizmet verebiliriz.",
+                  "S: Kaç adet kurumsal e-posta kutusu alabilirim? → İhtiyacınıza göre istediğiniz sayıda kurumsal e-posta hesabı tanımlanabilir.",
+                  "S: Web sitesi içeriğini kendim güncelleyebilir miyim? → Evet, talep halinde yönetim paneli veya düzenli içerik güncelleme desteği sunulur.",
+                  "S: Eski web sitem/e-postalarım varsa geçiş yapılabilir mi? → Evet, mevcut verileriniz kesintisiz şekilde yeni sisteme taşınır.",
+                  "S: Fiyatlandırma nasıl? → İhtiyaç ve kapsamına göre yıllık paket olarak sunulmaktadır."
                 ]
               }
             ]
@@ -319,7 +304,7 @@
       "products": [
         {
           "id": "epias-ges-kontrol",
-          "image": "/img-epias-ges.svg",
+          "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
           "name": "EPİAŞ Bazlı GES Otomasyon Sistemi",
           "model": "TE-EPS100",
           "variant": "",
@@ -380,7 +365,7 @@
         },
         {
           "id": "rs485-solar-surucu",
-          "image": "/img-rs485-surucu.svg",
+          "image": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80",
           "name": "RS485 Solar Panel Sürücü Kontrol Modülü",
           "model": "TE-RSD200",
           "variant": "",
