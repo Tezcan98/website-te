@@ -304,7 +304,7 @@
       "products": [
         {
           "id": "epias-ges-kontrol",
-          "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+          "image": "/solar.jpg",
           "name": "EPİAŞ Bazlı GES Otomasyon Sistemi",
           "model": "TE-EPS100",
           "variant": "",

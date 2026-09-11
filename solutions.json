@@ -4,7 +4,7 @@
       "id": "gunes-enerjisi",
       "title": "Güneş Enerjisi Sistemleri",
       "shortDesc": "Uzak noktalardaki güneş enerjisi tesisatlarınızı M2M/SIM röle modülleri ile uzaktan izleyin ve kontrol edin.",
-      "photo": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+      "photo": "/solar.jpg",
       "article": {
         "lead": "Güneş enerjisi sistemleri, kurulumlarının büyük çoğunluğu şehir dışında veya tarım arazilerinde yer aldığından uzaktan yönetim kritik bir ihtiyaç haline gelmiştir. TE Robotik olarak bu ihtiyaca özel DC röle kontrol modüllerimizle güneş tesisatlarınıza akıllı, uzaktan erişilebilir bir kontrol katmanı ekliyoruz.",
         "sections": [
@@ -31,7 +31,7 @@
       "id": "ozel-kart-tasarimi",
       "title": "Çözüme Özel Kart Tasarımı",
       "shortDesc": "İhtiyacınıza özel elektronik kart (PCB) tasarımı ve üretimiyle firmanızın çözüm ortağı oluyoruz.",
-      "photo": "/img-kart-tasarimi.svg",
+      "photo": "/pcb.jpg",
       "article": {
         "lead": "Hazır ürünlerin karşılayamadığı, firmanıza veya projenize özgü ihtiyaçlar için TE Robotik mühendislik ekibi sıfırdan elektronik kart (PCB) tasarımı yapar. Fikirden seri üretime kadar tüm süreçte firmanızın teknoloji iş ortağı oluyoruz.",
         "sections": [
@@ -112,7 +112,7 @@
       "id": "iot-uzak-izleme",
       "title": "IoT & Uzaktan İzleme",
       "shortDesc": "LoRa-SIM hibrit gateway ile internet altyapısı olmayan uzak noktalardaki sensör ağınızı buluta taşıyın.",
-      "photo": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      "photo": "/iot.jpg",
       "article": {
         "lead": "Tarımsal alanlar, uzak sanayi tesisleri ve kırsal altyapı noktaları çoğunlukla stabil internet bağlantısından yoksundur. TE Robotik LRG-100-M2M LoRa-SIM Gateway, bu boşluğu kapatarak LoRaWAN sensör ağlarını M2M üzerinden buluta bağlar.",
         "sections": [
