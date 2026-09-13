@@ -4,7 +4,7 @@
       "id": "gunes-enerjisi",
       "title": "Güneş Enerjisi Sistemleri",
       "shortDesc": "Uzak noktalardaki güneş enerjisi tesisatlarınızı M2M/SIM röle modülleri ile uzaktan izleyin ve kontrol edin.",
-      "photo": "/solar.jpg",
+      "photo": "/solar.jpeg",
       "article": {
         "lead": "Güneş enerjisi sistemleri, kurulumlarının büyük çoğunluğu şehir dışında veya tarım arazilerinde yer aldığından uzaktan yönetim kritik bir ihtiyaç haline gelmiştir. TE Robotik olarak bu ihtiyaca özel DC röle kontrol modüllerimizle güneş tesisatlarınıza akıllı, uzaktan erişilebilir bir kontrol katmanı ekliyoruz.",
         "sections": [

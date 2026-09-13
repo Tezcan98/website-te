@@ -239,7 +239,7 @@
       "products": [
         {
           "id": "kurumsal-web-mail",
-          "image": "/img-kurumsal-web-mail.svg",
+          "image": "/website.jpeg",
           "name": "Kurumsal Web Sitesi & E-posta Hizmetleri",
           "model": "TE-WEB100",
           "variant": "",
@@ -304,7 +304,7 @@
       "products": [
         {
           "id": "epias-ges-kontrol",
-          "image": "/solar.jpg",
+          "image": "/solar.jpeg",
           "name": "EPİAŞ Bazlı GES Otomasyon Sistemi",
           "model": "TE-EPS100",
           "variant": "",
