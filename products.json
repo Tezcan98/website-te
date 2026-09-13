@@ -12,7 +12,7 @@
       "products": [
         {
           "id": "efe001-ac",
-          "image": "/ac-katolog.png",
+          "image": "/assets/ac-katolog.png",
           "name": "Akıllı Röle Kontrol Modülü",
           "model": "EFE001-M2M-SIM",
           "variant": "AC Serisi",
@@ -88,7 +88,7 @@
         },
         {
           "id": "efe001-dc",
-          "image": "/dc-katolog.png",
+          "image": "/assets/dc-katolog.png",
           "name": "Akıllı Röle Kontrol Modülü",
           "model": "EFE001-M2M-SIM-DC",
           "variant": "DC Serisi",
@@ -160,7 +160,7 @@
         },
         {
           "id": "lrg100",
-          "image": "/gateway.jpeg",
+          "image": "/assets/gateway.jpeg",
           "name": "LoRa-SIM Gateway",
           "model": "LRG-100-M2M",
           "variant": "",
@@ -239,7 +239,7 @@
       "products": [
         {
           "id": "kurumsal-web-mail",
-          "image": "/website.jpeg",
+          "image": "/assets/website.jpeg",
           "name": "Kurumsal Web Sitesi & E-posta Hizmetleri",
           "model": "TE-WEB100",
           "variant": "",
@@ -304,7 +304,7 @@
       "products": [
         {
           "id": "epias-ges-kontrol",
-          "image": "/solar.jpeg",
+          "image": "/assets/solar.jpeg",
           "name": "EPİAŞ Bazlı GES Otomasyon Sistemi",
           "model": "TE-EPS100",
           "variant": "",
@@ -365,7 +365,7 @@
         },
         {
           "id": "rs485-solar-surucu",
-          "image": "/rs485.jpeg",
+          "image": "/assets/rs485.jpeg",
           "name": "RS485 Solar Panel Sürücü Kontrol Modülü",
           "model": "TE-RSD200",
           "variant": "",
